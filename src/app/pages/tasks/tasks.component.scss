@@ -1,0 +1,23 @@
+.cell-selected {
+    background-color: lightgreen;
+  }
+  
+  .dx-datagrid {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .dx-datagrid .dx-row > td {
+    line-height: 0px;
+}
+
+.dx-datagrid-content .dx-datagrid-table .dx-row > td, .dx-datagrid-content .dx-datagrid-table .dx-row > tr > td {
+  line-height: 0px;
+}
+
+
+ngx-monaco-editor {
+  height: calc(100% - 100px);
+  width: 100%;
+  padding: 15px;
+}
+

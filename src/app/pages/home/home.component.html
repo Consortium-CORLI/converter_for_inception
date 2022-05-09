@@ -1,0 +1,38 @@
+<h2 class="content-block">Accueil</h2>
+<div class="content-block">
+  <div class="dx-card responsive-paddings">
+ 
+<p> Cet utilitaire est un prototype qui doit  permettre de préparer des documents XML pour être importés
+    dans l'outil <a target="_blank" href="https://inception-project.github.io/">INCEpTION</a>. Ceci implique de transformer vos données
+    dans le format UIMA CAS XMI avec un seul document par fichier (split).
+</p>
+
+  <b>Marche à suivre : </b>
+  <ol>
+    <li>Charger votre document XML (TEI par exemple)</li>
+    <li>Le document sera analysé (SAX parser) et présenté dans une table où les colonnes représentent un niveau de profondeur dans l'arborescence du document XML</li> 
+    <li>Il vous est alors demandé d'identifier dans ce document : </li>
+    <ol>
+      <li><b>La balise qui permet de distinguer chaque document</b>, si votre document comporte une liste de documents</li>
+      <li>[optionnel] : la balise qui représente la notion de paragraphe</li>
+      <li>[optionnel] : la balise qui représente la notion de phrase</li>
+      <li>les annotations pré-éxistantes qui vous souhaitez retrouver dans INCEpTION</li>
+    </ol>
+  </ol>
+<p>
+  L'identification des éléments précités se fait par clic-sélection d'une cellule (balise) dans la table puis en 
+  cliquant sur les boutons d'actions correspondant à ce que l'on veut identifier. Le bouton Collecter permet de collecter 
+  toutes les balises du document. À l'utilisateur d'éditer le type de la balise dans la table (doc càd frontière de document, annotation).
+</p>
+
+ 
+    <ul>
+      <li>Objectif 1 : Convertir le fichier en entrée vers des fichiers CAS XMI.</li>
+      <li>Objectif 2 : Générer un script Python permettant de réaliser cette conversion</li>
+      <li>Objectif 3 (plus lointain) : Générer un script Python permettant de rétro-convertir l'export du projet INCEPTION vers le format original.</li>
+        
+
+  </ul>
+  
+</div>
+</div>
