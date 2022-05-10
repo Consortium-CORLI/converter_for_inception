@@ -485,6 +485,11 @@ export class Sax2Component implements OnInit {
   }
 
   generer(){
+    /* <LOUIS> */
+    if(!(this.inception_url.startsWith('http'))){
+      this.inception_url = 'http://' + this.inception_url;
+    }
+    /* </LOUIS> */
     this.typesystemGeneration();
     this.generatePythonParser();
 
@@ -1252,6 +1257,16 @@ import xml.sax
 import re
 `;
 
+if(this.auto_authentication){
+  imports += `
+from os import listdir
+from os import mkdir
+from os.path import exists
+from pycaprio import Pycaprio
+from pycaprio.mappings import InceptionFormat, DocumentState
+  `;
+}
+
     // Variables globales
     var globales = `
 TYPESYS_FILE = 'data/typesystem.xml'
@@ -1588,16 +1603,32 @@ code.startTag = code.startTag + test;
 \t\tself.current_document_text += whitespace`;
 
 
-        var main = `\n\n\nwith open(TYPESYS_FILE, 'rb') as f:
-        type_system = load_typesystem(f)
-        contentHandler = XML2XMIHandler(type_system, OUT_DIR)
-        xml.sax.parse(CORPUS_FILE, contentHandler)
-        
-        ` 
+        var main = `\n\n\n
+if not exists('target'):
+\tmkdir('target')
+
+with open(TYPESYS_FILE, 'rb') as f:
+\ttype_system = load_typesystem(f)
+\tcontentHandler = XML2XMIHandler(type_system, OUT_DIR)
+\txml.sax.parse(CORPUS_FILE, contentHandler)
+` 
+
+        var pycaprio_uploading = ``;
+        if(this.auto_authentication){
+        pycaprio_uploading = `
+client = Pycaprio("`+this.inception_url+`",authentication=("`+this.inception_id+`","`+this.inception_password+`"))
+new_project = client.api.create_project("`+this.project_name+`",creator_name="`+this.inception_id+`")
+for a in listdir('target'):
+\tif not a.endswith('.xml'):
+\t\tcontinue
+\twith open('target/'+a,'rb') as document_file:
+\t\tnew_document = client.api.create_document(new_project,a,document_file,document_format=InceptionFormat.UIMA_CAS_XMI_XML_1_1,document_state=DocumentState.NEW) 
+`;
+        }
 
 let header = "# this Python 3 code has been generated on : " + new Date();
 
-this.pythonCode = header+imports + globales + classe + code.startTag  + code.endTag + commonMethods  + main;
+this.pythonCode = header+imports + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading;
 
   }
 }

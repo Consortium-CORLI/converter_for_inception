@@ -80,8 +80,8 @@
     </dxi-column>
 
     <!--<LOUIS>-->
-      <dxi-column dataField="quantity" caption="Quantité"></dxi-column>
-      <dxi-column dataField="averageCharCount" caption="Longueur moyenne"></dxi-column>
+      <dxi-column dataField="quantity" caption="Quantité" [allowEditing]="false"></dxi-column>
+      <dxi-column dataField="averageCharCount" caption="Longueur moyenne" [allowEditing]="false"></dxi-column>
       <!-- <dxi-column dataField="chainingRatio" caption="Ratio de chaine"></dxi-column> -->
       <!-- <dxi-column dataField="chainingRatio" caption="Se suit"></dxi-column> -->
     <!--</LOUIS>-->
@@ -279,10 +279,10 @@
       
   
       <!--<LOUIS>-->
-        <dxi-column dataField="quality" caption="Qualité"></dxi-column>
-        <dxi-column dataField="scale" caption="Echelle"></dxi-column>
+        <dxi-column dataField="quality" caption="Qualité" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="scale" caption="Echelle" [allowEditing]="false"></dxi-column>
         <!-- <dxi-column dataField="chainingRatio" caption="Ratio de chaine"></dxi-column> -->
-        <dxi-column dataField="suggestions_str" caption="Suggestions">
+        <dxi-column dataField="suggestions_str" caption="Suggestions" [allowEditing]="false">
           <!-- <select>
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
