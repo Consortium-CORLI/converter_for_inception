@@ -9,6 +9,9 @@ import { DxFileUploaderModule } from 'devextreme-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Sax2Component } from './pages/sax2/sax2.component';
+// import { Sax2_v2_Component } from './pages/sax2_v2/sax2_v2.component';
+// import { Sax2_v2_Component } from './pages/sax2_v2/sax.component';
+// import { Sax2v3Component } from './pages/sax2_v3/sax2.component';
 const routes: Routes = [
   {
     path: 'tasks',
@@ -20,6 +23,16 @@ const routes: Routes = [
     component: Sax2Component,
     canActivate: [ AuthGuardService ]
   },
+  // {
+  //   path: 'sax2_v2',
+  //   component: Sax2_v2_Component,
+  //   canActivate: [ AuthGuardService ]
+  // },
+  // {
+  //   path: 'sax2_v3',
+  //   component: Sax2v3Component,
+  //   canActivate: [ AuthGuardService ]
+  // },
   {
     path: 'home',
     component: HomeComponent,

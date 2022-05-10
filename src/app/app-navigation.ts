@@ -13,6 +13,11 @@ export const navigation = [
     text: 'Conversion alt.',
     path: '/sax2',
     icon: 'folder'
+  },
+  {
+    text: 'Conversion alt. v3',
+    path: '/sax2_v3',
+    icon: 'folder'
   }
  
 ];

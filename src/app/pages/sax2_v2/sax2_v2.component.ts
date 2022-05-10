@@ -4,20 +4,14 @@ import {SAXParser} from 'sax';
 import { AppInfoService, Tag } from 'src/app/shared/services';
 import { saveAs } from 'file-saver';
 
-// import 'ngx-highlightjs';
-
-import hljs from 'highlight.js/lib/core';
-import xml from 'highlight.js/lib/languages/xml';
-hljs.registerLanguage('xml',xml);
-
-import * as JSZip from 'jszip';
-
 @Component({
-  selector: 'app-sax2',
-  templateUrl: './sax2.component.html',
-  styleUrls: ['./sax2.component.scss']
+  selector: 'app-sax2_v2',
+  // templateUrl: './sax2_v2.component.html',
+  templateUrl: './sax.component.html',
+  // styleUrls: ['./sax2_v2.component.scss'] 
+  styleUrls: ['./sax.component.scss'] 
 })
-export class Sax2Component implements OnInit {
+export class Sax2_v2_Component implements OnInit {
 
   @ViewChild('xmlGrid', { static: true }) xmlGrid: DxDataGridComponent;
   @ViewChild('tabPanel', { static: true }) tabPanel: DxTabPanelComponent;
@@ -44,19 +38,6 @@ export class Sax2Component implements OnInit {
   /* <LOUIS> */
   tagsAverageContentLength: any = [];
   tagsChainingRatio: any = [];
-  full_xml = '';
-  highlighted_full_xml = '';
-  first_document = 'First document';
-  suggestionTickVisible = false;
-  firstDocumentVisible = false;
-  number_of_documents = 0;
-  auto_authentication = false;
-  remember_authentication = (window.localStorage.getItem('remember_authentication') === 'true')? true : false;
-  project_name = '';
-  inception_id = '';
-  inception_password = '';
-  inception_url = '';
-  uploadedXML = '';
   /* </LOUIS> */
   tagdefDataSource: any = [];
   tagColors: any = ["#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a"];
@@ -151,8 +132,7 @@ export class Sax2Component implements OnInit {
         return;
       }
       this.fichierXML = file.name;
-      this.uploadedXML = file;
-      /*
+    /*
       let filename = file.name.split('.');
       if (filename.length != 2) {
         console.error("Nom de fichier invalide.");
@@ -161,7 +141,7 @@ export class Sax2Component implements OnInit {
       }
       let name = filename[0];
       let ext = filename[1];
-      */
+*/
       /* <LOUIS> */
       if(!(file.name.endsWith('.xml'))){
         console.error("Nom de fichier invalide.");
@@ -175,58 +155,9 @@ export class Sax2Component implements OnInit {
         this.initParser();
         this.parser.write(reader.result).close();
         
-        /* <LOUIS> */
-        this.collectTags();
-        // document.getElementById('xml_display_iframe').src = file.name;
-        // var tab_panel = document.getElementById('main_tab_panel');
-        // var dxi_item = document.createElement('dxi-item');
-        // dxi_item.title = 'Fichier XML';
-        /*
-        var div = document.createElement('div');
-        var iframe = document.createElement('iframe');
-        iframe.src = file.name;
-        // iframe.style = 'width:100%;height:600px;border:0px';
-        div.appendChild(iframe);
-        dxi_item.appendChild(div);
-        */
-        // tab_panel.appendChild(dxi_item);
-        /*
-        var dxi_item = document.getElementById('dxi_item_iframe');
-        var div = document.createElement('div');
-        var iframe = document.createElement('iframe');
-        iframe.src = file.name;
-        // iframe.style = 'width:100%;height:600px;border:0px';
-        div.appendChild(iframe);
-        dxi_item.appendChild(div);
-        */
-
-        // this.highlighted_full_xml = hljs.highlight(this.full_xml,{language:'xml'}).value;
-        // document.getElementById('xml_p').innerHTML = this.highlighted_full_xml; // ICI
-
-
-
-        this.suggestionTickVisible = true;
-        this.suggestionPopupTagsVisible = true;
-        for(var i = 0, i_limit = this.tagdefDataSource.length ; i < i_limit ; i++){
-          if(this.tagdefDataSource[i]['type'] === 0){
-            this.suggestionDataSource[0].choice = this.tagdefDataSource[i]['tag'];
-            break;
-          }
-        } 
-        this.updateSystem();
-        /* </LOUIS> */
       }
 
       reader.readAsText(file);
-      // var txt = reader.readAsText(file);
-      // console.log(txt);
-
-      /* <LOUIS> */
-      // this.collectTags();
-      // console.log(this.tagdefDataSource);
-      // var interval = setTimeout(this.collectTags,500);
-      // console.log('interval set');
-      /* </LOUIS> */
     }
   }
 
@@ -249,7 +180,6 @@ export class Sax2Component implements OnInit {
     // var tagsAverageContentLength = [];
     var charIndex = 0;
     var endedElement = '';
-    zis.full_xml = '';
     /* </LOUIS> */
 
     this.parser.onerror = function (e) {
@@ -262,7 +192,6 @@ export class Sax2Component implements OnInit {
       /* <LOUIS> */
       // charIndex += chars.length;
       charIndex += t.length;
-      zis.full_xml += t;
       /* </LOUIS> */
     };
     this.parser.onopentag = function (node) {
@@ -331,9 +260,6 @@ export class Sax2Component implements OnInit {
       zis.depth = zis.depth + 1;
 
 
-      /* <LOUIS> */
-      zis.full_xml += '<' + node.name + '>';
-      /* </LOUIS> */
     };
     this.parser.onattribute = function (attr) {
       // an attribute.  attr has "name" and "value"
@@ -382,14 +308,9 @@ export class Sax2Component implements OnInit {
           if (previous && previoustag && previoustag.substring(0, name.length + 1) == "<" + name) {
             zis.docContentMap[rowid - 1] = contenu;
           }
-      
-          /* <LOUIS> */
-          zis.full_xml += '</' + name + '>';
-          /* </LOUIS> */
     };
 
-    // console.log(contenu);
-    // console.log(this.full_xml);
+
   }
 
 
@@ -425,162 +346,10 @@ export class Sax2Component implements OnInit {
     }
   }
 
-  onToolbarPreparingSuggestionPopup(e) {
-    var toolbarItems = e.toolbarOptions.items;
-
-    /*
-    toolbarItems.push({
-      location: 'before',
-      widget: 'dxButton',
-      locateInMenu: 'auto',
-      options: {
-        type: 'normal',
-        hint: 'Mettre à jour le type des balises',
-        text: 'Mettre à jour toutes les balises',
-        disabled: false,
-        onInitialized: (e) => {
-          // this.popupTagsVisible = false;
-        },
-        onClick: () => {
-          // if(!this.tagdefDataSource || this.tagdefDataSource.length<1)
-          // alert("Il faut d'abord chager un fichier");
-          // else
-          // this.collectTags();
-          console.log("Bouton 'mise à jour'");
-          // var button = document.getElementById('suggestionBox');
-          // console.log(button);
-          // button.style.display = 'block';
-          // this.popupTagsVisible = true;
-          // this.suggestionPopupTagsVisible = true;
-
-          for(var i = 0, i_limit = this.tagdefDataSource.length ; i < i_limit ; i++){
-            // if(this.tagdefDataSource[i].tag !== this.suggestionDataSource[0].choice && this.tagdefDataSource[i].type === 0){
-            //   this.tagdefDataSource[i].type = 3;
-            // }else if(this.tagdefDataSource[i].tag !== this.suggestionDataSource[1].choice && this.tagdefDataSource[i].type === 1){
-            //   this.tagdefDataSource[i].type = 3;
-            // }else if(this.tagdefDataSource[i].tag !== this.suggestionDataSource[2].choice && this.tagdefDataSource[i].type === 2){
-            //   this.tagdefDataSource[i].type = 3;
-            // }
-
-            // if(this.tagdefDataSource[i].tag === this.suggestionDataSource[0].choice){
-            //   if(this.tagdefDataSource[i].type === 0)
-            //   this.tagdefDataSource[i].type = 3;
-            // }
-
-            if(this.tagdefDataSource[i].tag === this.suggestionDataSource[0].choice){
-              this.tagdefDataSource[i].type = 0; 
-            }else if(this.tagdefDataSource[i].tag === this.suggestionDataSource[1].choice){
-              this.tagdefDataSource[i].type = 1; 
-            }else if(this.tagdefDataSource[i].tag === this.suggestionDataSource[2].choice){
-              this.tagdefDataSource[i].type = 2; 
-            }else{
-              this.tagdefDataSource[i].type = 3;
-            }
-          }
-        }
-      }
-    }
-    );
-    */
-  }
-
-  generer(){
-    this.typesystemGeneration();
-    this.generatePythonParser();
-
-    this.downloadZip();
-
-    /*
-    this.tabPanel.selectedIndex=1;
-    this.popupTagsVisible = false;
-    this.popupSelectVisible = false;
-    this.suggestionPopupTagsVisible = false;
-    */
-
-    /* <LOUIS> */
-    if(this.remember_authentication){
-      window.localStorage.setItem('id',this.inception_id);
-      window.localStorage.setItem('password',this.inception_password);
-      window.localStorage.setItem('inception_url',this.inception_url);
-    }else{
-      window.localStorage.removeItem('id');
-      window.localStorage.removeItem('password');
-      window.localStorage.removeItem('inception_url');
-    }
-    window.localStorage.setItem('remember_authentication',this.remember_authentication.toString());
-    /* </LOUIS> */
-  }
-
-  toggle_input_display(){
-    /*
-    var new_display = 'none';
-    if(this.auto_authentication){
-      new_display = 'block';
-    }
-    document.getElementById('project_name_input').style.display = new_display;
-    document.getElementById('inception_id_input').style.display = new_display;
-    document.getElementById('inception_password_input').style.display = new_display;
-    console.log('toggle');
-    */
-    if(this.auto_authentication){
-      document.getElementById('project_name_input').style.display = 'inline';
-
-
-
-      var id_input = document.getElementById('inception_id_input');
-      
-      if(this.inception_id === ''){
-        var stored_id = window.localStorage.getItem('id');
-        if(stored_id !== null){
-          // id_input.value = stored_id;
-          this.inception_id = stored_id;
-        }
-      }
-      
-      id_input.style.display = 'inline';
-
-
-
-      var password_input = document.getElementById('inception_password_input');
-      
-      if(this.inception_password === ''){
-        var stored_password = window.localStorage.getItem('password');
-        if(stored_password !== null){
-          // password_input.value = stored_password;
-          this.inception_password = stored_password;
-        }
-      }
-      
-      password_input.style.display = 'inline';
-
-
-
-
-
-      var inception_input = document.getElementById('inception_url_input');
-      
-      if(this.inception_url === ''){
-        var stored_url = window.localStorage.getItem('inception_url');
-        if(stored_url !== null){
-          // password_input.value = stored_password;
-          this.inception_url = stored_url;
-        }
-      }
-      
-      inception_input.style.display = 'inline';
-    }else{
-      document.getElementById('project_name_input').style.display = 'none';
-      document.getElementById('inception_id_input').style.display = 'none';
-      document.getElementById('inception_password_input').style.display = 'none';
-      document.getElementById('inception_url_input').style.display = 'none';
-    }
-  }
-
   onToolbarPreparing(e) {
     var toolbarItems = e.toolbarOptions.items;
 
 
-    /*
     toolbarItems.push({
       location: 'before',
       widget: 'dxSelectBox',
@@ -598,9 +367,7 @@ export class Sax2Component implements OnInit {
       }
     }
     );
-    */
 
-    /*
     toolbarItems.push({
       location: 'before',
       widget: 'dxButton',
@@ -644,10 +411,8 @@ export class Sax2Component implements OnInit {
       }
     }
     );
-    */
 
 
-    /*
     toolbarItems.push({
       location: 'before',
       widget: 'dxButton',
@@ -671,12 +436,10 @@ export class Sax2Component implements OnInit {
       }
     }
     );
-    */
 
 
 
 
-    /*
     toolbarItems.push({
       location: 'before',
       widget: 'dxButton',
@@ -699,8 +462,6 @@ export class Sax2Component implements OnInit {
       }
     }
     );
-    */
-    
 
     /* <LOUIS> */
     /*
@@ -733,7 +494,6 @@ export class Sax2Component implements OnInit {
     );
     */
 
-    /*
     toolbarItems.push({
       location: 'before',
       widget: 'dxButton',
@@ -786,7 +546,6 @@ export class Sax2Component implements OnInit {
       }
     }
     );
-    */
     /* </LOUIS> */
 
   }
@@ -860,7 +619,6 @@ export class Sax2Component implements OnInit {
     var docMinQuantity = 5;
     var standardParagraphNames = ["p","par","paragraph"];
     var standardDocumentNames = ["text","body"];
-    // console.log(this.tagdefDataSource);
     /* </LOUIS> */
 
     this.tagdefDataSource.map(e => {
@@ -1060,17 +818,8 @@ export class Sax2Component implements OnInit {
   }
 
   dowloadPython() {
-    
     var blob = new Blob([this.pythonCode], { type: "text/plain;charset=utf-8" });
     saveAs(blob, "split-and-convert.py");
-    
-   /*
-   var zip = new JSZip();
-    zip.file('inception_project/split-and-convert.py',this.pythonCode);
-    zip.generateAsync({type: 'blob'}).then(function(content){
-      saveAs(content,'test_zip.zip');
-    });
-    */
   }
 
 
@@ -1078,149 +827,6 @@ export class Sax2Component implements OnInit {
     var blob = new Blob([this.typesystem], { type: "text/plain;charset=utf-8" });
     saveAs(blob, "typesystem.xml");
   }
-
-  /* <LOUIS> */
-
-  downloadZip(){
-    var zip = new JSZip();
-    zip.file('inception_project/split-and-convert.py',this.pythonCode);
-    zip.file('inception_project/data/typesystem.xml',this.typesystem);
-    zip.file('inception_project/data/'+this.fichierXML,this.uploadedXML);
-    zip.generateAsync({type: 'blob'}).then(function(content){
-      saveAs(content,'inception_project.zip');
-    });
-  }
-
-  updateSystem(){
-    // if(!this.tagdefDataSource || this.tagdefDataSource.length<1)
-    // alert("Il faut d'abord chager un fichier");
-    // else
-    // this.collectTags();
-    // console.log("Bouton 'mise à jour'");
-    // var button = document.getElementById('suggestionBox');
-    // console.log(button);
-    // button.style.display = 'block';
-    // this.popupTagsVisible = true;
-    // this.suggestionPopupTagsVisible = true;
-
-    for(var i = 0, i_limit = this.tagdefDataSource.length ; i < i_limit ; i++){
-      // if(this.tagdefDataSource[i].tag !== this.suggestionDataSource[0].choice && this.tagdefDataSource[i].type === 0){
-      //   this.tagdefDataSource[i].type = 3;
-      // }else if(this.tagdefDataSource[i].tag !== this.suggestionDataSource[1].choice && this.tagdefDataSource[i].type === 1){
-      //   this.tagdefDataSource[i].type = 3;
-      // }else if(this.tagdefDataSource[i].tag !== this.suggestionDataSource[2].choice && this.tagdefDataSource[i].type === 2){
-      //   this.tagdefDataSource[i].type = 3;
-      // }
-
-      // if(this.tagdefDataSource[i].tag === this.suggestionDataSource[0].choice){
-      //   if(this.tagdefDataSource[i].type === 0)
-      //   this.tagdefDataSource[i].type = 3;
-      // }
-
-      if(this.tagdefDataSource[i].tag === this.suggestionDataSource[0].choice){
-        this.tagdefDataSource[i].type = 0; 
-      }else if(this.tagdefDataSource[i].tag === this.suggestionDataSource[1].choice){
-        this.tagdefDataSource[i].type = 1; 
-      }else if(this.tagdefDataSource[i].tag === this.suggestionDataSource[2].choice){
-        this.tagdefDataSource[i].type = 2; 
-      }else{
-        this.tagdefDataSource[i].type = 3;
-      }
-    }
-
-    var contrainte = false;
-    for(var i = 0, i_limit = this.tagdefDataSource.length ; i < i_limit ; i++){
-      if(this.tagdefDataSource[i]['tag'] === this.suggestionDataSource[0].choice){
-        if(this.tagdefDataSource[i]['constraint'] === 1){
-          contrainte = true;
-        }else{
-          contrainte = false;
-        }
-        break;
-      }
-    }
-
-    var tag_count = 0;
-    // var first_document_regex_pattern = '<'+this.suggestionDataSource[0].choice+'[\\w\\W]*(?<!</'+this.suggestionDataSource[0].choice+'>)</'+this.suggestionDataSource[0].choice+'>';
-    var first_document_regex_pattern = '</?' + this.suggestionDataSource[0].choice + '(?:[ />])';
-    var first_document_regex_result_list = [];
-    console.log(first_document_regex_pattern);
-    var first_document_regex = new RegExp(first_document_regex_pattern,'g')
-    // var first_document_regex_result = first_document_regex.exec(this.full_xml);
-    // if(first_document_regex_result !== null){
-    //   this.first_document = first_document_regex_result[0];
-    // }else{
-    //   console.log("Couldn't find first document");
-    // }
-    var first_document_regex_result;
-    while((first_document_regex_result = first_document_regex.exec(this.full_xml)) !== null){
-      first_document_regex_result_list.push([first_document_regex_result.index,first_document_regex_result[0]]);
-      if(first_document_regex_result[0][1] !== '/'){
-        tag_count++;
-      }else{
-        tag_count--;
-        if(contrainte){
-          if(tag_count === 0){
-            this.first_document = this.full_xml.slice(first_document_regex_result_list[0][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
-            break;
-          }
-        }else{
-          this.first_document = this.full_xml.slice(first_document_regex_result_list[first_document_regex_result_list.length-2][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
-          break;
-        }
-      }
-    }
-
-    // this.firstDocumentVisible = true;
-
-    var tag_replacement_pattern = '</?[^>]+>';
-    var tag_replacement_regex = new RegExp(tag_replacement_pattern,'g');
-    this.first_document = this.first_document.replace(tag_replacement_regex,'');
-
-    // var whitespace_replacement_pattern = '\\s(\\s*)';
-    var whitespace_replacement_pattern = '(\\s)\\s*';
-    var whitespace_replacement_regex = new RegExp(whitespace_replacement_pattern,'g');
-    this.first_document = this.first_document.replace(whitespace_replacement_regex,'$1');
-
-    var early_whitespace_replacement_pattern = '^\\s*';
-    var early_whitespace_replacement_regex = new RegExp(early_whitespace_replacement_pattern,'g');
-    this.first_document = this.first_document.replace(early_whitespace_replacement_regex,'');
-
-
-    for(var i = 0, i_limit = this.tagdefDataSource.length ; i < i_limit ; i++){
-      if(this.tagdefDataSource[i]['tag'] === this.suggestionDataSource[0].choice){
-        this.number_of_documents = this.tagdefDataSource[i]['quantity'];
-        console.log("number of documents found", this.number_of_documents);
-        break;
-      }
-    }
-
-    var nb_doc = this.number_of_documents;
-
-    this.firstDocumentVisible = true;
-    // document.getElementById('first_document_announcer_span').style.display = 'block';
-    // document.getElementById('number_of_documents_span').innerText = (~~(this.number_of_documents/2)).toString();
-    var display_interval = setInterval(function(){
-      /*
-      var local_span = document.getElementById('number_of_documents_span');
-      if(local_span !== null){
-        local_span.innerText = (~~(this.number_of_documents/2)).toString();
-        clearInterval(display_interval);
-      }
-      */
-     try{
-      // document.getElementById('number_of_documents_span').innerText = (~~(this.number_of_documents/2)).toString();
-      document.getElementById('number_of_documents_span').innerText = (~~(nb_doc/2)).toString();
-        clearInterval(display_interval);
-     }catch(err){
-      
-     }
-      console.log('interval !');
-      
-    },250);
-    // console.log(this.number_of_documents);
-  }
-  /* </LOUIS> */
 
 
   generatePythonParser() {
