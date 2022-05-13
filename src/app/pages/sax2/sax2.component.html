@@ -11,7 +11,10 @@
     <dx-toolbar>
       
       <dxi-item location="before">
-        <dx-file-uploader #up selectButtonText="Charger un fichier XML" labelText="" accept=".xml" uploadMode="useForm"
+        <!-- <dx-file-uploader #up selectButtonText="Charger un fichier XML" labelText="" accept=".xml" uploadMode="useForm"
+          [showFileList]="false" (onValueChanged)="onFileUploaderValueChanged($event)">
+        </dx-file-uploader> -->
+        <dx-file-uploader #up selectButtonText="Charger un fichier XML" labelText="" accept=".xml" uploadMode="useForm" multiple="true"
           [showFileList]="false" (onValueChanged)="onFileUploaderValueChanged($event)">
         </dx-file-uploader>
       </dxi-item>
@@ -68,7 +71,8 @@
     <dxo-selection mode="single"></dxo-selection>
 
     <dxi-column dataField="tag" caption="Tag" [allowEditing]="false"></dxi-column>
-    <dxi-column dataField="attrsstr" caption="Attributs" [allowEditing]="false"></dxi-column>
+    <!-- <dxi-column dataField="attrsstr" caption="Attributs" [allowEditing]="false"></dxi-column> -->
+    <dxi-column dataField="attrs" caption="Attributs" [allowEditing]="false"></dxi-column>
     <dxi-column dataField="constraint" caption="Contrainte">
       <dxo-lookup [dataSource]="constraintTypes" displayExpr="label" valueExpr="value">
       </dxo-lookup>
@@ -86,7 +90,7 @@
       <!-- <dxi-column dataField="chainingRatio" caption="Se suit"></dxi-column> -->
     <!--</LOUIS>-->
     
-    <dxi-column cellTemplate="cellTemplate" dataField="color" caption="Couleur"  dataType="string" editorType="dxColorBox"></dxi-column>
+    <!-- <dxi-column cellTemplate="cellTemplate" dataField="color" caption="Couleur"  dataType="string" editorType="dxColorBox"></dxi-column> -->
 
     <div *dxTemplate="let data of 'cellTemplate'">
       <dx-color-box [readOnly]="true" 
@@ -128,7 +132,7 @@
 
   <!-- </dxi-item> -->
   
-  <dxi-item title="Scripts de conversion générés">
+  <!-- <dxi-item title="Scripts de conversion générés">
   <div>
     <h2 class="content-block">Script Python d'importation</h2>
     <div class="content-block">
@@ -165,7 +169,24 @@
             
   </div>
   
-  </dxi-item>
+  </dxi-item> -->
+
+
+  <dxi-item title="Historique">
+    <dx-data-grid [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="history_list" keyExpr="id" [showColumnHeaders]="true"  (onRowUpdated)="onRowUpdated($event)"
+    [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">
+
+    <dxo-selection mode="single"></dxo-selection>
+
+    <dxi-column dataField="id" caption="#" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="project_name" caption="Nom du projet" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="doc_separator" caption="Séparateur de document" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="date" caption="Date" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="file_name" caption="Noms des fichiers" [allowEditing]="false"></dxi-column>
+
+  </dx-data-grid>
+    
+    </dxi-item>
    
   
   </dx-tab-panel>

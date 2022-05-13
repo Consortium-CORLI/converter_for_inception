@@ -57,6 +57,9 @@ export class Sax2Component implements OnInit {
   inception_password = '';
   inception_url = '';
   uploadedXML = '';
+  // history_list = JSON.parse((window.localStorage.getItem('history') || '{"history":[]}'))["history"];
+  history_list = JSON.parse((window.localStorage.getItem('history') || '[]'));
+  file_list = [];
   /* </LOUIS> */
   tagdefDataSource: any = [];
   tagColors: any = ["#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a"];
@@ -141,6 +144,9 @@ export class Sax2Component implements OnInit {
 
   onFileUploaderValueChanged(event) {
     // console.log("onFileUploaderValueChanged, event=", event); 
+    // console.log(event.value);
+    
+    /*
     if (event.value && event.value[0]) {
 
       let file = event.value[0];
@@ -152,53 +158,23 @@ export class Sax2Component implements OnInit {
       }
       this.fichierXML = file.name;
       this.uploadedXML = file;
-      /*
-      let filename = file.name.split('.');
-      if (filename.length != 2) {
-        console.error("Nom de fichier invalide.");
-        alert("Nom de fichier invalide");
-        return;
-      }
-      let name = filename[0];
-      let ext = filename[1];
-      */
-      /* <LOUIS> */
       if(!(file.name.endsWith('.xml'))){
         console.error("Nom de fichier invalide.");
         alert("Nom de fichier invalide");
         return;
       }
-      /* </LOUIS> */
       let reader = new FileReader();
       this.depth = 0;
       reader.onload = () => {
         this.initParser();
         this.parser.write(reader.result).close();
         
-        /* <LOUIS> */
+        
         this.collectTags();
         // document.getElementById('xml_display_iframe').src = file.name;
         // var tab_panel = document.getElementById('main_tab_panel');
         // var dxi_item = document.createElement('dxi-item');
         // dxi_item.title = 'Fichier XML';
-        /*
-        var div = document.createElement('div');
-        var iframe = document.createElement('iframe');
-        iframe.src = file.name;
-        // iframe.style = 'width:100%;height:600px;border:0px';
-        div.appendChild(iframe);
-        dxi_item.appendChild(div);
-        */
-        // tab_panel.appendChild(dxi_item);
-        /*
-        var dxi_item = document.getElementById('dxi_item_iframe');
-        var div = document.createElement('div');
-        var iframe = document.createElement('iframe');
-        iframe.src = file.name;
-        // iframe.style = 'width:100%;height:600px;border:0px';
-        div.appendChild(iframe);
-        dxi_item.appendChild(div);
-        */
 
         // this.highlighted_full_xml = hljs.highlight(this.full_xml,{language:'xml'}).value;
         // document.getElementById('xml_p').innerHTML = this.highlighted_full_xml; // ICI
@@ -214,19 +190,143 @@ export class Sax2Component implements OnInit {
           }
         } 
         this.updateSystem();
-        /* </LOUIS> */
       }
 
       reader.readAsText(file);
-      // var txt = reader.readAsText(file);
-      // console.log(txt);
+    }
+    */
+    
+    /*
+    if(event.value){
+      for(var i = 0, i_limit = event.value.length ; i < i_limit ; i++){
+        let file = event.value[i];
+        if(!(file.name.endsWith('.xml'))){
+          let local_string = "Nom de fichier invalide : " + file.name;
+          console.error(local_string);
+          alert(local_string);
+          continue;
+        }
+        if(!(this.fichierXML)){
+          this.fichierXML = file.name;
+          this.uploadedXML = file;
+        }
 
-      /* <LOUIS> */
-      // this.collectTags();
-      // console.log(this.tagdefDataSource);
-      // var interval = setTimeout(this.collectTags,500);
-      // console.log('interval set');
-      /* </LOUIS> */
+
+        let reader = new FileReader();
+        this.depth = 0;
+        reader.onload = () => {
+          this.initParser();
+          this.parser.write(reader.result).close();
+          
+          
+          this.collectTags();
+          // document.getElementById('xml_display_iframe').src = file.name;
+          // var tab_panel = document.getElementById('main_tab_panel');
+          // var dxi_item = document.createElement('dxi-item');
+          // dxi_item.title = 'Fichier XML';
+
+          // this.highlighted_full_xml = hljs.highlight(this.full_xml,{language:'xml'}).value;
+          // document.getElementById('xml_p').innerHTML = this.highlighted_full_xml; // ICI
+
+
+
+          this.suggestionTickVisible = true;
+          this.suggestionPopupTagsVisible = true;
+          for(var i = 0, i_limit = this.tagdefDataSource.length ; i < i_limit ; i++){
+            if(this.tagdefDataSource[i]['type'] === 0){
+              this.suggestionDataSource[0].choice = this.tagdefDataSource[i]['tag'];
+              break;
+            }
+          } 
+          this.updateSystem();
+
+
+          this.file_list.push(file); // ?
+        }
+
+        reader.readAsText(file);
+      }
+      // console.log(this.file_list);
+    }
+    */
+
+
+
+
+    if (event.value && event.value[0]) {
+
+      let file = event.value[0];
+
+      if (!file) {
+        alert("Fichier requis");
+        event.cancel = true;
+        return;
+      }
+      this.fichierXML = file.name;
+      this.uploadedXML = file;
+      if(!(file.name.endsWith('.xml'))){
+        console.error("Nom de fichier invalide.");
+        alert("Nom de fichier invalide");
+        return;
+      }
+      let reader = new FileReader();
+      this.depth = 0;
+      reader.onload = () => {
+        this.initParser();
+        this.parser.write(reader.result).close();
+        
+        
+        this.collectTags();
+        // document.getElementById('xml_display_iframe').src = file.name;
+        // var tab_panel = document.getElementById('main_tab_panel');
+        // var dxi_item = document.createElement('dxi-item');
+        // dxi_item.title = 'Fichier XML';
+
+        // this.highlighted_full_xml = hljs.highlight(this.full_xml,{language:'xml'}).value;
+        // document.getElementById('xml_p').innerHTML = this.highlighted_full_xml; // ICI
+
+
+
+        this.suggestionTickVisible = true;
+        this.suggestionPopupTagsVisible = true;
+        for(var i = 0, i_limit = this.tagdefDataSource.length ; i < i_limit ; i++){
+          if(this.tagdefDataSource[i]['type'] === 0){
+            this.suggestionDataSource[0].choice = this.tagdefDataSource[i]['tag'];
+            break;
+          }
+        } 
+        this.updateSystem();
+      }
+
+      reader.readAsText(file);
+
+      /****************************/
+
+      this.file_list.push(file);
+      for(var i = 1, i_limit = event.value.length ; i < i_limit ; i++){
+        let file = event.value[i];
+        if(!(file.name.endsWith('.xml'))){
+          let local_string = "Nom de fichier invalide : " + file.name;
+          console.error(local_string);
+          alert(local_string);
+          continue;
+        }
+
+        let reader = new FileReader();
+        this.depth = 0;
+        reader.onload = () => {
+          // this.initParser();
+          // this.parser.write(reader.result).close();
+          
+          // this.collectTags();
+
+          // this.file_list.push(file); // ?
+        }
+
+        this.file_list.push(file);
+
+        reader.readAsText(file);
+      }
     }
   }
 
@@ -311,7 +411,10 @@ export class Sax2Component implements OnInit {
       //console.log(rowid + " <elem>=" + elem);
       var row: any = {}
       var cname = "P" + zis.depth;
+      // console.log('ATTRS:',node.attributes); // -> HERE IT'S OK
       row.attrsstr = zis.attrToString(node.attributes);
+      // if(Math.random() < 0.3){console.log('ATTRS:',row.attrsstr);}
+      // if(node.attributes != {}){console.log('ATTRS:',node.attributes,row.attrsstr);} // HERE IT ISN'T OK
       if (node.attributes.length == 0)
         row[cname] = "<" + node.name + ">";
       else
@@ -513,6 +616,27 @@ export class Sax2Component implements OnInit {
       window.localStorage.removeItem('inception_url');
     }
     window.localStorage.setItem('remember_authentication',this.remember_authentication.toString());
+
+    this.history_list.push({
+      "id": this.history_list.length,
+      "date": (new Date()).toString(),
+      // "project_name": (this.project_name.length > 0)? this.project_name : '(aucun)',
+      "project_name": this.project_name,
+      // "file_name": this.fichierXML,
+      // "file_name": this.file_list.toString(),
+      "file_name": () => {
+        var s = '';
+        for(var i = 0, i_limit = this.file_list.length ; i < i_limit ; i++){
+          if(s.length > 0){
+            s += ', ';
+          }
+          s += this.file_list[i].name;
+        }
+        return s;
+      },
+      "doc_separator": this.suggestionDataSource[0].choice
+    });
+    window.localStorage.setItem('history',JSON.stringify(this.history_list));
     /* </LOUIS> */
   }
 
@@ -815,7 +939,7 @@ export class Sax2Component implements OnInit {
 
 
   onRowUpdated(e: any) {
-    console.log(e);
+    // console.log(e);
     if (e.data.tag in this.docTagMap) {
       this.docTagMap[this.lastSelectedTag] = e.data.color;
       this.xmlGrid.instance.refresh();
@@ -824,21 +948,34 @@ export class Sax2Component implements OnInit {
 
 
   attrToString(attrs) {
-    var str = ""
+    var str = "";
+    /*
     for (var i = 0; i < attrs.length; i++) {
       str = str + attrs[i][0] + "=\"" + attrs[i][1] + "\" ";
+    }
+    */
+    var local_keys = Object.keys(attrs);
+    for(var i = 0, i_limit = local_keys.length ; i < i_limit ; i++){
+      str += ' ' + local_keys[i] + '="' + attrs[local_keys[i]] + '"';
     }
     return str;
   }
 
   recupAttrNames(attrs) {
   //  console.log("recupAttrNames attrs=", attrs);
+  /*
     var anames = [];
     if(attrs==null || attrs.length==0) return anames;
     for (var a of Object.keys(attrs)) {
       anames.push(a[0]);
     }
     return anames;
+    */
+    if(!(attrs)){
+      return [];
+    }else{
+      return Object.keys(attrs);
+    }
   }
 
   normalizeAttributeName(tag, aname) {
@@ -1042,8 +1179,8 @@ export class Sax2Component implements OnInit {
 
 
   typeDescriptionGenerator(name, attrs): string {
-    console.log("typeDescriptionGenerator for: "+ name);
-    console.log(attrs);
+    // console.log("typeDescriptionGenerator for: "+ name);
+    // console.log(attrs);
     var description = "\n\n<typeDescription>" + "\n";
     description = description + "<name>webanno.custom." + name + "</name>" + "\n";
     description = description + "<description/>" + "\n";
@@ -1051,7 +1188,7 @@ export class Sax2Component implements OnInit {
     description = description + "<features>" + "\n";
     if(attrs && attrs.length>0)
     attrs.map(e => {
-      console.log("<name>" + e + "</name>");
+      // console.log("<name>" + e + "</name>");
       description = description + "<featureDescription>" + "\n";
       description = description + "<name>" + this.normalizeAttributeName(name, e) + "</name>" + "\n";
       description = description + "<description/> " + "\n";
@@ -1090,7 +1227,11 @@ export class Sax2Component implements OnInit {
     var zip = new JSZip();
     zip.file('inception_project/split-and-convert.py',this.pythonCode);
     zip.file('inception_project/data/typesystem.xml',this.typesystem);
-    zip.file('inception_project/data/'+this.fichierXML,this.uploadedXML);
+    // zip.file('inception_project/data/'+this.fichierXML,this.uploadedXML);
+    // console.log(this.file_list);
+    for(var i = 0, i_limit = this.file_list.length ; i < i_limit ; i++){
+      zip.file('inception_project/data/'+this.file_list[i].name,this.file_list[i])
+    }
     zip.generateAsync({type: 'blob'}).then(function(content){
       saveAs(content,'inception_project.zip');
     });
@@ -1149,7 +1290,7 @@ export class Sax2Component implements OnInit {
     // var first_document_regex_pattern = '<'+this.suggestionDataSource[0].choice+'[\\w\\W]*(?<!</'+this.suggestionDataSource[0].choice+'>)</'+this.suggestionDataSource[0].choice+'>';
     var first_document_regex_pattern = '</?' + this.suggestionDataSource[0].choice + '(?:[ />])';
     var first_document_regex_result_list = [];
-    console.log(first_document_regex_pattern);
+    // console.log(first_document_regex_pattern);
     var first_document_regex = new RegExp(first_document_regex_pattern,'g')
     // var first_document_regex_result = first_document_regex.exec(this.full_xml);
     // if(first_document_regex_result !== null){
@@ -1159,6 +1300,7 @@ export class Sax2Component implements OnInit {
     // }
     var first_document_regex_result;
     while((first_document_regex_result = first_document_regex.exec(this.full_xml)) !== null){
+    // while((first_document_regex_result = first_document_regex.exec(this.file_list[0])) !== null){
       first_document_regex_result_list.push([first_document_regex_result.index,first_document_regex_result[0]]);
       if(first_document_regex_result[0][1] !== '/'){
         tag_count++;
@@ -1166,11 +1308,13 @@ export class Sax2Component implements OnInit {
         tag_count--;
         if(contrainte){
           if(tag_count === 0){
-            this.first_document = this.full_xml.slice(first_document_regex_result_list[0][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
+              this.first_document = this.full_xml.slice(first_document_regex_result_list[0][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
+            // this.first_document = this.file_list[0].slice(first_document_regex_result_list[0][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
             break;
           }
         }else{
           this.first_document = this.full_xml.slice(first_document_regex_result_list[first_document_regex_result_list.length-2][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
+          // this.first_document = this.file_list[0].slice(first_document_regex_result_list[first_document_regex_result_list.length-2][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
           break;
         }
       }
@@ -1195,7 +1339,7 @@ export class Sax2Component implements OnInit {
     for(var i = 0, i_limit = this.tagdefDataSource.length ; i < i_limit ; i++){
       if(this.tagdefDataSource[i]['tag'] === this.suggestionDataSource[0].choice){
         this.number_of_documents = this.tagdefDataSource[i]['quantity'];
-        console.log("number of documents found", this.number_of_documents);
+        // console.log("number of documents found", this.number_of_documents);
         break;
       }
     }
@@ -1220,7 +1364,7 @@ export class Sax2Component implements OnInit {
      }catch(err){
       
      }
-      console.log('interval !');
+      // console.log('interval !');
       
     },250);
     // console.log(this.number_of_documents);
@@ -1255,13 +1399,13 @@ export class Sax2Component implements OnInit {
 from cassis import *
 import xml.sax
 import re
-`;
-
-if(this.auto_authentication){
-  imports += `
 from os import listdir
 from os import mkdir
 from os.path import exists
+`; 
+
+if(this.auto_authentication){
+  imports += `
 from pycaprio import Pycaprio
 from pycaprio.mappings import InceptionFormat, DocumentState
   `;
@@ -1271,6 +1415,7 @@ from pycaprio.mappings import InceptionFormat, DocumentState
     var globales = `
 TYPESYS_FILE = 'data/typesystem.xml'
 CORPUS_FILE = 'data/`+this.fichierXML+`'
+CORPUS_FILES_DIRECTORY = 'data/'
 `
 /* <LOUIS> */
 +
@@ -1331,6 +1476,7 @@ class XML2XMIHandler(xml.sax.ContentHandler):
 \t\tself.current_attributes = None
 \t\tself.depth = 0
 \t\tself.xpath = []
+\t\tself.doc_depth = 0
 `;
 
 
@@ -1370,6 +1516,7 @@ this.tagdefDataSource.map(t => {
         } else {
           test = `\t\tif tag == '${t.tag}':
 \t\t\tself.current_document_cas = Cas(typesystem=self.type_system)
+\t\t\tself.current_document_text = ''
 \t\t\treturn;
 `;
                   
@@ -1406,10 +1553,10 @@ ALSO REMOVED TABS AFTERWARDS
 \t\t\treturn\n\n`;
         } else {
           test = `\t\tif tag == '`+t.tag+`':
-\t\t\tself.openedTag['`+t.tag+`'] -= 1
-\t\t\tself.doc_count += 1
-\t\t\tself.write_document()
-\t\t\tself.current_document_text = ''`
+\t\t\tif self.current_document_cas != None:
+\t\t\t\tself.doc_count += 1
+\t\t\t\tself.write_document()
+\t\t\t\tself.current_document_text = ''`
 /* <LOUIS> */
 +
 `
@@ -1422,7 +1569,10 @@ ALSO REMOVED TABS AFTERWARDS
 `
 /* <LOUIS> */
 +
-`\t\t\tself.current_document_cas = None`
+`
+\t\t\tself.current_document_cas = None
+\t\t\tself.openedTag['`+t.tag+`'] -= 1
+`
 +
 /* </LOUIS> */
 `
@@ -1607,11 +1757,21 @@ code.startTag = code.startTag + test;
 if not exists('target'):
 \tmkdir('target')
 
+
+with open(TYPESYS_FILE, 'rb') as f:
+\ttype_system = load_typesystem(f)
+\tcontentHandler = XML2XMIHandler(type_system, OUT_DIR)
+\tfor i in listdir(CORPUS_FILES_DIRECTORY):
+\t\tif i == 'typesystem.xml' or (not i.endswith('.xml')):
+\t\t\tcontinue
+\t\txml.sax.parse(CORPUS_FILES_DIRECTORY+i, contentHandler)
+` 
+/*
 with open(TYPESYS_FILE, 'rb') as f:
 \ttype_system = load_typesystem(f)
 \tcontentHandler = XML2XMIHandler(type_system, OUT_DIR)
 \txml.sax.parse(CORPUS_FILE, contentHandler)
-` 
+*/
 
         var pycaprio_uploading = ``;
         if(this.auto_authentication){
