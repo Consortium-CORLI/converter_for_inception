@@ -4,7 +4,7 @@ import { LoginFormComponent, ResetPasswordFormComponent, CreateAccountFormCompon
 import { AuthGuardService } from './shared/services';
 import { HomeComponent } from './pages/home/home.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
-import { DxButtonModule, DxCheckBoxModule, DxColorBoxModule, DxDataGridModule, DxFormModule, DxPopupModule, DxScrollViewModule, DxTabPanelModule, DxTextAreaModule, DxTextBoxModule, DxToolbarModule } from 'devextreme-angular';
+import { DxButtonModule, DxCheckBoxModule, DxColorBoxModule, DxDataGridModule, DxFormModule, DxPopupModule, DxScrollViewModule, DxTabPanelModule, DxTextAreaModule, DxTextBoxModule, DxToolbarModule, DxProgressBarModule } from 'devextreme-angular';
 import { DxFileUploaderModule } from 'devextreme-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -67,7 +67,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true }), HttpClientModule, DxDataGridModule, DxFormModule, DxToolbarModule, 
     DxColorBoxModule, FormsModule, DxTextAreaModule, DxButtonModule,
-    DxFileUploaderModule, DxPopupModule, DxScrollViewModule, DxCheckBoxModule, DxToolbarModule, DxTabPanelModule, DxTextBoxModule],
+    DxFileUploaderModule, DxPopupModule, DxScrollViewModule, DxCheckBoxModule, DxToolbarModule, DxTabPanelModule, DxTextBoxModule, DxProgressBarModule],
   providers: [AuthGuardService],
   exports: [RouterModule],
   declarations: [HomeComponent,  TasksComponent, Sax2Component]

@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { DxDataGridComponent, DxTabPanelComponent } from 'devextreme-angular';
+// import { DxDataGridComponent, DxTabPanelComponent, DxProgressBarModule } from 'devextreme-angular';
 import {SAXParser} from 'sax';
 import { AppInfoService, Tag } from 'src/app/shared/services';
+// import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { saveAs } from 'file-saver';
 
 // import 'ngx-highlightjs';
@@ -11,6 +13,16 @@ import xml from 'highlight.js/lib/languages/xml';
 hljs.registerLanguage('xml',xml);
 
 import * as JSZip from 'jszip';
+
+// const conversion_server_url = 'http://localhost:8000';
+// const conversion_server_url = 'http://localhost:8001';
+// const conversion_server_url = 'http://localhost:8002';
+// const conversion_server_url = 'http://localhost:8003';
+// const conversion_server_url = 'http://localhost:8004';
+// const conversion_server_url = 'http://localhost:8005';
+// const conversion_server_url = 'http://localhost:8006';
+const conversion_server_url = 'http://localhost:8007';
+
 
 @Component({
   selector: 'app-sax2',
@@ -52,7 +64,8 @@ export class Sax2Component implements OnInit {
   number_of_documents = 0;
   auto_authentication = false;
   remember_authentication = (window.localStorage.getItem('remember_authentication') === 'true')? true : false;
-  project_name = '';
+  // project_name = '';
+  project_name = 'project' + Date.now().toString();
   inception_id = '';
   inception_password = '';
   inception_url = '';
@@ -60,6 +73,9 @@ export class Sax2Component implements OnInit {
   // history_list = JSON.parse((window.localStorage.getItem('history') || '{"history":[]}'))["history"];
   history_list = JSON.parse((window.localStorage.getItem('history') || '[]'));
   file_list = [];
+  file_contents = [];
+  JSONForServerRequest = '';
+  conversion_progress = 0.0;
   /* </LOUIS> */
   tagdefDataSource: any = [];
   tagColors: any = ["#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a"];
@@ -296,13 +312,22 @@ export class Sax2Component implements OnInit {
           }
         } 
         this.updateSystem();
+
+
+
+
+        this.file_list[0]["content"] = reader.result;
+        this.file_contents[0] = reader.result;
       }
 
       reader.readAsText(file);
+      // var readers_list = [reader];
+      // reader.readAsText(file);
 
       /****************************/
 
       this.file_list.push(file);
+      var zis = this;
       for(var i = 1, i_limit = event.value.length ; i < i_limit ; i++){
         let file = event.value[i];
         if(!(file.name.endsWith('.xml'))){
@@ -313,7 +338,10 @@ export class Sax2Component implements OnInit {
         }
 
         let reader = new FileReader();
+        // readers_list.push(new FileReader());
         this.depth = 0;
+        var local_index = i + 0;
+        
         reader.onload = () => {
           // this.initParser();
           // this.parser.write(reader.result).close();
@@ -321,11 +349,32 @@ export class Sax2Component implements OnInit {
           // this.collectTags();
 
           // this.file_list.push(file); // ?
+
+          // this.file_list[local_index]["content"] = reader.result;
+          console.log(zis);
+          for(var j = 0, j_limit = zis.file_list.length ; j < j_limit ; j++){
+            if(zis.file_list[j].name === file.name){
+              local_index = j;
+              console.log('local_index found:',local_index);
+              break;
+            }
+          }
+          zis.file_list[local_index]["content"] = reader.result;
+          zis.file_contents[local_index] = reader.result;
         }
+        
+       /*
+        readers_list[readers_list.length-1].onload = () => {
+          console.log(zis);
+          zis.file_list[local_index]["content"] = reader.result;
+          zis.file_contents[local_index] = reader.result;
+        }
+        */
 
         this.file_list.push(file);
 
         reader.readAsText(file);
+        // readers_list[readers_list.length-1].readAsText(file);
       }
     }
   }
@@ -596,7 +645,11 @@ export class Sax2Component implements OnInit {
     this.typesystemGeneration();
     this.generatePythonParser();
 
-    this.downloadZip();
+    // this.downloadZip();
+    /* <LOUIS> */
+    this.generateJSONForServerRequest();
+    this.queryServerWithJSON();
+    /* </LOUIS> */
 
     /*
     this.tabPanel.selectedIndex=1;
@@ -1371,6 +1424,91 @@ export class Sax2Component implements OnInit {
   }
   /* </LOUIS> */
 
+  generateJSONForServerRequest(){
+    // console.log(this.uploadedXML);
+    var JSON_obj = {};
+    JSON_obj["name"] = this.project_name;
+    // JSON_obj["slug"] = (new RegExp("\\s","gmi"))
+    JSON_obj["slug"] = this.project_name.replace((new RegExp("\\s","gmi")),"");
+    JSON_obj["description"] = "";
+    JSON_obj["mode"] = "annotation";
+    JSON_obj["version"] = 1;
+    JSON_obj["source_documents"] = [];
+    var now = Date.now();
+    for(var i = 0, i_limit = this.file_list.length ; i < i_limit ; i++){
+      JSON_obj["source_documents"].push({
+        "name": this.file_list[i].name,
+        "format": "xml",
+        "state": "NEW",
+        "timestamp": null,
+        "created": now,
+        "updated": now,
+        // "content": this.file_list[i]["content"]
+        "content": this.file_list[i].text().value || this.file_contents[i]
+      });
+    }
+    JSON_obj["tags_roles"] = this.suggestionDataSource;
+    JSON_obj["python_code"] = this.pythonCode;
+    JSON_obj["typesystem_xml"] = this.typesystem;
+    JSON_obj["target_doc_count"] = this.number_of_documents * this.file_list.length;
+
+    console.log(JSON_obj);
+
+
+    this.JSONForServerRequest = JSON.stringify(JSON_obj);
+
+    // console.log(this.JSONForServerRequest);
+  }
+
+  queryServerWithJSON(){
+    var zis = this;
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState === 4 && xhr.status == 200){
+        console.log("Request successful (200):",xhr.responseText);
+
+        var xhr_parsed_response = JSON.parse(xhr.responseText);
+
+        zis.history_list[zis.history_list.length-1]['token'] = xhr_parsed_response['token'];
+        
+        var check_status_interval = setInterval(() => {
+          var cs_xhr = new XMLHttpRequest();
+          cs_xhr.onreadystatechange = function(){
+            if(cs_xhr.readyState === 4 && cs_xhr.status === 200){
+              console.log(cs_xhr.responseText);
+              try{
+                var cs_xhr_obj = JSON.parse(cs_xhr.responseText);
+                if(cs_xhr_obj.status === "complete"){
+                  clearInterval(check_status_interval);
+                  zis.conversion_progress = 100;
+                }else if(cs_xhr_obj.status === "in process"){
+                  zis.conversion_progress = cs_xhr_obj.progress;
+                }
+                // document.getElementById('conversion_progress_bar').value = zis.conversion_progress;
+              }catch(e){
+                console.log('interval server error\n',e);
+              }
+            }
+          }
+          var cs_url = conversion_server_url + '/check_status';
+          // cs_xhr.open("GET",cs_url,true);
+          cs_xhr.open("POST",cs_url,true);
+          cs_xhr.setRequestHeader("Content-Type", "application/json");
+          console.log('sending:',xhr.responseText);
+          cs_xhr.send(xhr.responseText);
+        },1000);
+        
+      }
+    }
+    // var url = conversion_server_url+"/split_and_convert?";
+    var url = conversion_server_url+"/split_and_convert";
+    // url += 'json_content=' + this.JSONForServerRequest;
+    xhr.open("POST",url,true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(this.JSONForServerRequest);
+    console.log("Request sent:",url);
+  }
+
 
   generatePythonParser() {
 
@@ -1710,7 +1848,18 @@ code.startTag = code.startTag + test;
 \t\tfor t in self.xpath:
 \t\t\ttraces.write(t + "\\n")
 \t\ttraces.close()
+`
+// \t\twrite_progress()
 
++
+`
+\t\t
+\t\tfile = open('status.log','wt',encoding='utf-8')
+\t\tfile.write(str(int(100*self.doc_count/` + (~~(this.file_list.length*this.number_of_documents/2)).toString() + `)))
+\t\tfile.close()
+`
++
+`
 \tdef trim_whitespace(self, begin, end, text):
 \t\t"""move offsets so there is no leading or trailing white-space in the annotation"""
 \t\twhitespace = re.compile(r'\\s')
@@ -1761,11 +1910,23 @@ if not exists('target'):
 with open(TYPESYS_FILE, 'rb') as f:
 \ttype_system = load_typesystem(f)
 \tcontentHandler = XML2XMIHandler(type_system, OUT_DIR)
-\tfor i in listdir(CORPUS_FILES_DIRECTORY):
+`
++
+// \tfiles_handled = 0
+`
+\tlistdir_CORPUS_FILES_DIRECTORY = listdir(CORPUS_FILES_DIRECTORY)
+\tlen_listdir_CORPUS_FILES_DIRECTORY = len(listdir_CORPUS_FILES_DIRECTORY)
+\tfor i in listdir_CORPUS_FILES_DIRECTORY:
 \t\tif i == 'typesystem.xml' or (not i.endswith('.xml')):
 \t\t\tcontinue
 \t\txml.sax.parse(CORPUS_FILES_DIRECTORY+i, contentHandler)
-` 
+`
+// \t\tfiles_handled += 1
+// \t\tfile = open('status.log','wt',encoding='utf-8')
+// \t\tprint(str(int(100*files_handled/(len_listdir_CORPUS_FILES_DIRECTORY/2))))
+// \t\tfile.write(str(int(100*files_handled/(len_listdir_CORPUS_FILES_DIRECTORY/2))))
+// \t\tfile.close()
+// ` 
 /*
 with open(TYPESYS_FILE, 'rb') as f:
 \ttype_system = load_typesystem(f)
@@ -1788,8 +1949,22 @@ for a in listdir('target'):
 
 let header = "# this Python 3 code has been generated on : " + new Date();
 
-this.pythonCode = header+imports + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading;
+// this.pythonCode = header+imports+ `\nexpected_global_doc_count=` + (~~(this.file_list.length*this.number_of_documents/2)).toString() + `\ndef write_progress():\n\tglobal_doc_count += 1\tfile=open('status.log','wt',encoding='utf-8')\n\tfile.write(str(int(100*global_doc_count/expected_global_doc_count)))\n\tfile.close()\n` + `\nglobal_doc_count=0\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('0')\nfile.close()\n` + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()`;
+// this.pythonCode = header+imports+ `\nexpected_global_doc_count=` + (~~(this.file_list.length*this.number_of_documents/2)).toString() + `\ndef write_progress():\n\tglobal_doc_count += 1\n\tfile=open('status.log','wt',encoding='utf-8')\n\tfile.write(str(int(100*global_doc_count/expected_global_doc_count)))\n\tfile.close()\n` + `\nwrite_progress()\n` + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()`;
+this.pythonCode = header+imports+ `` + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('0')\nfile.close()\n` + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()\n`;
 
+// (~~(this.file_list.length*this.number_of_documents/2)).toString()
   }
 }
 
+
+// @NgModule({
+//   imports:[
+//     DxProgressBarModule
+//   ],
+//   declarations: [Sax2Component],
+//   bootstrap: [Sax2Component],
+// })
+// export class AppModule { }
+
+// platformBrowserDynamic().bootstrapModule(AppModule);
