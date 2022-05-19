@@ -14,14 +14,14 @@ hljs.registerLanguage('xml',xml);
 
 import * as JSZip from 'jszip';
 
-// const conversion_server_url = 'http://localhost:8000';
+const conversion_server_url = 'http://localhost:8000';
 // const conversion_server_url = 'http://localhost:8001';
 // const conversion_server_url = 'http://localhost:8002';
 // const conversion_server_url = 'http://localhost:8003';
 // const conversion_server_url = 'http://localhost:8004';
 // const conversion_server_url = 'http://localhost:8005';
 // const conversion_server_url = 'http://localhost:8006';
-const conversion_server_url = 'http://localhost:8007';
+// const conversion_server_url = 'http://localhost:8007';
 
 
 @Component({
@@ -62,7 +62,8 @@ export class Sax2Component implements OnInit {
   suggestionTickVisible = false;
   firstDocumentVisible = false;
   number_of_documents = 0;
-  auto_authentication = false;
+  // auto_authentication = false;
+  auto_authentication = true;
   remember_authentication = (window.localStorage.getItem('remember_authentication') === 'true')? true : false;
   // project_name = '';
   project_name = 'project' + Date.now().toString();
@@ -677,6 +678,7 @@ export class Sax2Component implements OnInit {
       "project_name": this.project_name,
       // "file_name": this.fichierXML,
       // "file_name": this.file_list.toString(),
+      /*
       "file_name": () => {
         var s = '';
         for(var i = 0, i_limit = this.file_list.length ; i < i_limit ; i++){
@@ -687,6 +689,17 @@ export class Sax2Component implements OnInit {
         }
         return s;
       },
+      */
+      "file_name": (() => {
+        var s = '';
+        for(var i = 0, i_limit = this.file_list.length ; i < i_limit ; i++){
+          if(s.length > 0){
+            s += ', ';
+          }
+          s += this.file_list[i].name;
+        }
+        return s;
+      })(),
       "doc_separator": this.suggestionDataSource[0].choice
     });
     window.localStorage.setItem('history',JSON.stringify(this.history_list));
@@ -708,7 +721,7 @@ export class Sax2Component implements OnInit {
       document.getElementById('project_name_input').style.display = 'inline';
 
 
-
+      /*
       var id_input = document.getElementById('inception_id_input');
       
       if(this.inception_id === ''){
@@ -750,11 +763,14 @@ export class Sax2Component implements OnInit {
       }
       
       inception_input.style.display = 'inline';
+      */
     }else{
+      /*
       document.getElementById('project_name_input').style.display = 'none';
       document.getElementById('inception_id_input').style.display = 'none';
       document.getElementById('inception_password_input').style.display = 'none';
       document.getElementById('inception_url_input').style.display = 'none';
+      */
     }
   }
 
@@ -1451,6 +1467,7 @@ export class Sax2Component implements OnInit {
     JSON_obj["python_code"] = this.pythonCode;
     JSON_obj["typesystem_xml"] = this.typesystem;
     JSON_obj["target_doc_count"] = this.number_of_documents * this.file_list.length;
+    JSON_obj["tagdefDataSource"] = this.tagdefDataSource;
 
     console.log(JSON_obj);
 
@@ -1481,6 +1498,41 @@ export class Sax2Component implements OnInit {
                 if(cs_xhr_obj.status === "complete"){
                   clearInterval(check_status_interval);
                   zis.conversion_progress = 100;
+
+                  /*
+                  var link = document.createElement('a');
+                  link.href = conversion_server_url+'/tmp/'+xhr_parsed_response['token']+'/project_archive.zip';
+                  link.target = '_blank';
+                  link.click();
+                  */
+
+                  
+                  var dl_xhr = new XMLHttpRequest();
+                  // dl_xhr.open("POST",conversion_server_url+'/download_project',true);
+                  // dl_xhr.open("GET",conversion_server_url+'/download_project?token',true);
+                  dl_xhr.open("GET",conversion_server_url+'/tmp/'+xhr_parsed_response['token']+'/project_archive.zip',true);
+                  // dl_xhr.setRequestHeader("Content-type","application/json");
+                  dl_xhr.onreadystatechange = function(){
+                    if(dl_xhr.readyState === 4 && dl_xhr.status === 200){
+                      // console.log(dl_xhr.responseText);
+                      // var blob = new Blob([dl_xhr.response], { type: "application/zip" });
+                      // var blob = new Blob([dl_xhr.response], { type: "application/zip;charset=utf-8" });
+                      // var blob = new Blob([dl_xhr.responseText], { type: "application/zip;charset=utf-8" });
+                      // var blob = new Blob([dl_xhr.responseText], { type: "text/plain;charset=utf-8" });
+                      
+                      var blob = new Blob([dl_xhr.response], { type: "octet/stream" });
+                      saveAs(blob, "inception-project"+Date.now()+".zip");
+                      
+                      // ;charset=utf-8
+                    }
+                  }
+                  // dl_xhr.send(xhr.responseText);
+                  // THIS LINE RIGHT HERE MADE THE DIFFERENCE
+                  dl_xhr.responseType = 'arraybuffer';
+                  dl_xhr.send();
+                  
+
+
                 }else if(cs_xhr_obj.status === "in process"){
                   zis.conversion_progress = cs_xhr_obj.progress;
                 }
@@ -1494,7 +1546,7 @@ export class Sax2Component implements OnInit {
           // cs_xhr.open("GET",cs_url,true);
           cs_xhr.open("POST",cs_url,true);
           cs_xhr.setRequestHeader("Content-Type", "application/json");
-          console.log('sending:',xhr.responseText);
+          // console.log('sending:',xhr.responseText);
           cs_xhr.send(xhr.responseText);
         },1000);
         
@@ -1541,13 +1593,14 @@ from os import listdir
 from os import mkdir
 from os.path import exists
 `; 
-
+/*
 if(this.auto_authentication){
   imports += `
 from pycaprio import Pycaprio
 from pycaprio.mappings import InceptionFormat, DocumentState
   `;
 }
+*/
 
     // Variables globales
     var globales = `
@@ -1563,7 +1616,7 @@ file_name_no_extension = re.findall('/([^/]+)\\\\.[^\\\\.]+$',CORPUS_FILE)[0]
 +
 /* </LOUIS> */
 `
-OUT_DIR = "target/"
+OUT_DIR = "source/"
 `;
 
 
@@ -1903,8 +1956,8 @@ code.startTag = code.startTag + test;
 
 
         var main = `\n\n\n
-if not exists('target'):
-\tmkdir('target')
+if not exists(OUT_DIR):
+\tmkdir(OUT_DIR)
 
 
 with open(TYPESYS_FILE, 'rb') as f:
@@ -1933,7 +1986,7 @@ with open(TYPESYS_FILE, 'rb') as f:
 \tcontentHandler = XML2XMIHandler(type_system, OUT_DIR)
 \txml.sax.parse(CORPUS_FILE, contentHandler)
 */
-
+/*
         var pycaprio_uploading = ``;
         if(this.auto_authentication){
         pycaprio_uploading = `
@@ -1946,12 +1999,21 @@ for a in listdir('target'):
 \t\tnew_document = client.api.create_document(new_project,a,document_file,document_format=InceptionFormat.UIMA_CAS_XMI_XML_1_1,document_state=DocumentState.NEW) 
 `;
         }
+*/
 
 let header = "# this Python 3 code has been generated on : " + new Date();
 
 // this.pythonCode = header+imports+ `\nexpected_global_doc_count=` + (~~(this.file_list.length*this.number_of_documents/2)).toString() + `\ndef write_progress():\n\tglobal_doc_count += 1\tfile=open('status.log','wt',encoding='utf-8')\n\tfile.write(str(int(100*global_doc_count/expected_global_doc_count)))\n\tfile.close()\n` + `\nglobal_doc_count=0\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('0')\nfile.close()\n` + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()`;
 // this.pythonCode = header+imports+ `\nexpected_global_doc_count=` + (~~(this.file_list.length*this.number_of_documents/2)).toString() + `\ndef write_progress():\n\tglobal_doc_count += 1\n\tfile=open('status.log','wt',encoding='utf-8')\n\tfile.write(str(int(100*global_doc_count/expected_global_doc_count)))\n\tfile.close()\n` + `\nwrite_progress()\n` + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()`;
-this.pythonCode = header+imports+ `` + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('0')\nfile.close()\n` + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()\n`;
+// this.pythonCode = header+imports+ `` + `\nfrom zipfile import ZipFile\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('0')\nfile.close()\n` + globales + classe + code.startTag  + code.endTag + commonMethods  + main + pycaprio_uploading + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()\n
+this.pythonCode = header+imports+ `` + `\nfrom zipfile import ZipFile\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('0')\nfile.close()\n` + globales + classe + code.startTag  + code.endTag + commonMethods  + main + `\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()\n
+
+#with ZipFile('project_archive.zip','w') as zip:
+#\tfor i in listdir(OUT_DIR):
+#\t\tif i.endswith('.xml'):
+#\t\t\tzip.write(OUT_DIR+i)
+#\tzip.write('config.json')
+`;
 
 // (~~(this.file_list.length*this.number_of_documents/2)).toString()
   }

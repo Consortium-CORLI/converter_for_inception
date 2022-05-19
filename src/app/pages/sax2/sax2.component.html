@@ -390,37 +390,31 @@
       <br/>
       <dx-text-area [spellcheck]="false" [value]="first_document" [visible]="firstDocumentVisible" height="20%"></dx-text-area>
       <br/>
-      <dxi-item location="before" [visible]="firstDocumentVisible">
+      <!-- <dxi-item location="before" [visible]="firstDocumentVisible">
         <dx-check-box text="Import direct vers INCEpTION" [(value)]="auto_authentication" (onValueChanged)="toggle_input_display()"></dx-check-box>
         <dx-check-box text="Se souvenir des identifiants" [visible]="auto_authentication" [(value)]="remember_authentication" style="margin-left:16px"></dx-check-box>
-      </dxi-item>
+      </dxi-item> -->
       <!-- <br/> -->
       <dxi-item location="before" [visible]="auto_authentication">
-        <!-- <input placeholder="Nom du projet" id="project_name_input" style="display:none"/> -->
-        <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:none" [(value)]="project_name"></dx-text-box>
-        <dx-text-box placeholder="URL vers INCEpTION" id="inception_url_input" style="display:none" [(value)]="inception_url"></dx-text-box>
-        <!-- <br/> -->
-        <!-- <input placeholder="Identifiant" id="inception_id_input" style="display:none"/> -->
-        <dx-text-box placeholder="Identifiant" id="inception_id_input" style="display:none" [(value)]="inception_id"></dx-text-box>
-        <!-- <br/> -->
-        <!-- <input placeholder="Mot de passe" id="inception_password_input" style="display:none" type="password"/> -->
-        <dx-text-box placeholder="Mot de passe" id="inception_password_input" style="display:none" [(value)]="inception_password"></dx-text-box>
-        <!-- <br/> -->
-        <!-- <dxi-item location="before" [visible]="auto_authentication">
-          <dx-check-box text="Se souvenir" [visible]="auto_authentication" [(value)]="remember_authentication"></dx-check-box>
-        </dxi-item> -->
-        <!-- <dx-text-box></dx-text-box> -->
+        <!-- <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:none" [(value)]="project_name"></dx-text-box> -->
+        <span>Nom du projet : </span>
+        <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:inline" [(value)]="project_name"></dx-text-box>
+        
+      </dxi-item>
+      <dxi-item location="after">
+        <dx-button
+        stylingMode="contained"
+        text="Générer"
+        type="normal"
+        [width]="200"
+        [visible]="firstDocumentVisible"
+        (onClick)="generer()">
+        </dx-button>
+        
       </dxi-item>
       <br/>
-      <dx-button
-      stylingMode="contained"
-      text="Générer"
-      type="normal"
-      [width]="200"
-      [visible]="firstDocumentVisible"
-      (onClick)="generer()">
-      </dx-button>
-      <br/>
+      <!--  -->
+      <!-- <br/> -->
       <dx-progress-bar [min]="0" [max]="100" [value]="conversion_progress"></dx-progress-bar>
       <!-- <progress id="conversion_progress_bar" value="0" max="100"></progress> -->
     <!-- </div> -->
