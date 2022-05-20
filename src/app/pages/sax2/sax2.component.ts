@@ -1468,6 +1468,8 @@ export class Sax2Component implements OnInit {
     JSON_obj["typesystem_xml"] = this.typesystem;
     JSON_obj["target_doc_count"] = this.number_of_documents * this.file_list.length;
     JSON_obj["tagdefDataSource"] = this.tagdefDataSource;
+    JSON_obj["nb_doc"] = (~~(this.file_list.length*this.number_of_documents/2));
+    JSON_obj["output_name"] = this.fichierXML;
 
     console.log(JSON_obj);
 
@@ -1510,7 +1512,11 @@ export class Sax2Component implements OnInit {
                   var dl_xhr = new XMLHttpRequest();
                   // dl_xhr.open("POST",conversion_server_url+'/download_project',true);
                   // dl_xhr.open("GET",conversion_server_url+'/download_project?token',true);
-                  dl_xhr.open("GET",conversion_server_url+'/tmp/'+xhr_parsed_response['token']+'/project_archive.zip',true);
+                  // THIS ONE USED TO WORK IN DIRECT
+                  // dl_xhr.open("GET",conversion_server_url+'/tmp/'+xhr_parsed_response['token']+'/project_archive.zip',true);
+                  // dl_xhr.open("GET",conversion_server_url+'/tmp_inception_converter/'+xhr_parsed_response['token']+'/project_archive.zip',true);
+                  dl_xhr.open("GET",conversion_server_url+'/'+xhr_parsed_response['token']+'/project_archive.zip',true);
+                  // dl_xhr.open("POST",conversion_server_url+'/download_project',true);
                   // dl_xhr.setRequestHeader("Content-type","application/json");
                   dl_xhr.onreadystatechange = function(){
                     if(dl_xhr.readyState === 4 && dl_xhr.status === 200){
@@ -1530,6 +1536,7 @@ export class Sax2Component implements OnInit {
                   // THIS LINE RIGHT HERE MADE THE DIFFERENCE
                   dl_xhr.responseType = 'arraybuffer';
                   dl_xhr.send();
+                  // dl_xhr.send(xhr.responseText);
                   
 
 
