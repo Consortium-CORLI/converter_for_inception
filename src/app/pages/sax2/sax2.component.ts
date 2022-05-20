@@ -14,7 +14,7 @@ hljs.registerLanguage('xml',xml);
 
 import * as JSZip from 'jszip';
 
-const conversion_server_url = 'http://localhost:8000';
+// const conversion_server_url = 'http://localhost:8000';
 // const conversion_server_url = 'http://localhost:8001';
 // const conversion_server_url = 'http://localhost:8002';
 // const conversion_server_url = 'http://localhost:8003';
@@ -22,6 +22,7 @@ const conversion_server_url = 'http://localhost:8000';
 // const conversion_server_url = 'http://localhost:8005';
 // const conversion_server_url = 'http://localhost:8006';
 // const conversion_server_url = 'http://localhost:8007';
+const conversion_server_url = document.domain;
 
 
 @Component({
@@ -352,11 +353,11 @@ export class Sax2Component implements OnInit {
           // this.file_list.push(file); // ?
 
           // this.file_list[local_index]["content"] = reader.result;
-          console.log(zis);
+          // console.log(zis);
           for(var j = 0, j_limit = zis.file_list.length ; j < j_limit ; j++){
             if(zis.file_list[j].name === file.name){
               local_index = j;
-              console.log('local_index found:',local_index);
+              // console.log('local_index found:',local_index);
               break;
             }
           }
@@ -1474,7 +1475,7 @@ export class Sax2Component implements OnInit {
     JSON_obj["nb_doc"] = (~~(this.file_list.length*this.number_of_documents/2));
     JSON_obj["output_name"] = this.fichierXML;
 
-    console.log(JSON_obj);
+    // console.log(JSON_obj);
 
 
     this.JSONForServerRequest = JSON.stringify(JSON_obj);
@@ -1487,7 +1488,7 @@ export class Sax2Component implements OnInit {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
       if(xhr.readyState === 4 && xhr.status == 200){
-        console.log("Request successful (200):",xhr.responseText);
+        // console.log("Request successful (200):",xhr.responseText);
 
         var xhr_parsed_response = JSON.parse(xhr.responseText);
 
@@ -1497,7 +1498,7 @@ export class Sax2Component implements OnInit {
           var cs_xhr = new XMLHttpRequest();
           cs_xhr.onreadystatechange = function(){
             if(cs_xhr.readyState === 4 && cs_xhr.status === 200){
-              console.log(cs_xhr.responseText);
+              // console.log(cs_xhr.responseText);
               try{
                 var cs_xhr_obj = JSON.parse(cs_xhr.responseText);
                 if(cs_xhr_obj.status === "complete"){
@@ -1519,7 +1520,8 @@ export class Sax2Component implements OnInit {
                   // dl_xhr.open("GET",conversion_server_url+'/tmp/'+xhr_parsed_response['token']+'/project_archive.zip',true);
                   // dl_xhr.open("GET",conversion_server_url+'/tmp_inception_converter/'+xhr_parsed_response['token']+'/project_archive.zip',true);
                   // dl_xhr.open("GET",conversion_server_url+'/'+xhr_parsed_response['token']+'/project_archive.zip',true);
-                  dl_xhr.open("POST",conversion_server_url+'/download_project.php',true);
+                  // dl_xhr.open("POST",conversion_server_url+'/download_project.php',true);
+                  dl_xhr.open("POST",'/download_project.php',true);
                   // dl_xhr.open("POST",conversion_server_url+'/download_project',true);
                   // dl_xhr.setRequestHeader("Content-type","application/json");
                   dl_xhr.onreadystatechange = function(){
@@ -1553,7 +1555,9 @@ export class Sax2Component implements OnInit {
               }
             }
           }
-          var cs_url = conversion_server_url + '/check_status';
+          // var cs_url = conversion_server_url + '/check_status';
+          // var cs_url = conversion_server_url + '/check_status.php';
+          var cs_url = '/check_status.php';
           // cs_xhr.open("GET",cs_url,true);
           cs_xhr.open("POST",cs_url,true);
           cs_xhr.setRequestHeader("Content-Type", "application/json");
@@ -1564,12 +1568,14 @@ export class Sax2Component implements OnInit {
       }
     }
     // var url = conversion_server_url+"/split_and_convert?";
-    var url = conversion_server_url+"/split_and_convert";
+    // var url = conversion_server_url+"/split_and_convert";
+    // var url = conversion_server_url+"/split_and_convert.php";
+    var url = "/split_and_convert.php";
     // url += 'json_content=' + this.JSONForServerRequest;
     xhr.open("POST",url,true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(this.JSONForServerRequest);
-    console.log("Request sent:",url);
+    // console.log("Request sent:",url);
   }
 
 
