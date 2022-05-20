@@ -997,6 +997,7 @@ with open(TYPESYS_FILE, 'rb') as f:
         http_response_code(200);
         // exit;
     }else{
+    // }else if(preg_match('/download_project\.php$/',$_SERVER['REQUEST_URI'])){
         /*
         // WORKS, BUT TRYING WITH GET
         header("Content-type:application/zip");
@@ -1006,11 +1007,18 @@ with open(TYPESYS_FILE, 'rb') as f:
         exit;
         // http_response_code(404);
         */
+        /*
         // $path_to_file = $_SERVER['REQUEST_URI'];
         $path_to_file = sys_get_temp_dir() . '/tmp_inception_converter' . $_SERVER['REQUEST_URI'];
         $path_to_file = preg_replace('/\.+/mi','.',$path_to_file);
         // $path_to_file = substr($path_to_file,1);
         // echo $path_to_file;
+        */
+
+        $raw_json = file_get_contents('php://input');
+        $data = json_decode($raw_json);
+        $path_to_file = sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $data->token . '/project_archive.zip';
+        $path_to_file = preg_replace('/\.+/mi','.',$path_to_file);
 
         if(preg_match('/\.zip$/mi',$path_to_file) && is_file($path_to_file)){
             // header("Content-type:application/zip");
@@ -1023,6 +1031,32 @@ with open(TYPESYS_FILE, 'rb') as f:
             readfile($path_to_file);
             // exit;
             http_response_code(200);
+
+
+
+            /*
+            function recursive_clearning($origin_dir_path){
+                $origin_dir_path = preg_replace('/\.+/mi','.',$origin_dir_path);
+                $current_dir = opendir($origin_dir_path);
+                $sub_content = scandir($origin_dir_path);
+                $i_limit = count($sub_content);
+                for($i = 0 ; $i < $i_limit ; $i += 1){
+                    // $new_path = $origin_dir_path . '/' . $sub_content[$i];
+                    $new_path = $origin_dir_path . "\\" . $sub_content[$i];
+                    if(is_file($new_path)){
+                        unlink($new_path);
+                    }else{
+                        recursive_clearning($new_path);
+                    }
+                }
+                rmdir($origin_dir_path);
+            }
+
+            // recursive_clearning('tmp' . "\\" . $data->token);
+            recursive_clearning(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $data->token);
+            // $tmp_dirs = scandir()
+            */
+            // http_response_code(200);
         }else{
             http_response_code(404);
         }

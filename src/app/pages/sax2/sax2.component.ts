@@ -1414,6 +1414,7 @@ export class Sax2Component implements OnInit {
     }
 
     var nb_doc = this.number_of_documents;
+    var nb_uploaded_files = this.file_list.length;
 
     this.firstDocumentVisible = true;
     // document.getElementById('first_document_announcer_span').style.display = 'block';
@@ -1428,7 +1429,9 @@ export class Sax2Component implements OnInit {
       */
      try{
       // document.getElementById('number_of_documents_span').innerText = (~~(this.number_of_documents/2)).toString();
-      document.getElementById('number_of_documents_span').innerText = (~~(nb_doc/2)).toString();
+      // document.getElementById('number_of_documents_span').innerText = (~~(nb_doc/2)).toString();
+      // document.getElementById('number_of_documents_span').innerText = (~~(nb_doc/2)*this.file_list.length).toString() + '(approximation)';
+      document.getElementById('number_of_documents_span').innerText = (~~(nb_doc/2)*nb_uploaded_files).toString() + ' [approximation]';
         clearInterval(display_interval);
      }catch(err){
       
@@ -1515,7 +1518,8 @@ export class Sax2Component implements OnInit {
                   // THIS ONE USED TO WORK IN DIRECT
                   // dl_xhr.open("GET",conversion_server_url+'/tmp/'+xhr_parsed_response['token']+'/project_archive.zip',true);
                   // dl_xhr.open("GET",conversion_server_url+'/tmp_inception_converter/'+xhr_parsed_response['token']+'/project_archive.zip',true);
-                  dl_xhr.open("GET",conversion_server_url+'/'+xhr_parsed_response['token']+'/project_archive.zip',true);
+                  // dl_xhr.open("GET",conversion_server_url+'/'+xhr_parsed_response['token']+'/project_archive.zip',true);
+                  dl_xhr.open("POST",conversion_server_url+'/download_project.php',true);
                   // dl_xhr.open("POST",conversion_server_url+'/download_project',true);
                   // dl_xhr.setRequestHeader("Content-type","application/json");
                   dl_xhr.onreadystatechange = function(){
@@ -1535,8 +1539,8 @@ export class Sax2Component implements OnInit {
                   // dl_xhr.send(xhr.responseText);
                   // THIS LINE RIGHT HERE MADE THE DIFFERENCE
                   dl_xhr.responseType = 'arraybuffer';
-                  dl_xhr.send();
-                  // dl_xhr.send(xhr.responseText);
+                  // dl_xhr.send();
+                  dl_xhr.send(xhr.responseText);
                   
 
 
