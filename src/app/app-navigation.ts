@@ -4,6 +4,7 @@ export const navigation = [
     path: '/home',
     icon: 'home'
   },
+  /*
   {
     text: 'Conversion',
     path: '/tasks',
@@ -19,7 +20,13 @@ export const navigation = [
     path: '/sax2_v3',
     icon: 'folder'
   }
+  */
  
+  {
+    text: 'Conversion',
+    path: '/sax2',
+    icon: 'folder'
+  }
 ];
 
 

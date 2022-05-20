@@ -645,7 +645,7 @@ export class Sax2Component implements OnInit {
     }
     /* </LOUIS> */
     this.typesystemGeneration();
-    this.generatePythonParser();
+    // this.generatePythonParser();
 
     // this.downloadZip();
     /* <LOUIS> */
@@ -1468,7 +1468,7 @@ export class Sax2Component implements OnInit {
       });
     }
     JSON_obj["tags_roles"] = this.suggestionDataSource;
-    JSON_obj["python_code"] = this.pythonCode;
+    // JSON_obj["python_code"] = this.pythonCode;
     JSON_obj["typesystem_xml"] = this.typesystem;
     JSON_obj["target_doc_count"] = this.number_of_documents * this.file_list.length;
     JSON_obj["tagdefDataSource"] = this.tagdefDataSource;
