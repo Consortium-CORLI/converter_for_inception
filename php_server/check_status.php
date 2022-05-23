@@ -63,7 +63,8 @@
                             for($j = 0 ; $j < $j_limit ; $j += 1){
                                 $loop_obj = clone ($project->layers[0]->features[0]);
 
-                                $loop_obj->name = $saved_json->tagdefDataSource[$i]->attrs[$j];
+                                // $loop_obj->name = $saved_json->tagdefDataSource[$i]->attrs[$j];
+                                $loop_obj->name = preg_replace('/[^a-zA-Z0-9_]/mi','_',$saved_json->tagdefDataSource[$i]->attrs[$j]);
                                 $loop_obj->uiName = $saved_json->tagdefDataSource[$i]->attrs[$j];
                                 $loop_obj->description = $saved_json->tagdefDataSource[$i]->attrs[$j];
                                 $loop_obj->type = 'uima.cas.String';
