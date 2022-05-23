@@ -10,8 +10,8 @@
             header('Content-type:application/json');
 
             $raw_json = file_get_contents('php://input');
-            $local_sha1_hash = sha1($raw_json . time());
-            $dir_path = $tmp_dir . '/' . $local_sha1_hash;
+            $local_hash = hash('sha3-224',$raw_json . time());
+            $dir_path = $tmp_dir . '/' . $local_hash;
             if(!is_dir($dir_path)){
                 mkdir($dir_path,0777,false);
             }
@@ -199,84 +199,6 @@ class XML2XMIHandler(xml.sax.ContentHandler):
                        $code->endTag = $code->endTag . $test;
                     }
                 }
-
-
-
-
-
-
-
-
-
-
-                $i_limit = count($tagdefDataSource);
-                for($i = 0 ; $i < $i_limit ; $i += 1){
-                    if($tagdefDataSource[$i]->type == 0){
-                        $c = ($tagdefDataSource[$i]->constraint == "1");
-
-                        $test = '';
-        if($c) {
-          $test = "
-\t\tif tag == '" . $tagdefDataSource[$i]->tag . "':
-\t\t\tself.openedTag['" . $tagdefDataSource[$i]->tag . "'] += 1
-\t\t\t# case of a document boundary tag, possibly with a depth level constraint
-\t\t\tif self.openedTag['" . $tagdefDataSource[$i]->tag . "'] == 1:
-\t\t\t\tself.current_document_cas = Cas(typesystem=self.type_system)
-\t\t\t\treturn;
-";
-        } else {
-          $test = "
-\t\tif tag == '" . $tagdefDataSource[$i]->tag . "':
-\t\t\tself.current_document_cas = Cas(typesystem=self.type_system)
-\t\t\tself.current_document_text = ''
-\t\t\treturn;
-";
-                  
-        }
-        $code->startTag = $code->startTag . $test;
-
-
-
-
-        if($c) {
-            $test = "
-\t\tif tag == '" . $tagdefDataSource[$i]->tag . "':
-\t\t\tself.openedTag['" . $tagdefDataSource[$i]->tag . "'] -= 1
-\t\t\tself.depth -=1
-\t\t\t# finish document
-\t\t\tif " . ($c?'True':'False') . " and self.openedTag['" . $tagdefDataSource[$i]->tag . "'] == 0:
-\t\t\t\tself.doc_count += 1
-\t\t\t\tself.write_document()
-\t\t\t\tself.current_document_text = ''
-\t\t\t\tself.current_document_cas = None
-\t\t\tself.xpath.pop()
-\t\t\treturn\n\n"
-;
-          } else {
-            $test = "
-\t\tif tag == '" . $tagdefDataSource[$i]->tag . "':
-\t\t\tif self.current_document_cas != None:
-\t\t\t\tself.doc_count += 1
-\t\t\t\tself.write_document()
-\t\t\t\tself.current_document_text = ''
-\t\t\tself.depth -=1
-\t\t\tself.xpath.pop()
-\t\t\tself.current_document_cas = None
-\t\t\tself.openedTag['" . $tagdefDataSource[$i]->tag . "'] -= 1
-\t\t\treturn\n\n
-";
-          }
-          // </tag>
-       $code->endTag = $code->endTag . $test;
-                    }
-                }
-
-
-
-
-
-
-
 
 
 
@@ -485,11 +407,11 @@ with open(TYPESYS_FILE, 'rb') as f:
             }
             startBackgroundProcess($shell_command);
 
-            echo '{"token":"' . $local_sha1_hash .'","timeout":' . (time()+$timeout_ms) . '}';
+            echo '{"token":"' . $local_hash . '"}';
 
             
-            $dir_path = sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_sha1_hash . '/source';
-            $json_config_file = fopen(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_sha1_hash . '/config.json','w');
+            $dir_path = sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_hash . '/source';
+            $json_config_file = fopen(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_hash . '/config.json','w');
             // CHANGING THE JSON FILE HERE ?
             // fwrite($raw_json,strlen($raw_json));
             fwrite($json_config_file,$raw_json);

@@ -67,7 +67,22 @@ export class Sax2Component implements OnInit {
   auto_authentication = true;
   remember_authentication = (window.localStorage.getItem('remember_authentication') === 'true')? true : false;
   // project_name = '';
-  project_name = 'project' + Date.now().toString();
+  // project_name = 'project' + Date.now().toString();
+  project_name = 'project' + (() => {
+    var d = new Date();
+    var s = d.getFullYear().toString() + '-';
+    var m = d.getMonth() + 1;
+    if(m < 10){
+      s += '0';
+    }
+    s += m.toString() + '-';
+    var j = d.getDate();
+    if(j < 10){
+      s += '0';
+    }
+    s += j.toString();
+    return s;
+  })();
   inception_id = '';
   inception_password = '';
   inception_url = '';
@@ -1012,7 +1027,7 @@ export class Sax2Component implements OnInit {
     // console.log(e);
     if (e.data.tag in this.docTagMap) {
       this.docTagMap[this.lastSelectedTag] = e.data.color;
-      this.xmlGrid.instance.refresh();
+      // this.xmlGrid.instance.refresh();
     }
   }
 

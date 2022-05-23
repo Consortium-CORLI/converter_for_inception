@@ -9,30 +9,41 @@
 
   <b>Marche à suivre : </b>
   <ol>
-    <li>Charger votre document XML (TEI par exemple)</li>
-    <li>Le document sera analysé (SAX parser) et présenté dans une table où les colonnes représentent un niveau de profondeur dans l'arborescence du document XML</li> 
-    <li>Il vous est alors demandé d'identifier dans ce document : </li>
+    <!-- <li>Charger votre document XML (TEI par exemple)</li> -->
+    <li>Dans l'onglet "Conversion", chargez vos fichiers XML (TEI par exemple), puis identifiez :</li>
+    <!-- <li>Le document sera analysé (SAX parser) et présenté dans une table où les colonnes représentent un niveau de profondeur dans l'arborescence du document XML</li>  -->
+    <!-- <li>Le document sera analysé (SAX parser) et présenté dans un tableau avec une ligne par type de balise</li>  -->
+    <!-- <li>Il vous est alors demandé d'identifier dans ce document : </li> -->
     <ol>
-      <li><b>La balise qui permet de distinguer chaque document</b>, si votre document comporte une liste de documents</li>
-      <li>[optionnel] : la balise qui représente la notion de paragraphe</li>
-      <li>[optionnel] : la balise qui représente la notion de phrase</li>
-      <li>les annotations pré-éxistantes qui vous souhaitez retrouver dans INCEpTION</li>
+      <!-- <li><b>La balise qui permet de distinguer chaque document</b>, si votre document comporte une liste de documents</li> -->
+      <li><b>La balise qui permet de distinguer chaque document du corpus</b> (<i>l'application vous fera des suggestions, mais vous pouvez mettre ce que vous souhaitez</i>)</li>
+      <!-- <li>[optionnel] : la balise qui représente la notion de paragraphe</li> -->
+      <li>[optionnel] la balise qui représente la notion de paragraphe</li>
+      <!-- <li>[optionnel] : la balise qui représente la notion de phrase</li> -->
+      <li>[optionnel] la balise qui représente la notion de phrase</li>
+      <!-- <li>les annotations pré-éxistantes qui vous souhaitez retrouver dans INCEpTION</li> -->
+      <li>les annotations pré-éxistantes qui vous souhaitez retrouver dans INCEpTION (<i>par défaut, toutes les balises qui ne font pas partie des autres catégories sont considérées comme des annotations</i>)</li>
     </ol>
+    <li>[optionnel] Sélectionnez un nom de projet.</li>
+    <li>Cliquez sur <b>GENERER</b> et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement sous la forme d'un fichier ZIP. <b>Vous n'avez pas besoin de décompresser ce fichier, il pourra directement être chargé dans INCEpTION.</b></li>
+    <li>Dans l'onglet "Projects" d'INCEpTION, cliquez sur "Import project" et sélectionnez le fichier ZIP.</li>
   </ol>
-<p>
+
+  <p>Veuillez noter que cet outil a été testé sur INCEpTION 23.4. Au besoin, veuillez contacter <a href="https://corli.huma-num.fr/en/contact-2/">CORLI</a> ou me contacter directement <a href="https://github.com/LouisEsteve/inception_converter_applet">sur GitHub</a>. Ceci étant un prototype, nous sommes aussi ouverts aux retours.</p>
+<!-- <p>
   L'identification des éléments précités se fait par clic-sélection d'une cellule (balise) dans la table puis en 
   cliquant sur les boutons d'actions correspondant à ce que l'on veut identifier. Le bouton Collecter permet de collecter 
   toutes les balises du document. À l'utilisateur d'éditer le type de la balise dans la table (doc càd frontière de document, annotation).
-</p>
+</p> -->
 
  
-    <ul>
+    <!-- <ul>
       <li>Objectif 1 : Convertir le fichier en entrée vers des fichiers CAS XMI.</li>
       <li>Objectif 2 : Générer un script Python permettant de réaliser cette conversion</li>
       <li>Objectif 3 (plus lointain) : Générer un script Python permettant de rétro-convertir l'export du projet INCEPTION vers le format original.</li>
         
 
-  </ul>
+  </ul> -->
   
 </div>
 </div>
