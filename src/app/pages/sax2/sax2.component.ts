@@ -13,6 +13,7 @@ import xml from 'highlight.js/lib/languages/xml';
 hljs.registerLanguage('xml',xml);
 
 import * as JSZip from 'jszip';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 // const conversion_server_url = 'http://localhost:8000';
 // const conversion_server_url = 'http://localhost:8001';
@@ -22,7 +23,7 @@ import * as JSZip from 'jszip';
 // const conversion_server_url = 'http://localhost:8005';
 // const conversion_server_url = 'http://localhost:8006';
 // const conversion_server_url = 'http://localhost:8007';
-const conversion_server_url = document.domain;
+// const conversion_server_url = document.domain;
 
 
 @Component({
@@ -93,6 +94,14 @@ export class Sax2Component implements OnInit {
   file_contents = [];
   JSONForServerRequest = '';
   conversion_progress = 0.0;
+  // captcha_answer = null;
+  // captcha_answer = this.generate_captcha();
+  captcha = this.generate_captcha();
+  captcha_user_answer = undefined;
+  file_to_reconvert = null;
+  file_to_reconvert_name = null;
+  file_to_reconvert_content = null;
+  index_in_history = null;
   /* </LOUIS> */
   tagdefDataSource: any = [];
   tagColors: any = ["#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a", "#cc99ff", "#80e5ff", "#ff9966", "#ffff1a"];
@@ -165,6 +174,105 @@ export class Sax2Component implements OnInit {
       this.typesystemTemplate = r;
     });
 
+  }
+
+  generate_captcha(){
+    var element_a = ~~(Math.random() * 20) - 10;
+    var element_b = ~~(Math.random() * 20) - 10;
+    var element_c = ~~(Math.random() * 20) - 10;
+    // console.log(element_a, element_b, element_c);
+    
+    var sign_a = ~~(Math.random() * 3);
+    var sign_b = ~~(Math.random() * 2);
+
+    var s = '';
+    s += element_a.toString();
+    s += ' ';
+
+    var total = 0;
+    if(sign_a === 0){
+      total += (element_a + element_b);
+      s += '+ ';
+    }else if(sign_a === 1){
+      total += (element_a - element_b);
+      s += '- ';
+    }else{
+      total += (element_a * element_b);
+      s += '* ';
+    }
+    // console.log('A', total);
+
+    s += element_b.toString();
+    s += ' ';
+
+    if(sign_b === 0){
+      total += (element_c);
+      s += '+ ';
+    }else if(sign_b === 1){
+      total += (-element_c);
+      s += '- ';
+    }
+    // console.log('B', total);
+
+    s +=  element_c.toString() + ' =';
+
+    // this.captcha_answer = total;
+    // console.log('C', total, this.captcha_answer);
+
+    // return total;
+    return {
+      equation: s,
+      answer: total
+    }
+  }
+
+  display_captcha(){
+    // var canvas = document.getElementById('captcha_canvas');
+    var canvas = document.getElementsByTagName('canvas')[0];
+    var context = canvas.getContext('2d');
+    var width = canvas.width;
+    var height = canvas.height;
+    var color = '#';
+    var text_color = '#';
+    for(var i = 0 ; i < 6 ; i++){
+      color += 'abcdef'[~~(Math.random()*6)];
+      text_color += '012345'[~~(Math.random()*6)];
+    }
+    // var angle = (Math.random() * 20) - 10;
+    // var angle = (Math.random() * 4) - 2;
+    var angle = (Math.random() * 0.4) - 0.2;
+    // var angle = 0;
+    context.fillStyle = color;
+    // context.fillRect(0,0,width,height);
+    context.fillRect(0,0,width,height);
+    context.save();
+    context.rotate(angle);
+    context.strokeStyle = text_color;
+    context.font = (~~(Math.random()*5) + 15).toString() +  'px verdana';
+    // context.strokeText(s,~~(width/2),~~(height/2));
+    var x_offset = (Math.random() * 0.05) + 0.025;
+    // context.strokeText(s,~~(width*x_offset),~~(height/2));
+    context.strokeText(this.captcha['equation'],~~(width*x_offset),~~(height/2));
+    context.restore();
+    // context.restore();
+    var nb_lines = 5;
+    for(var i = 0 ; i < nb_lines ; i++){
+      var color = '#';
+      for(var j = 0 ; j < 6 ; j++){
+        color += '0123456789abcdef'[~~(Math.random()*16)];
+      }
+      context.strokeStyle = color;
+      var x1 = Math.random() * 0.2;
+      var x2 = Math.random() * 0.2 + 0.8;
+      var y1 = Math.random();
+      var y2 = Math.random();
+      // context.stroke(x1,y1,x2,y2);
+      context.beginPath();
+      context.moveTo(x1*width,y1*height);
+      context.lineTo(x2*width,y2*height);
+      context.closePath();
+      context.stroke();
+    }
   }
 
 
@@ -393,6 +501,54 @@ export class Sax2Component implements OnInit {
         reader.readAsText(file);
         // readers_list[readers_list.length-1].readAsText(file);
       }
+    }
+    // this.generate_captcha();
+    // setTimeout(this.generate_captcha,100);
+    setTimeout(() => {
+      this.captcha = this.generate_captcha();
+      this.display_captcha();
+    },100);
+  }
+
+  
+  onReconverterFileUploaderValueChanged(event) {
+    
+
+
+
+
+    if (event.value && event.value[0]) {
+
+      let file = event.value[0];
+
+      if (!file) {
+        alert("Fichier requis");
+        event.cancel = true;
+        return;
+      }
+      this.file_to_reconvert_name = file.name;
+      this.file_to_reconvert = file;
+      if(!(file.name.endsWith('.zip'))){
+        console.error("Nom de fichier invalide.");
+        alert("Nom de fichier invalide");
+        return;
+      }
+      let reader = new FileReader();
+      this.depth = 0;
+      reader.onload = () => {
+        this.file_to_reconvert_content = reader.result;
+        console.log(this.file_to_reconvert);
+        console.log(this.file_to_reconvert_name);
+        console.log(this.file_to_reconvert_content);
+      }
+
+      // reader.readAsText(file);
+      reader.readAsBinaryString(file);
+      // var readers_list = [reader];
+      // reader.readAsText(file);
+
+      /****************************/
+
     }
   }
 
@@ -655,9 +811,21 @@ export class Sax2Component implements OnInit {
 
   generer(){
     /* <LOUIS> */
+    /*
     if(!(this.inception_url.startsWith('http'))){
       this.inception_url = 'http://' + this.inception_url;
     }
+    */
+    // console.log(this.captcha_user_answer,Number(this.captcha_user_answer),this.captcha_answer);
+  //  if(Number(this.captcha_user_answer) !== this.captcha_answer){
+    if(Number(this.captcha_user_answer) !== this.captcha['answer']){
+    //  console.log(this.captcha_user_answer,Number(this.captcha_user_answer),this.captcha_answer);
+     alert('CAPTCHA incorrect.');
+    //  this.generate_captcha();
+    this.captcha = this.generate_captcha();
+    this.display_captcha();
+     return;
+   }
     /* </LOUIS> */
     this.typesystemGeneration();
     // this.generatePythonParser();
@@ -676,6 +844,7 @@ export class Sax2Component implements OnInit {
     */
 
     /* <LOUIS> */
+    /*
     if(this.remember_authentication){
       window.localStorage.setItem('id',this.inception_id);
       window.localStorage.setItem('password',this.inception_password);
@@ -686,6 +855,7 @@ export class Sax2Component implements OnInit {
       window.localStorage.removeItem('inception_url');
     }
     window.localStorage.setItem('remember_authentication',this.remember_authentication.toString());
+    */
 
     this.history_list.push({
       "id": this.history_list.length,
@@ -721,6 +891,46 @@ export class Sax2Component implements OnInit {
     window.localStorage.setItem('history',JSON.stringify(this.history_list));
     /* </LOUIS> */
   }
+
+  
+  reconvertir(){
+    /* <LOUIS> */
+    var zis = this;
+    var local_history = window.localStorage.getItem('history');
+    var num_index_in_history = Number(this.index_in_history);
+    if(this.index_in_history === null || this.index_in_history === undefined || num_index_in_history >= local_history.length){
+      alert('Veuillez insérer un indice d\'historique valide.');
+      return;
+    }
+    var reconv_traces_xhr = new XMLHttpRequest();
+    reconv_traces_xhr.setRequestHeader("Content-Type", "application/json");
+    // reconv_traces_xhr.open('POST','traces_bridge.php',true);
+    reconv_traces_xhr.onreadystatechange = function(){
+      if(reconv_traces_xhr.readyState === 4 && reconv_traces_xhr.status === 200){
+        // reconv_traces_xhr.send(JSON.stringify(local_history[Number(this.index_in_history)]['traces']));
+        // reconv_traces_xhr.send(JSON.stringify(local_history[num_index_in_history]['traces']));
+
+        var reconv_zip_xhr = new XMLHttpRequest();
+        // reconv_zip_xhr.setRequestHeader("Content-Type", this.file_to_reconvert.type);
+        reconv_zip_xhr.setRequestHeader("Content-Type", "octet/stream");
+        reconv_zip_xhr.open('POST','reconv_zip_bridge.php',true);
+        // reconv_traces_xhr.send(JSON.stringify(local_history[Number(this.index_in_history)]['traces']));
+        // reconv_zip_xhr.send(this.file_to_reconvert);
+        // reconv_zip_xhr.send(this.file_to_reconvert_content);
+        // setTimeout(function(){
+        //   reconv_zip_xhr.send(this.file_to_reconvert_content);
+        // },500);
+        // reconv_zip_xhr.send(this.file_to_reconvert_content);
+        reconv_zip_xhr.send(zis.file_to_reconvert_content);
+      }
+    }
+    
+    reconv_traces_xhr.open('POST','traces_bridge.php',true);
+    reconv_traces_xhr.send(JSON.stringify(local_history[num_index_in_history]['traces']));
+    // window.localStorage.setItem('history',JSON.stringify(this.history_list));
+    /* </LOUIS> */
+  }
+
 
   toggle_input_display(){
     /*
@@ -1520,6 +1730,10 @@ export class Sax2Component implements OnInit {
                   clearInterval(check_status_interval);
                   zis.conversion_progress = 100;
 
+                  // TESTING IN PREPARATION TO RECONVERSION
+                  zis.history_list[zis.history_list.length-1]['traces'] = cs_xhr_obj['traces'];
+                  window.localStorage.setItem('history',JSON.stringify(zis.history_list));
+
                   /*
                   var link = document.createElement('a');
                   link.href = conversion_server_url+'/tmp/'+xhr_parsed_response['token']+'/project_archive.zip';
@@ -1578,7 +1792,7 @@ export class Sax2Component implements OnInit {
           cs_xhr.setRequestHeader("Content-Type", "application/json");
           // console.log('sending:',xhr.responseText);
           cs_xhr.send(xhr.responseText);
-        },1000);
+        },2000);
         
       }
     }

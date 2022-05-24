@@ -16,7 +16,63 @@
                 $log_status = fread($current_file,3); // 3 is for up to 100, but it stops before if it doesn't have 3 chars
                 fclose($current_file);
                 if($log_status == '100' || $log_status == 100){
-                    echo '{"status":"complete"}';
+                    // echo '{"status":"complete"}';
+                    $return_obj = new stdClass();
+                    $return_obj->status = 'complete';
+                    $return_obj->traces = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    $source_path = $dir_path . '/source';
+        
+                    $source_files_list = scandir($source_path);
+                    $i_limit = count($source_files_list);
+                    for($i = 0 ; $i < $i_limit ; $i += 1){
+                        if(preg_match('/\.trace$/mi',$source_files_list[$i])){
+                            $file_path = $source_path . '/' . $source_files_list[$i];
+                            $file = fopen($file_path);
+                            $data = fread($file,filesize($file_path));
+                            fclose($file);
+        
+        
+                            // if(strlen($all_traces_str) > 0){
+                            //     $all_traces_str += ',';
+                            // }
+                            // $all_traces_str = $all_traces_str . '{"file_name":"' . $source_files_list[$i] . '","trace":"' . $data . '"}';
+
+                            array_push($return_obj->traces,[$source_files_list[$i],$data]);
+                        }
+                    }
+
+                    $return_obj_json_str = json_encode($return_obj);
+                    echo $return_obj_json_str;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     $path_to_config = $dir_path . '/config.json';
                     $saved_json_file = fopen($path_to_config,'r');

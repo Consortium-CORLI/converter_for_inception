@@ -30,7 +30,7 @@
      -->
 
      <dxi-item location="after" [visible]="suggestionTickVisible" style="margin-right:16px">
-      <dx-check-box text="Suggestion" [(value)]="suggestionPopupTagsVisible"></dx-check-box>
+      <dx-check-box text="Suggestions" [(value)]="suggestionPopupTagsVisible"></dx-check-box>
     </dxi-item>
   
   
@@ -185,6 +185,21 @@
     <dxi-column dataField="file_name" caption="Noms des fichiers" [allowEditing]="false"></dxi-column>
 
   </dx-data-grid>
+
+    <p>Reconversion vers le format initial d'un export INCEpTION (pour se faire, faites un export avec comme format additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale qui se trouve dans l'historique) : </p>
+
+    <dx-file-uploader #up selectButtonText="Charger un fichier d'export INCEpTION" labelText="" accept=".zip" uploadMode="useForm" multiple="true"
+          [showFileList]="false" (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
+        </dx-file-uploader>
+        <dx-text-box placeholder="Indice dans l'historique" id="index_in_history_input" style="display:inline" [(value)]="index_in_history"></dx-text-box>
+        <dx-button
+        stylingMode="contained"
+        text="Reconvertir"
+        type="normal"
+        [width]="200"
+        [visible]="true"
+        (onClick)="reconvertir()">
+        </dx-button>
     
     </dxi-item>
    
@@ -388,7 +403,7 @@
       <br/>
       <span id="first_document_announcer_span" style="display:block">Premier document (sur <span id="number_of_documents_span"></span>):</span>
       <br/>
-      <dx-text-area [spellcheck]="false" [value]="first_document" [visible]="firstDocumentVisible" height="20%"></dx-text-area>
+      <dx-text-area [spellcheck]="false" [value]="first_document" [visible]="firstDocumentVisible" height="15%"></dx-text-area>
       <br/>
       <!-- <dxi-item location="before" [visible]="firstDocumentVisible">
         <dx-check-box text="Import direct vers INCEpTION" [(value)]="auto_authentication" (onValueChanged)="toggle_input_display()"></dx-check-box>
@@ -396,12 +411,24 @@
       </dxi-item> -->
       <!-- <br/> -->
       <dxi-item location="before" [visible]="auto_authentication">
+        
         <!-- <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:none" [(value)]="project_name"></dx-text-box> -->
         <span>Nom du projet : </span>
         <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:inline" [(value)]="project_name"></dx-text-box>
-        
+        <canvas id="captcha_canvas" style="display:inline; position: absolute; right: 22%" width="180" height="50"></canvas>
+          <dx-text-box placeholder="Réponse au captcha" id="captcha_input" style="display:inline; position:absolute; right: 2%" [(value)]="captcha_user_answer"></dx-text-box>
+          
       </dxi-item>
       <dxi-item location="after">
+        <!-- <div style="align-items: center; align-content: center;"> -->
+        <!-- <div style="position: absolute; right:5%">
+        <canvas id="captcha_canvas" style="display:inline" width="180" height="70"></canvas>
+        <dx-text-box placeholder="Réponse au captcha" id="captcha_input" style="display:inline" [(value)]="captcha_user_answer"></dx-text-box>
+        </div> -->
+          <!-- <canvas id="captcha_canvas" style="display:inline; position: absolute; right: 35%" width="180" height="70"></canvas>
+          <dx-text-box placeholder="Réponse au captcha" id="captcha_input" style="display:inline; position:absolute; right: 5%" [(value)]="captcha_user_answer"></dx-text-box>
+           -->
+           
         <dx-button
         stylingMode="contained"
         text="Générer"
