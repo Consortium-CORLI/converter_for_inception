@@ -16,10 +16,12 @@
                 $log_status = fread($current_file,3); // 3 is for up to 100, but it stops before if it doesn't have 3 chars
                 fclose($current_file);
                 if($log_status == '100' || $log_status == 100){
-                    // echo '{"status":"complete"}';
+                    echo '{"status":"complete"}';
+                    /*
                     $return_obj = new stdClass();
                     $return_obj->status = 'complete';
-                    $return_obj->traces = [];
+                    // $return_obj->traces = [];
+                    $return_obj->traces = array();
 
 
 
@@ -37,29 +39,119 @@
 
 
 
+                    
                     $source_path = $dir_path . '/source';
         
                     $source_files_list = scandir($source_path);
                     $i_limit = count($source_files_list);
                     for($i = 0 ; $i < $i_limit ; $i += 1){
+                        
                         if(preg_match('/\.trace$/mi',$source_files_list[$i])){
+                            
                             $file_path = $source_path . '/' . $source_files_list[$i];
-                            $file = fopen($file_path);
-                            $data = fread($file,filesize($file_path));
+                            $file = fopen($file_path,'r');
+                            // echo $file_path;
+                            // $local_data = fread($file,filesize($file_path));
+                            // $local_data = fread($file,filesize(preg_replace("/\\\\//mi","\\", $file_path));
+                            // $local_data = fread($file,filesize(preg_replace("/\\\\//mi","\\", $file_path)));
+                            $local_data = fread($file,1000000);
+                            // echo $local_data;
+                            // fclose($file);
+
+                            
+                            // array_push($return_obj->traces,'a');
+                            $test = new stdClass();
+                            $test->file_name = $source_files_list[$i];
+                            // $test->file_name = $local_data;
+                            $test->data = $local_data;
+                            array_push($return_obj->traces,$test);
                             fclose($file);
-        
         
                             // if(strlen($all_traces_str) > 0){
                             //     $all_traces_str += ',';
                             // }
                             // $all_traces_str = $all_traces_str . '{"file_name":"' . $source_files_list[$i] . '","trace":"' . $data . '"}';
 
-                            array_push($return_obj->traces,[$source_files_list[$i],$data]);
-                        }
-                    }
+                            // array_push($return_obj->traces,[$source_files_list[$i],$local_data]);
+                            
+                            
+                            
+                            try{
+                            // $local_trace_std = new stdClass();
+                            // $local_trace_std->file_name = $source_files_list[$i];
+                            // $local_trace_std->data = $local_data;
+                            
+                            //     array_push($return_obj->traces, $local_trace_std);
+                            // }catch(Exception $e_){
 
+                            // }
+                            
+                            
+                            
+                        }
+                        // echo json_encode($return_obj->traces);
+                        
+                    }
+                    // echo json_encode($return_obj->traces);
+                    
                     $return_obj_json_str = json_encode($return_obj);
                     echo $return_obj_json_str;
+                    */
+                    
+                    
+
+                    /*
+                    // $return_json_str = '{"status":"complete","traces":[';
+                    $return_json_str = '{"status":"complete","traces":"[';
+                    // $return_json_str = '{"status":"complete","traces":';
+                    $return_traces_str = '';
+                    $return_traces_list = array();
+
+                    $source_path = $dir_path . '/source';
+        
+                    $source_files_list = scandir($source_path);
+                    $i_limit = count($source_files_list);
+                    for($i = 0 ; $i < $i_limit ; $i += 1){
+                        
+                        if(preg_match('/\.trace$/mi',$source_files_list[$i])){
+                            
+                            $file_path = $source_path . '/' . $source_files_list[$i];
+                            $file = fopen($file_path,'r');
+                            $local_data = fread($file,filesize($file_path));
+                            fclose($file);
+                            
+                            // $local_data = preg_replace("/\\\\/mi","\\\\",$local_data);
+                            // $local_data = preg_replace('/"/mi',"\\\"",$local_data);
+
+                            // $local_trace = array();
+                            // array_push($local_trace,$source_files_list[$i]);
+                            // array_push($local_trace,$local_data);
+                            // array_push($return_traces_list,$local_trace);
+
+                            
+                            // $local_data = json_encode($local_data);
+                            $local_data = addslashes($local_data);
+                            $local_data = preg_replace('/\n/mi','\n',$local_data);
+
+                            if(strlen($return_traces_str) > 1){
+                                $return_traces_str = $return_traces_str . ',';
+                            }
+                            // $return_traces_str = $return_traces_str . '["' . $source_files_list[$i] . '","' . pg_escape_string($local_data) . '"]';
+                            // $return_traces_str = $return_traces_str . '["' . $source_files_list[$i] . '","' . $local_data . '"]';
+                            // $return_traces_str = $return_traces_str . '[\'' . $source_files_list[$i] . '\',\'' . $local_data . '\']';
+                            $return_traces_str = $return_traces_str . '[\'' . $source_files_list[$i] . '\',\'' . $local_data . '\']';
+                            
+                            
+                            
+                        }
+                        
+                    }
+                    // $return_json_str = $return_json_str . $return_traces_str . ']}';
+                    $return_json_str = $return_json_str . $return_traces_str . ']"}';
+                    // $return_json_str = $return_json_str . json_encode($return_traces_list) . '}';
+                    echo $return_json_str;
+                    */
+                    
 
 
 
@@ -203,6 +295,7 @@
         
         http_response_code(200);
     }catch(Exception $e){
+        echo $e;
         http_response_code(500);
     }
 ?>

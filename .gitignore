@@ -46,3 +46,6 @@ Thumbs.db
 
 # backups
 **BACKUP**
+
+traces_bridge.php
+download_traces.php
