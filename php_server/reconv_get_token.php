@@ -4,7 +4,8 @@
     $data->token = preg_replace('/[^a-zA-Z0-9]/mi','',$data->token);
     $obj = new stdClass();
     $obj->token = $data->token;
-    $path = sys_get_temp_dir() . '/tmp_inception_converter' . '/token_memory.json';
+    // $path = sys_get_temp_dir() . '/tmp_inception_converter' . '/token_memory.json';
+    $path = '/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/token_memory.json';
     $file = fopen($path,'w');
     fwrite($file,json_encode($obj));
     fclose($file);

@@ -1,8 +1,11 @@
 <?php
         $timeout_ms = 86400 * 1000; // ONE DAY
-        $tmp_dir = sys_get_temp_dir() . '/tmp_inception_converter';
+        // $tmp_dir = sys_get_temp_dir() . '/tmp_inception_converter';
+	$tmp_dir = '/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter';
+	// echo $tmp_dir;
         if(!is_dir($tmp_dir)){
-            mkdir($tmp_dir,0777,false);
+            // mkdir($tmp_dir,0777,false);
+		mkdir($tmp_dir,0777,true);
         }
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -13,11 +16,13 @@
             $local_hash = hash('sha3-224',$raw_json . time());
             $dir_path = $tmp_dir . '/' . $local_hash;
             if(!is_dir($dir_path)){
-                mkdir($dir_path,0777,false);
+                // mkdir($dir_path,0777,false);
+		mkdir($dir_path,0777,true);
             }
             $dir_path_data = $dir_path . '/data';
             if(!is_dir($dir_path_data)){
-                mkdir($dir_path_data,0777,false);
+                // mkdir($dir_path_data,0777,false);
+		mkdir($dir_path_data,0777,true);
             }
             $data = json_decode($raw_json);
 
@@ -42,6 +47,15 @@ import re
 from os import listdir
 from os import mkdir
 from os.path import exists
+from os import environ
+import sys
+#from importlib import reload
+#environ["PYTHONIOENCODING"] = "UTF-8"
+#reload(sys)
+#sys.setdefaultencoding("UTF8")
+print("sys.stdin.encoding:",sys.stdin.encoding)
+print("sys.stdout.encoding:",sys.stdout.encoding)
+print("LANG:",environ["LANG"])
 ';
 
                 $globales = "
@@ -401,17 +415,24 @@ with open(TYPESYS_FILE, 'rb') as f:
 
             $shell_command = '';
             if(substr(PHP_OS,0,3) == 'WIN'){
-                $shell_command = 'cd ' . $dir_path . ' && start /B python3 split_and_convert.py > out.log';
+                // $shell_command = 'cd ' . $dir_path . ' && source /sites/corliweb/www/python_venv_convinception/bin/activate && start /B python3 split_and_convert.py > out.log';
+		$shell_command = 'cd ' . $dir_path . ' && start /B python3 split_and_convert.py > out.log';
             }else{
-                $shell_command = 'cd ' . $dir_path . ' ; python3 split_and_convert.py &';
+                // $shell_command = 'cd ' . $dir_path . ' ; source /sites/corliweb/www/python_venv_convinception/bin/activate ; python3 split_and_convert.py > out.log 2> err.log &';
+		$shell_command = 'cd ' . $dir_path . ' ; source /sites/corliweb/www/python_venv_convinception/bin/activate ; export PYTHONIOENCODING=UTF-8 ; export LANG=fr_FR.UTF-8 ; env python3 split_and_convert.py > out.log 2> err.log &';
+		// $shell_command = 'cd ' . $dir_path . ' ; source /sites/corliweb/www/python_venv_convinception/bin/activate ; export PYTHONIOENCODING=UTF-8 ; env python3 split_and_convert.py > out.log 2> err.log &';
+		// $shell_command = 'cd ' . $dir_path . ' ; python3 split_and_convert.py > out.log &';
             }
-            startBackgroundProcess($shell_command);
+            // startBackgroundProcess($shell_command);
+	    shell_exec($shell_command);
 
-            echo '{"token":"' . $local_hash . '"}';
-
+            // echo '{"token":"' . $local_hash . '","path":"' . sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_hash . '"}';
+	    echo '{"token":"' . $local_hash . '","dir_path":"' . $dir_path . '","shell_command":"' . $shell_command . '"}';
             
-            $dir_path = sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_hash . '/source';
-            $json_config_file = fopen(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_hash . '/config.json','w');
+            // $dir_path = sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_hash . '/source';
+	    $dir_path = '/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $local_hash . '/source';
+            // $json_config_file = fopen(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $local_hash . '/config.json','w');
+	    $json_config_file = fopen('/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $local_hash . '/config.json','w');
             // CHANGING THE JSON FILE HERE ?
             // fwrite($raw_json,strlen($raw_json));
             fwrite($json_config_file,$raw_json);
