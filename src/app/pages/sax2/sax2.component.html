@@ -1,333 +1,229 @@
-
 <dx-tab-panel #tabPanel id="main_tab_panel">
-    <dxi-item title="Conversion">
-  <!-- <h2 class="content-block">Conversion (alt. sax parser) {{fichierXML}} </h2> -->
-  <div class="content-block">
-  
-  
-  
-     
-  
-    <dx-toolbar>
-      
+  <dxi-item title="Conversion">
+    <div class="content-block">
+      <!-- <dx-toolbar> -->
+
       <dxi-item location="before">
-        <!-- <dx-file-uploader #up selectButtonText="Charger un fichier XML" labelText="" accept=".xml" uploadMode="useForm"
-          [showFileList]="false" (onValueChanged)="onFileUploaderValueChanged($event)">
-        </dx-file-uploader> -->
-        <dx-file-uploader #up selectButtonText="Charger des fichiers XML" labelText="" accept=".xml" uploadMode="useForm" multiple="true"
-          [showFileList]="false" (onValueChanged)="onFileUploaderValueChanged($event)">
+        <dx-file-uploader #up selectButtonText="Charger des fichiers XML" labelText="" accept=".xml"
+          uploadMode="useForm" multiple="true" [showFileList]="false"
+          (onValueChanged)="onFileUploaderValueChanged($event)">
         </dx-file-uploader>
       </dxi-item>
-      
-      <!--
-      <dxi-item location="after">
-        <dx-check-box text="Sélection info " [(value)]="popupSelectVisible"></dx-check-box>
-      </dxi-item>
-  
-      <dxi-item location="after">
-        <dx-check-box text="Tags info " [(value)]="popupTagsVisible"></dx-check-box>
-      </dxi-item>
-     -->
 
-     <dxi-item location="after" [visible]="suggestionTickVisible" style="margin-right:16px">
-      <dx-check-box text="Suggestions" [(value)]="suggestionPopupTagsVisible"></dx-check-box>
-    </dxi-item>
-  
-  
-    </dx-toolbar>
-  
-  
-    <!--
-    <dx-data-grid #xmlGrid id="xmlGrid" [dataSource]="docDataSource" [columns]="docColumns" keyExpr="id"
-      [showColumnHeaders]="false" [allowColumnResizing]="true" [columnAutoWidth]="true" [showBorders]="true"
-      (onCellClick)="onCellClick($event)" 
-      (onCellPrepared)="onCellPrepared($event)"
-      (onSelectionChanged)="onSelectionChanged($event)"
-      (onCellHoverChanged)="onCellHoverChanged($event)"
-      (onContentReady)="onContentReady($event)">
-      <dxo-selection mode="single"></dxo-selection>
-      <dxo-load-panel [enabled]="true"></dxo-load-panel>
-      <dxo-scrolling mode="virtual"></dxo-scrolling>
-      <dxo-sorting mode="multiple"></dxo-sorting>
-    </dx-data-grid>
-    -->
+      <!-- <dxi-item location="after" [visible]="suggestionTickVisible" style="margin-right:16px">
+        <dx-check-box text="Suggestions" [(value)]="suggestionPopupTagsVisible"></dx-check-box>
+      </dxi-item> -->
 
-    <!-- <dxi-item location="after">
-      <dx-check-box text="Suggestion" [(value)]="suggestionPopupTagsVisible"></dx-check-box>
-    </dxi-item> -->
-  
-    <dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="tagdefDataSource" keyExpr="id" [showColumnHeaders]="true"  (onRowUpdated)="onRowUpdated($event)"
-    [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">
-    
-    <dxo-scrolling mode="normal"></dxo-scrolling>
-    <dxo-editing mode="popup" [allowUpdating]="true"    [allowDeleting]="true"    [allowAdding]="false"></dxo-editing>
-    <dxo-popup [fullScreen]="false" title="Edition" [showTitle]="true" [width]="800" [height]="350"> </dxo-popup>
-    <dxo-form [colCount]="1" [labelLocation]="'left'">
-      <dxi-item editorType="dxSelectBox" dataField="type"></dxi-item>
-      <dxi-item editorType="dxTextBox" dataField="constraint"></dxi-item>
-      <dxi-item editorType="dxColorBox" [editorOptions]="{ editAlphaChannel: true }" dataField="color"></dxi-item>
-    </dxo-form>
 
-    <dxo-selection mode="single"></dxo-selection>
-
-    <dxi-column dataField="tag" caption="Tag" [allowEditing]="false"></dxi-column>
-    <!-- <dxi-column dataField="attrsstr" caption="Attributs" [allowEditing]="false"></dxi-column> -->
-    <dxi-column dataField="attrs" caption="Attributs" [allowEditing]="false"></dxi-column>
-    <dxi-column dataField="constraint" caption="Contrainte">
-      <dxo-lookup [dataSource]="constraintTypes" displayExpr="label" valueExpr="value">
-      </dxo-lookup>
-
-    </dxi-column>
-    <dxi-column dataField="type" caption="Type">
-      <dxo-lookup [dataSource]="tagTypes" displayExpr="label" valueExpr="value">
-      </dxo-lookup>
-    </dxi-column>
-
-    <!--<LOUIS>-->
-      <dxi-column dataField="quantity" caption="Quantité" [allowEditing]="false"></dxi-column>
-      <dxi-column dataField="averageCharCount" caption="Longueur moyenne" [allowEditing]="false"></dxi-column>
-      <!-- <dxi-column dataField="chainingRatio" caption="Ratio de chaine"></dxi-column> -->
-      <!-- <dxi-column dataField="chainingRatio" caption="Se suit"></dxi-column> -->
-    <!--</LOUIS>-->
-    
-    <!-- <dxi-column cellTemplate="cellTemplate" dataField="color" caption="Couleur"  dataType="string" editorType="dxColorBox"></dxi-column> -->
-
-    <div *dxTemplate="let data of 'cellTemplate'">
-      <dx-color-box [readOnly]="true" 
-          [value]="data.value"
-          applyButtonText="OK"
-          cancelButtonText="Annuler"
-        ></dx-color-box>
+      <!-- </dx-toolbar> -->
     </div>
 
-  </dx-data-grid>
+    <!-- <div class="content-block"> -->
+    <div id="suggestion_div" class="content-block" style="display:none">
+      <dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true"
+        [dataSource]="suggestionDataSource" keyExpr="id" [showColumnHeaders]="true"
+        (onRowUpdated)="onRowUpdated($event)" [showBorders]="true"
+        (onToolbarPreparing)="onToolbarPreparingSuggestionPopup($event)" (onRowUpdated)="updateSystem()">
+        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="false"></dxo-editing>
+        <dxo-scrolling mode="normal"></dxo-scrolling>
 
-  <dx-scroll-view width="100%">
-    <!-- <dx-text-area  [spellcheck]="false" height="400"  [value]="full_xml"></dx-text-area> -->
-    <!-- <dx-text-area  [spellcheck]="false" height="400"  [value]="highlighted_full_xml"></dx-text-area> -->
-    <!-- <div [innerHtml]></div> -->
-    <pre>
+        <dxi-column dataField="quality" caption="Qualité" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="scale" caption="Echelle" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="suggestions_str" caption="Suggestions" [allowEditing]="false">
+        </dxi-column>
+        <dxi-column dataField="choice" caption="Choix"></dxi-column>
+
+        <div *dxTemplate="let data of 'cellTemplate'">
+          <dx-color-box [readOnly]="true" [value]="data.value" applyButtonText="OK" cancelButtonText="Annuler">
+          </dx-color-box>
+        </div>
+
+      </dx-data-grid>
+      <br />
+      <span id="first_document_announcer_span" style="display:block">Premier document (sur <span
+          id="number_of_documents_span"></span>):</span>
+      <br />
+      <dx-text-area [spellcheck]="false" [value]="first_document" [visible]="firstDocumentVisible" height="15%">
+      </dx-text-area>
+      <br />
+
+      <!-- <dxi-item location="before" [visible]="auto_authentication"> -->
+      <!-- <dxi-item location="before" [visible]="suggestionPopupTagsVisible"> -->
+      <dxi-item location="before">
+
+        <span>Nom du projet : </span>
+        <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:inline"
+          [(value)]="project_name">
+        </dx-text-box>
+        <canvas id="captcha_canvas" style="display:inline; position: absolute; right: 22%" width="180"
+          height="50"></canvas>
+        <dx-text-box placeholder="Réponse au captcha" id="captcha_input"
+          style="display:inline; position:absolute; right: 2%" [(value)]="captcha_user_answer"></dx-text-box>
+
+      </dxi-item>
+      <dxi-item location="after">
+
+        <dx-button stylingMode="contained" text="Générer" type="normal" [width]="200" [visible]="firstDocumentVisible"
+          (onClick)="generer()">
+        </dx-button>
+
+      </dxi-item>
+      <br />
+      <dx-progress-bar [min]="0" [max]="100" [value]="conversion_progress"></dx-progress-bar>
+    </div>
+  </dxi-item>
+  <dxi-item title="Balises">
+    <!-- <h2 class="content-block">Conversion (alt. sax parser) {{fichierXML}} </h2> -->
+    <div class="content-block">
+
+      <!-- <dx-toolbar>
+
+        <dxi-item location="before">
+          <dx-file-uploader #up selectButtonText="Charger des fichiers XML" labelText="" accept=".xml"
+            uploadMode="useForm" multiple="true" [showFileList]="false"
+            (onValueChanged)="onFileUploaderValueChanged($event)">
+          </dx-file-uploader>
+        </dxi-item>
+
+        <dxi-item location="after" [visible]="suggestionTickVisible" style="margin-right:16px">
+          <dx-check-box text="Suggestions" [(value)]="suggestionPopupTagsVisible"></dx-check-box>
+        </dxi-item>
+
+
+      </dx-toolbar> -->
+
+      <dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true"
+        [dataSource]="tagdefDataSource" keyExpr="id" [showColumnHeaders]="true" (onRowUpdated)="onRowUpdated($event)"
+        [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">
+
+        <dxo-scrolling mode="normal"></dxo-scrolling>
+        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="false"></dxo-editing>
+        <dxo-popup [fullScreen]="false" title="Edition" [showTitle]="true" [width]="800" [height]="350"> </dxo-popup>
+        <dxo-form [colCount]="1" [labelLocation]="'left'">
+          <dxi-item editorType="dxSelectBox" dataField="type"></dxi-item>
+          <dxi-item editorType="dxTextBox" dataField="constraint"></dxi-item>
+          <dxi-item editorType="dxColorBox" [editorOptions]="{ editAlphaChannel: true }" dataField="color"></dxi-item>
+        </dxo-form>
+
+        <dxo-selection mode="single"></dxo-selection>
+
+        <dxi-column dataField="tag" caption="Tag" [allowEditing]="false"></dxi-column>
+        <!-- <dxi-column dataField="attrsstr" caption="Attributs" [allowEditing]="false"></dxi-column> -->
+        <dxi-column dataField="attrs" caption="Attributs" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="constraint" caption="Contrainte">
+          <dxo-lookup [dataSource]="constraintTypes" displayExpr="label" valueExpr="value">
+          </dxo-lookup>
+
+        </dxi-column>
+        <dxi-column dataField="type" caption="Type">
+          <dxo-lookup [dataSource]="tagTypes" displayExpr="label" valueExpr="value">
+          </dxo-lookup>
+        </dxi-column>
+
+        <dxi-column dataField="quantity" caption="Quantité" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="averageCharCount" caption="Longueur moyenne" [allowEditing]="false"></dxi-column>
+
+
+        <div *dxTemplate="let data of 'cellTemplate'">
+          <dx-color-box [readOnly]="true" [value]="data.value" applyButtonText="OK" cancelButtonText="Annuler">
+          </dx-color-box>
+        </div>
+
+      </dx-data-grid>
+
+      <dx-scroll-view width="100%">
+        <pre>
     <p id="xml_p"></p>
     </pre>
-  </dx-scroll-view>
-  <!-- <pre>
-    <code [highlight]="full_xml"></code>
-  </pre> -->
-  
-  
-  </div>
-  
+      </dx-scroll-view>
+
+
+    </div>
+
   </dxi-item>
 
-  <!-- <dxi-item title="Fichier XML" id="dxi_item_iframe"> -->
-    
-    
-
-    <!-- <div id="iframe_div"> -->
-    
-      <!-- <iframe src="https://en.wikipedia.org" style="width:100%;height:600px;border:0px" id="xml_display_iframe"></iframe> -->
-      <!-- <iframe src="file:///C:/Users/Louis/Documents/universite/MASTER/M1/S2/STAGE/corpus-extrait-corli_test/corpus_tests_import/WIKIDEEP/data/WIKIDEEP.xml" style="width:100%;height:600px;border:0px" id="xml_display_iframe"></iframe> -->
-
-    <!-- </div> -->
-
-  <!-- </dxi-item> -->
-  
-  <!-- <dxi-item title="Scripts de conversion générés">
-  <div>
-    <h2 class="content-block">Script Python d'importation</h2>
-    <div class="content-block">
-      <dx-text-area  [spellcheck]="false" height="400"  [value]="pythonCode"></dx-text-area>
-  
-     
-      <dx-button
-  stylingMode="contained"
-  text="Télécharger"
-  type="normal"
-  [width]="200"
-  (onClick)="dowloadPython()"></dx-button>
-  
-  </div>
-  
-  </div>
-        
-  
-  <div>
-    <h2 class="content-block">typesystem.xml</h2>
-      <div class="content-block">  
-  
-      
-     <dx-text-area  [spellcheck]="false" height="400" [value]="typesystem"></dx-text-area>
-  
-     <dx-button
-              stylingMode="contained"
-              text="Télécharger"
-              type="normal"
-              [width]="200"
-              (onClick)="downloadTypesystem()"></dx-button>
-  </div>
-  
-            
-  </div>
-  
-  </dxi-item> -->
-
-
   <dxi-item title="Historique">
-    <dx-data-grid [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="history_list" keyExpr="id" [showColumnHeaders]="true"  (onRowUpdated)="onRowUpdated($event)"
-    [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">
+    <div class="content-block">
+      <dx-data-grid [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="history_list" keyExpr="id"
+        [showColumnHeaders]="true" (onRowUpdated)="onRowUpdated($event)" [showBorders]="true"
+        (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">
 
-    <dxo-selection mode="single"></dxo-selection>
+        <dxo-selection mode="single"></dxo-selection>
 
-    <dxi-column dataField="id" caption="#" [allowEditing]="false"></dxi-column>
-    <dxi-column dataField="project_name" caption="Nom du projet" [allowEditing]="false"></dxi-column>
-    <dxi-column dataField="doc_separator" caption="Séparateur de document" [allowEditing]="false"></dxi-column>
-    <dxi-column dataField="date" caption="Date" [allowEditing]="false"></dxi-column>
-    <dxi-column dataField="file_name" caption="Noms des fichiers" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="id" caption="#" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="project_name" caption="Nom du projet" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="doc_separator" caption="Séparateur de document" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="date" caption="Date" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="file_name" caption="Noms des fichiers" [allowEditing]="false"></dxi-column>
 
-  </dx-data-grid>
+      </dx-data-grid>
 
-    <p>Reconversion vers le format initial d'un export INCEpTION (pour se faire, faites un export avec comme format additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale qui se trouve dans l'historique) : </p>
+      <p>Reconversion vers le format initial d'un export INCEpTION (pour se faire, faites un export avec comme format
+        additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale
+        qui se trouve dans l'historique) : </p>
 
-    <dx-file-uploader #up selectButtonText="Charger un fichier d'export INCEpTION" labelText="" accept=".zip" uploadMode="useForm" multiple="true"
-          [showFileList]="false" (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
-        </dx-file-uploader>
-        <dx-text-box placeholder="Indice dans l'historique" id="index_in_history_input" style="display:inline" [(value)]="index_in_history"></dx-text-box>
-        <dx-button
-        stylingMode="contained"
-        text="Reconvertir"
-        type="normal"
-        [width]="200"
-        [visible]="true"
+      <dx-file-uploader #up selectButtonText="Charger un fichier d'export INCEpTION" labelText="" accept=".zip"
+        uploadMode="useForm" multiple="true" [showFileList]="false"
+        (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
+      </dx-file-uploader>
+      <dx-text-box placeholder="Indice dans l'historique" id="index_in_history_input" style="display:inline"
+        [(value)]="index_in_history"></dx-text-box>
+      <dx-button stylingMode="contained" text="Reconvertir" type="normal" [width]="200" [visible]="true"
         (onClick)="reconvertir()">
-        </dx-button>
-    
-    </dxi-item>
-   
-  
-  </dx-tab-panel>
-  
-  
-  
-  <dx-popup [position]=" { my: 'right', at: 'center'  }" [width]="300" [height]="400" [showTitle]="true" [shading]="false"
+      </dx-button>
+
+    </div>
+  </dxi-item>
+
+  <dxi-item title="Aide">
+    <div class="content-block">
+      <p>1. Chargez vos documents</p>
+      <img src="aide1.png" style="max-width:100%">
+      <br>
+      <p>2. Cliquez sur le crayon pour modifier la balise séparatrice de documents</p>
+      <img src="aide2.png" style="max-width:100%">
+      <br>
+      <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p>
+      <img src="aide3.png" style="max-width:100%">
+      <br>
+      <p>4. Remplissez le CAPTCHA</p>
+      <img src="aide4.png" style="max-width:100%">
+      <br>
+      <p>5. Modifiez le nom du projet si vous le souhaitez, cliquez sur "GENERER" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement</p>
+      <img src="aide5.png" style="max-width:100%">
+      <br>
+      <p>6. Une fois dans INCEpTION, dans l'onglet "Projects", importez le fichier téléchargé en cliquant sur "Import project"</p>
+      <img src="aide6.png" style="max-width:100%">
+      <!-- <br> -->
+
+    </div>
+  </dxi-item>
+
+
+</dx-tab-panel>
+
+
+
+<!-- <dx-popup [position]=" { my: 'right', at: 'center'  }" [width]="300" [height]="400" [showTitle]="true" [shading]="false"
     title="Sélection" [dragEnabled]="true" [closeOnOutsideClick]="false" [showCloseButton]="false" [resizeEnabled]="true" 
     container=".dx-viewport" [visible]="popupSelectVisible" [hideOnParentScroll]="true">
     
-    <!-- <dx-button
-    stylingMode="contained"
-    text="Mettre à jour"
-    type="normal"
-    [width]="200"
-    (onClick)="updateSystem()"></dx-button> -->
-  
-    <!-- <dx-scroll-view width="100%" height="100%">
-      <dx-button
-      stylingMode="contained"
-      text="Mettre à jour"
-      type="normal"
-      [width]="200"
-      (onClick)="updateSystem()"></dx-button>
-      {{taginfoPopup.tag}}<br>
-      Contenu : {{taginfoPopup.contenu}}<br>
-    </dx-scroll-view> -->
-  </dx-popup>
-  
-  
-  
-   
-  <!--
-  <dx-popup [position]=" { my: 'left', at: 'center'  }" [width]="850" [height]="800" [showTitle]="true" [shading]="false"
-    title="Information Tags" [dragEnabled]="true" [resizeEnabled]="true"  [closeOnOutsideClick]="false" [showCloseButton]="false"
-    container=".dx-viewport" [visible]="popupTagsVisible" [hideOnParentScroll]="true">
-    
+  </dx-popup> -->
 
-    <dxi-item location="after">
-      <dx-check-box text="Suggestion" [(value)]="suggestionPopupTagsVisible"></dx-check-box>
-    </dxi-item>
-
-
-    <dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="tagdefDataSource" keyExpr="id" [showColumnHeaders]="true"  (onRowUpdated)="onRowUpdated($event)"
-      [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">
-      
-      <dxo-scrolling mode="normal"></dxo-scrolling>
-      <dxo-editing mode="popup" [allowUpdating]="true"    [allowDeleting]="true"    [allowAdding]="false"></dxo-editing>
-      <dxo-popup [fullScreen]="false" title="Edition" [showTitle]="true" [width]="800" [height]="350"> </dxo-popup>
-      <dxo-form [colCount]="1" [labelLocation]="'left'">
-        <dxi-item editorType="dxSelectBox" dataField="type"></dxi-item>
-        <dxi-item editorType="dxTextBox" dataField="constraint"></dxi-item>
-        <dxi-item editorType="dxColorBox" [editorOptions]="{ editAlphaChannel: true }" dataField="color"></dxi-item>
-      </dxo-form>
-  
-      <dxo-selection mode="single"></dxo-selection>
-  
-      <dxi-column dataField="tag" caption="Tag" [allowEditing]="false"></dxi-column>
-      <dxi-column dataField="attrsstr" caption="Attributs" [allowEditing]="false"></dxi-column>
-      <dxi-column dataField="constraint" caption="Contrainte">
-        <dxo-lookup [dataSource]="constraintTypes" displayExpr="label" valueExpr="value">
-        </dxo-lookup>
-  
-      </dxi-column>
-      <dxi-column dataField="type" caption="Type">
-        <dxo-lookup [dataSource]="tagTypes" displayExpr="label" valueExpr="value">
-        </dxo-lookup>
-      </dxi-column>
-
-      
-        <dxi-column dataField="quantity" caption="Quantité"></dxi-column>
-        <dxi-column dataField="averageCharCount" caption="Char./balise"></dxi-column>
-        <dxi-column dataField="chainingRatio" caption="Se suit"></dxi-column>
-      
-      <dxi-column cellTemplate="cellTemplate" dataField="color" caption="Couleur"  dataType="string" editorType="dxColorBox"></dxi-column>
-  
-      <div *dxTemplate="let data of 'cellTemplate'">
-        <dx-color-box [readOnly]="true" 
-            [value]="data.value"
-            applyButtonText="OK"
-            cancelButtonText="Annuler"
-          ></dx-color-box>
-      </div>
-  
-    </dx-data-grid>
-  
-  
-  
-  
-  </dx-popup>
--->
-
-  <!-- <LOUIS> -->
-  
-    <dx-popup [position]=" { my: 'center', at: 'center'  }" [width]="1200" [showTitle]="true" [shading]="false"
+<!-- <dx-popup [position]=" { my: 'center', at: 'center'  }" [width]="1200" [showTitle]="true" [shading]="false"
     title="Suggestions" [dragEnabled]="true" [resizeEnabled]="true"  [closeOnOutsideClick]="false" [showCloseButton]="false"
     container=".dx-viewport" [visible]="suggestionPopupTagsVisible" [hideOnParentScroll]="true" id="suggestionBox">
   
-    
-  
-    
-    <!--<dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="suggestionDataSource" keyExpr="id" [showColumnHeaders]="true"  (onRowUpdated)="onRowUpdated($event)"
-      [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">-->
     <dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="suggestionDataSource" keyExpr="id" [showColumnHeaders]="true"  (onRowUpdated)="onRowUpdated($event)"
       [showBorders]="true" (onToolbarPreparing)="onToolbarPreparingSuggestionPopup($event)" (onRowUpdated)="updateSystem()">
       <dxo-editing mode="popup" [allowUpdating]="true"    [allowDeleting]="true"    [allowAdding]="false"></dxo-editing>
       <dxo-scrolling mode="normal"></dxo-scrolling>
-  
-      <!-- <dxo-selection mode="single"></dxo-selection> -->
-  
-      
-  
-      <!--<LOUIS>-->
+     
         <dxi-column dataField="quality" caption="Qualité" [allowEditing]="false"></dxi-column>
         <dxi-column dataField="scale" caption="Echelle" [allowEditing]="false"></dxi-column>
-        <!-- <dxi-column dataField="chainingRatio" caption="Ratio de chaine"></dxi-column> -->
         <dxi-column dataField="suggestions_str" caption="Suggestions" [allowEditing]="false">
-          <!-- <select>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-          </select> -->
         </dxi-column>
-        <dxi-column dataField="choice" caption="Choix"></dxi-column>
-        <!-- <dxo-selection mode="single"></dxo-selection> -->
-      <!--</LOUIS>-->
-      
+        <dxi-column dataField="choice" caption="Choix"></dxi-column>      
       
       <div *dxTemplate="let data of 'cellTemplate'">
         <dx-color-box [readOnly]="true" 
@@ -338,81 +234,15 @@
       </div>
   
     </dx-data-grid>
-    <!-- <button onclick="console.log('bouton validation')">Valider</button> -->
-    <!--
-    <dx-popup [position]=" { my: 'left', at: 'center'  }" [width]="425" [height]="400" [showTitle]="true" [shading]="false"
-    title="Suggestions" [dragEnabled]="true" [resizeEnabled]="true"  [closeOnOutsideClick]="false" [showCloseButton]="true"
-    container=".dx-viewport" [hideOnParentScroll]="true" id="suggestionBox" style="display:none">
-    -->
-    <!--
-    <dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="tagdefDataSource" keyExpr="id" [showColumnHeaders]="true"  (onRowUpdated)="onRowUpdated($event)"
-      [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">
-      
-      
-      <dxo-scrolling mode="normal"></dxo-scrolling>
-      <dxo-editing mode="popup" [allowUpdating]="true"    [allowDeleting]="true"    [allowAdding]="false"></dxo-editing>
-      <dxo-popup [fullScreen]="false" title="Edition" [showTitle]="true" [width]="800" [height]="350"> </dxo-popup>
-      <dxo-form [colCount]="1" [labelLocation]="'left'">
-        <dxi-item editorType="dxSelectBox" dataField="type"></dxi-item>
-        <dxi-item editorType="dxTextBox" dataField="constraint"></dxi-item>
-        <dxi-item editorType="dxColorBox" [editorOptions]="{ editAlphaChannel: true }" dataField="color"></dxi-item>
-      </dxo-form>
-  
-      <dxo-selection mode="single"></dxo-selection>
-  
-      <dxi-column dataField="tag" caption="Tag" [allowEditing]="false"></dxi-column>
-      <dxi-column dataField="attrsstr" caption="Attributs" [allowEditing]="false"></dxi-column>
-      <dxi-column dataField="constraint" caption="Contrainte">
-        <dxo-lookup [dataSource]="constraintTypes" displayExpr="label" valueExpr="value">
-        </dxo-lookup>
-  
-      </dxi-column>
-      <dxi-column dataField="type" caption="Type">
-        <dxo-lookup [dataSource]="tagTypes" displayExpr="label" valueExpr="value">
-        </dxo-lookup>
-      </dxi-column>
-  
-      
-        <dxi-column dataField="quantity" caption="Quantité"></dxi-column>
-        <dxi-column dataField="averageCharCount" caption="Char./balise"></dxi-column>
-        <dxi-column dataField="chainingRatio" caption="Se suit"></dxi-column>
-      
-      
-      <dxi-column cellTemplate="cellTemplate" dataField="color" caption="Couleur"  dataType="string" editorType="dxColorBox"></dxi-column>
-  
-      <div *dxTemplate="let data of 'cellTemplate'">
-        <dx-color-box [readOnly]="true" 
-            [value]="data.value"
-            applyButtonText="OK"
-            cancelButtonText="Annuler"
-          ></dx-color-box>
-      </div>
-  
-    </dx-data-grid>
-    -->
-    <!-- <br/>
-    <dx-button
-    stylingMode="contained"
-    text="Mettre à jour"
-    type="normal"
-    [width]="200"
-    (onClick)="updateSystem()">
-    </dx-button> -->
-    <!-- <dxi-item [visible]="firstDocumentVisible"> -->
-    <!-- <div> -->
+    
       <br/>
       <span id="first_document_announcer_span" style="display:block">Premier document (sur <span id="number_of_documents_span"></span>):</span>
       <br/>
       <dx-text-area [spellcheck]="false" [value]="first_document" [visible]="firstDocumentVisible" height="15%"></dx-text-area>
       <br/>
-      <!-- <dxi-item location="before" [visible]="firstDocumentVisible">
-        <dx-check-box text="Import direct vers INCEpTION" [(value)]="auto_authentication" (onValueChanged)="toggle_input_display()"></dx-check-box>
-        <dx-check-box text="Se souvenir des identifiants" [visible]="auto_authentication" [(value)]="remember_authentication" style="margin-left:16px"></dx-check-box>
-      </dxi-item> -->
-      <!-- <br/> -->
+      
       <dxi-item location="before" [visible]="auto_authentication">
         
-        <!-- <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:none" [(value)]="project_name"></dx-text-box> -->
         <span>Nom du projet : </span>
         <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:inline" [(value)]="project_name"></dx-text-box>
         <canvas id="captcha_canvas" style="display:inline; position: absolute; right: 22%" width="180" height="50"></canvas>
@@ -420,14 +250,6 @@
           
       </dxi-item>
       <dxi-item location="after">
-        <!-- <div style="align-items: center; align-content: center;"> -->
-        <!-- <div style="position: absolute; right:5%">
-        <canvas id="captcha_canvas" style="display:inline" width="180" height="70"></canvas>
-        <dx-text-box placeholder="Réponse au captcha" id="captcha_input" style="display:inline" [(value)]="captcha_user_answer"></dx-text-box>
-        </div> -->
-          <!-- <canvas id="captcha_canvas" style="display:inline; position: absolute; right: 35%" width="180" height="70"></canvas>
-          <dx-text-box placeholder="Réponse au captcha" id="captcha_input" style="display:inline; position:absolute; right: 5%" [(value)]="captcha_user_answer"></dx-text-box>
-           -->
            
         <dx-button
         stylingMode="contained"
@@ -440,14 +262,6 @@
         
       </dxi-item>
       <br/>
-      <!--  -->
-      <!-- <br/> -->
       <dx-progress-bar [min]="0" [max]="100" [value]="conversion_progress"></dx-progress-bar>
-      <!-- <progress id="conversion_progress_bar" value="0" max="100"></progress> -->
-    <!-- </div> -->
-    <!-- </dxi-item> -->
 
-  </dx-popup>
-
-  
-  <!-- </LOUIS> -->
+  </dx-popup> -->

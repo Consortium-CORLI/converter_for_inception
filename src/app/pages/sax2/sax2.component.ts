@@ -240,7 +240,8 @@ export class Sax2Component implements OnInit {
     }
     // var angle = (Math.random() * 20) - 10;
     // var angle = (Math.random() * 4) - 2;
-    var angle = (Math.random() * 0.4) - 0.2;
+    // var angle = (Math.random() * 0.4) - 0.2;
+    var angle = (Math.random() * 0.3) - 0.15;
     // var angle = 0;
     context.fillStyle = color;
     // context.fillRect(0,0,width,height);
@@ -508,6 +509,9 @@ export class Sax2Component implements OnInit {
       this.captcha = this.generate_captcha();
       this.display_captcha();
     },100);
+
+    var suggestion_div = document.getElementById('suggestion_div');
+    suggestion_div.style.display = 'block';
   }
 
   
