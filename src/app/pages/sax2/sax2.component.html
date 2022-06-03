@@ -150,7 +150,8 @@
 
         <dxo-selection mode="single"></dxo-selection>
 
-        <dxi-column dataField="id" caption="#" [allowEditing]="false"></dxi-column>
+        <!-- <dxi-column dataField="id" caption="#" [allowEditing]="false"></dxi-column> -->
+        <dxi-column dataField="id" caption="Indice" [allowEditing]="false"></dxi-column>
         <dxi-column dataField="project_name" caption="Nom du projet" [allowEditing]="false"></dxi-column>
         <dxi-column dataField="doc_separator" caption="Séparateur de document" [allowEditing]="false"></dxi-column>
         <dxi-column dataField="date" caption="Date" [allowEditing]="false"></dxi-column>
@@ -166,6 +167,7 @@
         uploadMode="useForm" multiple="true" [showFileList]="false"
         (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
       </dx-file-uploader>
+      <p id="reconverter_filename_p"></p>
       <dx-text-box placeholder="Indice dans l'historique" id="index_in_history_input" style="display:inline"
         [(value)]="index_in_history"></dx-text-box>
       <dx-button stylingMode="contained" text="Reconvertir" type="normal" [width]="200" [visible]="true"

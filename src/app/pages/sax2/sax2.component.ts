@@ -531,6 +531,7 @@ export class Sax2Component implements OnInit {
         return;
       }
       this.file_to_reconvert_name = file.name;
+      document.getElementById('reconverter_filename_p').innerText = this.file_to_reconvert_name;
       this.file_to_reconvert = file;
       if(!(file.name.endsWith('.zip'))){
         console.error("Nom de fichier invalide.");
