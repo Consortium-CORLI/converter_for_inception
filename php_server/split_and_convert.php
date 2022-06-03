@@ -281,7 +281,13 @@ $code->startTag = $code->startTag . $test;
 \t\t\tfor attribute in self.tagsAttrs[tag].keys():
 \t\t\t\tif self.tagAttrLastValues[tag+'@'+str(self.depth)]==None or attribute not in self.tagAttrLastValues[tag+'@'+str(self.depth)]:
 \t\t\t\t\tcontinue
-\t\t\t\tanno.__setattr__(attribute, self.tagAttrLastValues[tag+'@'+str(self.depth)].getValueByQName(attribute))
+\t\t\t\ttry:
+\t\t\t\t\tanno.__setattr__(attribute, self.tagAttrLastValues[tag+'@'+str(self.depth)].getValueByQName(attribute))
+\t\t\t\texcept:
+\t\t\t\t\t# err_file = open('__err_file.log','at',encoding='utf-8')
+\t\t\t\t\t# err_file.write('ERROR; anno=' + str(anno) + ', attribute=' + str(attribute) + ', tag=' + str(tag) + '\\n')
+\t\t\t\t\t# err_file.close()
+\t\t\t\t\tpass
 \t\tself.current_document_cas.add_annotation(anno)
 \t\tself.anno_begin[tag+'@'+str(self.depth)] = -1
 \t\tself.tagAttrLastValues[tag+'@'+str(self.depth)] = None
