@@ -1,6 +1,12 @@
-<h2 class="content-block">Accueil</h2>
+<h2 id="home_h2" class="content-block">Accueil</h2>
 <div class="content-block">
-  <div class="dx-card responsive-paddings">
+  <dx-button stylingMode="contained" type="normal" (onClick)="switch_to_french()">
+    <img src="french_flag.svg" height="20">
+  </dx-button>
+  <dx-button stylingMode="contained" type="normal" (onClick)="switch_to_english()">
+    <img src="uk_flag.svg" height="20">
+  </dx-button>
+  <div id="home_main_div" class="dx-card responsive-paddings">
  
 <p> Cet utilitaire est un prototype qui doit  permettre de préparer des documents XML pour être importés
     dans l'outil <a target="_blank" href="https://inception-project.github.io/">INCEpTION</a>. Ceci implique de transformer vos données

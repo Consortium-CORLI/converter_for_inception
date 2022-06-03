@@ -27,11 +27,11 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 
 
 @Component({
-  selector: 'app-sax2',
+  selector: 'app-sax2_english',
   templateUrl: './sax2.component.html',
   styleUrls: ['./sax2.component.scss']
 })
-export class Sax2Component implements OnInit {
+export class Sax2ComponentEnglish implements OnInit {
 
   @ViewChild('xmlGrid', { static: true }) xmlGrid: DxDataGridComponent;
   @ViewChild('tabPanel', { static: true }) tabPanel: DxTabPanelComponent;
@@ -142,7 +142,7 @@ export class Sax2Component implements OnInit {
   suggestionDataSource: any = [
     {
       id:0,
-      quality: "Nécessaire",
+      quality: "Necessary",
       scale: "Document",
       suggestions: [],
       suggestions_str: '',
@@ -150,16 +150,16 @@ export class Sax2Component implements OnInit {
     },
     {
       id:1,
-      quality: "Facultatif",
-      scale: "Paragraphe",
+      quality: "Optional",
+      scale: "Paragraph",
       suggestions: [],
       suggestions_str: '',
       choice: ''
     },
     {
       id:2,
-      quality: "Facultatif",
-      scale: "Phrase",
+      quality: "Optional",
+      scale: "Sentence",
       suggestions: [],
       suggestions_str: '',
       choice: ''

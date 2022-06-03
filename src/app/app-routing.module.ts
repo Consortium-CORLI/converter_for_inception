@@ -9,6 +9,7 @@ import { DxFileUploaderModule } from 'devextreme-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Sax2Component } from './pages/sax2/sax2.component';
+import { Sax2ComponentEnglish } from './pages/sax2_english/sax2.component';
 // import { Sax2_v2_Component } from './pages/sax2_v2/sax2_v2.component';
 // import { Sax2_v2_Component } from './pages/sax2_v2/sax.component';
 // import { Sax2v3Component } from './pages/sax2_v3/sax2.component';
@@ -21,6 +22,11 @@ const routes: Routes = [
   {
     path: 'sax2',
     component: Sax2Component,
+    canActivate: [ AuthGuardService ]
+  },
+  {
+    path: 'sax2_english',
+    component: Sax2ComponentEnglish,
     canActivate: [ AuthGuardService ]
   },
   // {
@@ -70,6 +76,7 @@ const routes: Routes = [
     DxFileUploaderModule, DxPopupModule, DxScrollViewModule, DxCheckBoxModule, DxToolbarModule, DxTabPanelModule, DxTextBoxModule, DxProgressBarModule],
   providers: [AuthGuardService],
   exports: [RouterModule],
-  declarations: [HomeComponent,  TasksComponent, Sax2Component]
+  // declarations: [HomeComponent,  TasksComponent, Sax2Component]
+  declarations: [HomeComponent,  TasksComponent, Sax2Component, Sax2ComponentEnglish]
 })
 export class AppRoutingModule { }

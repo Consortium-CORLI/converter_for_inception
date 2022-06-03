@@ -13,7 +13,7 @@
       <!-- <dx-toolbar> -->
 
       <dxi-item location="before">
-        <dx-file-uploader #up id="dx-file-uploader_xml_files" selectButtonText="Charger des fichiers XML" labelText="" accept=".xml"
+        <dx-file-uploader #up id="dx-file-uploader_xml_files" selectButtonText="Load XML files" labelText="" accept=".xml"
           uploadMode="useForm" multiple="true" [showFileList]="false"
           (onValueChanged)="onFileUploaderValueChanged($event)">
         </dx-file-uploader>
@@ -40,15 +40,15 @@
         <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="false"></dxo-editing>
         <dxo-scrolling mode="normal"></dxo-scrolling>
 
-        <dxi-column dataField="quality" caption="Qualité" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="quality" caption="Quality" [allowEditing]="false"></dxi-column>
         <!-- <dxi-column dataField="quality" [caption]="LANG_caption_quality" [allowEditing]="false"></dxi-column> -->
-        <dxi-column dataField="scale" caption="Echelle" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="scale" caption="Scale" [allowEditing]="false"></dxi-column>
         <!-- <dxi-column dataField="scale" [caption]="LANG_caption_scale" [allowEditing]="false"></dxi-column> -->
         <dxi-column dataField="suggestions_str" caption="Suggestions" [allowEditing]="false">
         </dxi-column>
         <!-- <dxi-column dataField="suggestions_str" [caption]="LANG_caption_suggestions" [allowEditing]="false">
         </dxi-column> -->
-        <dxi-column dataField="choice" caption="Choix"></dxi-column>
+        <dxi-column dataField="choice" caption="Choice"></dxi-column>
         <!-- <dxi-column dataField="choice" [caption]="LANG_caption_choice"></dxi-column> -->
 
         <div *dxTemplate="let data of 'cellTemplate'">
@@ -58,7 +58,7 @@
 
       </dx-data-grid>
       <br />
-      <span id="first_document_announcer_span" style="display:block">Premier document (sur <span id="number_of_documents_span"></span>) :</span>
+      <span id="first_document_announcer_span" style="display:block">First document (on <span id="number_of_documents_span"></span>):</span>
       <br />
       <dx-text-area [spellcheck]="false" [value]="first_document" [visible]="firstDocumentVisible" height="15%">
       </dx-text-area>
@@ -68,7 +68,7 @@
       <!-- <dxi-item location="before" [visible]="suggestionPopupTagsVisible"> -->
       <dxi-item location="before">
 
-        <span id="project_name_span">Nom du projet :</span>
+        <span id="project_name_span">Project name:</span>
         <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:inline"
           [(value)]="project_name">
         </dx-text-box>
@@ -82,7 +82,7 @@
       </dxi-item>
       <dxi-item location="after">
 
-        <dx-button stylingMode="contained" text="Générer" type="normal" [width]="300" [visible]="firstDocumentVisible"
+        <dx-button stylingMode="contained" text="Generate" type="normal" [width]="300" [visible]="firstDocumentVisible"
           (onClick)="generer()">
         </dx-button>
         <!-- <dx-button stylingMode="contained" [text]="LANG_generate" type="normal" [width]="200" [visible]="firstDocumentVisible"
@@ -94,7 +94,7 @@
       <dx-progress-bar [min]="0" [max]="100" [value]="conversion_progress"></dx-progress-bar>
     </div>
   </dxi-item>
-  <dxi-item title="Balises">
+  <dxi-item title="Tags">
   <!-- <dxi-item [title]="LANG_title_tags"> -->
     <!-- <h2 class="content-block">Conversion (alt. sax parser) {{fichierXML}} </h2> -->
     <div class="content-block">
@@ -130,10 +130,10 @@
 
         <dxo-selection mode="single"></dxo-selection>
 
-        <dxi-column dataField="tag" caption="Balise" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="tag" caption="Tag" [allowEditing]="false"></dxi-column>
         <!-- <dxi-column dataField="attrsstr" caption="Attributs" [allowEditing]="false"></dxi-column> -->
-        <dxi-column dataField="attrs" caption="Attributs" [allowEditing]="false"></dxi-column>
-        <dxi-column dataField="constraint" caption="Contrainte">
+        <dxi-column dataField="attrs" caption="Attributes" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="constraint" caption="Constraint">
           <dxo-lookup [dataSource]="constraintTypes" displayExpr="label" valueExpr="value">
           </dxo-lookup>
 
@@ -143,8 +143,8 @@
           </dxo-lookup>
         </dxi-column>
 
-        <dxi-column dataField="quantity" caption="Quantité" [allowEditing]="false"></dxi-column>
-        <dxi-column dataField="averageCharCount" caption="Longueur moyenne" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="quantity" caption="Quantity" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="averageCharCount" caption="Average length" [allowEditing]="false"></dxi-column>
 
 
         <div *dxTemplate="let data of 'cellTemplate'">
@@ -165,7 +165,7 @@
 
   </dxi-item>
 
-  <dxi-item title="Historique">
+  <dxi-item title="History">
   <!-- <dxi-item [title]="LANG_title_history"> -->
     <div class="content-block">
       <dx-data-grid [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="history_list" keyExpr="id"
@@ -175,52 +175,49 @@
         <dxo-selection mode="single"></dxo-selection>
 
         <!-- <dxi-column dataField="id" caption="#" [allowEditing]="false"></dxi-column> -->
-        <!-- <dxi-column dataField="id" caption="Indice" [allowEditing]="false"></dxi-column> -->
-        <dxi-column dataField="id" caption="Indice" [allowEditing]="false"></dxi-column>
-        <dxi-column dataField="project_name" caption="Nom du projet" [allowEditing]="false"></dxi-column>
-        <dxi-column dataField="doc_separator" caption="Séparateur de document" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="id" caption="Index" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="project_name" caption="Project name" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="doc_separator" caption="Document-separating tag" [allowEditing]="false"></dxi-column>
         <dxi-column dataField="date" caption="Date" [allowEditing]="false"></dxi-column>
-        <dxi-column dataField="file_name" caption="Noms des fichiers" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="file_name" caption="File names" [allowEditing]="false"></dxi-column>
 
       </dx-data-grid>
 
-      <p>Reconversion vers le format initial d'un export INCEpTION (pour se faire, faites un export avec comme format
-        additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale
-        qui se trouve dans l'historique) : </p>
+      <p>Converting back to the initial format from an INCEpTION export (to do so, export with UIMA CAS XML 1.1 as an additional format, put the ZIP file just below and indicate the index of the initial converting that may be found in the history): </p>
 
-      <dx-file-uploader #up selectButtonText="Charger un fichier d'export INCEpTION" labelText="" accept=".zip"
+      <dx-file-uploader #up selectButtonText="Load an INCEpTION export file" labelText="" accept=".zip"
         uploadMode="useForm" multiple="true" [showFileList]="false"
         (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
       </dx-file-uploader>
       <p id="reconverter_filename_p"></p>
-      <dx-text-box placeholder="Indice dans l'historique" id="index_in_history_input" style="display:inline"
+      <dx-text-box placeholder="Index in history" id="index_in_history_input" style="display:inline"
         [(value)]="index_in_history"></dx-text-box>
-      <dx-button stylingMode="contained" text="Reconvertir" type="normal" [width]="200" [visible]="true"
+      <dx-button stylingMode="contained" text="Convert back" type="normal" [width]="200" [visible]="true"
         (onClick)="reconvertir()">
       </dx-button>
 
     </div>
   </dxi-item>
 
-  <dxi-item title="Aide">
+  <dxi-item title="Help">
   <!-- <dxi-item [title]="LANG_title_help"> -->
     <div class="content-block">
-      <p>1. Chargez vos documents</p>
+      <p>1. Load your documents</p>
       <img src="aide1.png" style="max-width:100%">
       <br>
-      <p>2. Cliquez sur le crayon pour modifier la balise séparatrice de documents</p>
+      <p>2. Click on the pen to modify the document-separating tag</p>
       <img src="aide2.png" style="max-width:100%">
       <br>
-      <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p>
+      <p>3. Indicate the document separating-tag and click on "SAVE"</p>
       <img src="aide3.png" style="max-width:100%">
       <br>
-      <p>4. Remplissez le CAPTCHA</p>
+      <p>4. Answer the CAPTCHA</p>
       <img src="aide4.png" style="max-width:100%">
       <br>
-      <p>5. Modifiez le nom du projet si vous le souhaitez, cliquez sur "GENERER" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement</p>
+      <p>5. Modify the project name if you wish to, click on "GENERATE" and wait until your converted corpus is automatically downloaded</p>
       <img src="aide5.png" style="max-width:100%">
       <br>
-      <p>6. Une fois dans INCEpTION, dans l'onglet "Projects", importez le fichier téléchargé en cliquant sur "Import project"</p>
+      <p>6. Once in INCEpTION, in the "Projects" tab, import the downloaded file by clicking on "Import project"</p>
       <img src="aide6.png" style="max-width:100%">
       <!-- <br> -->
 
