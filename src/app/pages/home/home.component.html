@@ -1,41 +1,52 @@
-<h2 id="home_h2" class="content-block">Accueil</h2>
+<!-- <h2 id="home_h2" class="content-block">Accueil</h2> -->
+<h2 id="home_h2" class="content-block">{{ custom_home }}</h2>
 <div class="content-block">
-  <dx-button stylingMode="contained" type="normal" (onClick)="switch_to_french()">
+  <!-- <dx-button stylingMode="contained" type="normal" (onClick)="switch_to_french()">
     <img src="french_flag.svg" height="20">
   </dx-button>
   <dx-button stylingMode="contained" type="normal" (onClick)="switch_to_english()">
     <img src="uk_flag.svg" height="20">
-  </dx-button>
+  </dx-button> -->
   <div id="home_main_div" class="dx-card responsive-paddings">
  
-<p> Cet utilitaire est un prototype qui doit  permettre de préparer des documents XML pour être importés
+<!-- <p> {{ test }} Cet utilitaire est un prototype qui doit  permettre de préparer des documents XML pour être importés
     dans l'outil <a target="_blank" href="https://inception-project.github.io/">INCEpTION</a>. Ceci implique de transformer vos données
     dans le format UIMA CAS XMI avec un seul document par fichier (split).
-</p>
+</p> -->
+<p>{{ custom_this_applet_is_a_prototype }} <a target="_blank" href="https://inception-project.github.io/">INCEpTION</a>. {{ custom_this_means_it_will_transform }}</p>
 
-  <b>Marche à suivre : </b>
+  <!-- <b>Marche à suivre : </b> -->
+  <b>{{ custom_steps_to_follow }}</b>
   <ol>
     <!-- <li>Charger votre document XML (TEI par exemple)</li> -->
-    <li>Dans l'onglet "Conversion", chargez vos fichiers XML (TEI par exemple), puis identifiez :</li>
+    <!-- <li>Dans l'onglet "Conversion", chargez vos fichiers XML (TEI par exemple), puis identifiez :</li> -->
+    <li>{{ custom_in_the_converting_tab }}</li>
     <!-- <li>Le document sera analysé (SAX parser) et présenté dans une table où les colonnes représentent un niveau de profondeur dans l'arborescence du document XML</li>  -->
     <!-- <li>Le document sera analysé (SAX parser) et présenté dans un tableau avec une ligne par type de balise</li>  -->
     <!-- <li>Il vous est alors demandé d'identifier dans ce document : </li> -->
     <ol>
       <!-- <li><b>La balise qui permet de distinguer chaque document</b>, si votre document comporte une liste de documents</li> -->
-      <li><b>La balise qui permet de distinguer chaque document du corpus</b> (<i>l'application vous fera des suggestions, mais vous pouvez mettre ce que vous souhaitez</i>)</li>
+      <!-- <li><b>La balise qui permet de distinguer chaque document du corpus</b> (<i>l'application vous fera des suggestions, mais vous pouvez mettre ce que vous souhaitez</i>)</li> -->
+      <li><b>{{ custom_the_tag_that_allows }}</b> (<i>{{ custom_the_app_will_give_you_suggestions }}</i>)</li>
       <!-- <li>[optionnel] : la balise qui représente la notion de paragraphe</li> -->
-      <li>[optionnel] la balise qui représente la notion de paragraphe</li>
+      <li>{{ custom_paragraph_tag }}</li>
       <!-- <li>[optionnel] : la balise qui représente la notion de phrase</li> -->
-      <li>[optionnel] la balise qui représente la notion de phrase</li>
+      <li>{{ custom_sentence_tag }}</li>
       <!-- <li>les annotations pré-éxistantes qui vous souhaitez retrouver dans INCEpTION</li> -->
-      <li>les annotations pré-éxistantes qui vous souhaitez retrouver dans INCEpTION (<i>par défaut, toutes les balises qui ne font pas partie des autres catégories sont considérées comme des annotations</i>)</li>
+      <!-- <li>les annotations pré-éxistantes qui vous souhaitez retrouver dans INCEpTION (<i>par défaut, toutes les balises qui ne font pas partie des autres catégories sont considérées comme des annotations</i>)</li> -->
+      <li>{{ custom_preexisting_annotations }} (<i>{{ custom_default_tag }}</i>)</li>
     </ol>
-    <li>[optionnel] Sélectionnez un nom de projet.</li>
-    <li>Cliquez sur <b>GENERER</b> et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement sous la forme d'un fichier ZIP. <b>Vous n'avez pas besoin de décompresser ce fichier, il pourra directement être chargé dans INCEpTION.</b></li>
-    <li>Dans l'onglet "Projects" d'INCEpTION, cliquez sur "Import project" et sélectionnez le fichier ZIP.</li>
+    <!-- <li>[optionnel] Sélectionnez un nom de projet.</li> -->
+    <li>{{ custom_select_project_name }}</li>
+    <!-- <li>Cliquez sur <b>GENERER</b> et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement sous la forme d'un fichier ZIP. <b>Vous n'avez pas besoin de décompresser ce fichier, il pourra directement être chargé dans INCEpTION.</b></li> -->
+    <!-- <li>Dans l'onglet "Projects" d'INCEpTION, cliquez sur "Import project" et sélectionnez le fichier ZIP.</li> -->
+    <li>{{ custom_click_on }}<b>{{ custom_generate }}</b> {{ custom_and_wait }} <b> {{ custom_no_need_to_decompress }}</b></li>
+    <!-- <li>Dans l'onglet "Projects" d'INCEpTION, cliquez sur "Import project" et sélectionnez le fichier ZIP.</li> -->
+    <li>{{ custom_import_inception }}</li>
   </ol>
 
-  <p>Veuillez noter que cet outil a été testé sur INCEpTION 23.4. Au besoin, veuillez contacter <a href="https://corli.huma-num.fr/en/contact-2/">CORLI</a> ou me contacter directement <a href="https://github.com/LouisEsteve/inception_converter_applet">sur GitHub</a>. Ceci étant un prototype, nous sommes aussi ouverts aux retours.</p>
+  <!-- <p>Veuillez noter que cet outil a été testé sur INCEpTION 23.4. Au besoin, veuillez contacter <a href="https://corli.huma-num.fr/en/contact-2/">CORLI</a> ou me contacter directement <a href="https://github.com/LouisEsteve/inception_converter_applet">sur GitHub</a>. Ceci étant un prototype, nous sommes aussi ouverts aux retours.</p> -->
+  <p>{{ custom_please_note }} <a href="https://corli.huma-num.fr/en/contact-2/">CORLI</a> {{ custom_or_directly }} <a href="https://github.com/LouisEsteve/inception_converter_applet"> {{ custom_on_github }}</a>. {{ custom_as_this_tool_is_prototype }}</p>
 <!-- <p>
   L'identification des éléments précités se fait par clic-sélection d'une cellule (balise) dans la table puis en 
   cliquant sur les boutons d'actions correspondant à ce que l'on veut identifier. Le bouton Collecter permet de collecter 

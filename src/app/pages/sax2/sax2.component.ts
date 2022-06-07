@@ -14,17 +14,7 @@ hljs.registerLanguage('xml',xml);
 
 import * as JSZip from 'jszip';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
-
-// const conversion_server_url = 'http://localhost:8000';
-// const conversion_server_url = 'http://localhost:8001';
-// const conversion_server_url = 'http://localhost:8002';
-// const conversion_server_url = 'http://localhost:8003';
-// const conversion_server_url = 'http://localhost:8004';
-// const conversion_server_url = 'http://localhost:8005';
-// const conversion_server_url = 'http://localhost:8006';
-// const conversion_server_url = 'http://localhost:8007';
-// const conversion_server_url = document.domain;
-
+import { locale, loadMessages, formatMessage } from 'devextreme/localization';
 
 @Component({
   selector: 'app-sax2',
@@ -199,7 +189,153 @@ export class Sax2Component implements OnInit {
       this.typesystemTemplate = r;
     });
 
+
+
+
+
+
+
+    loadMessages({
+      'fr': {
+        "test": "test français",
+        "custom_generate": "GENERER",
+        "custom_load_xml_files": "Charger des fichiers XML",
+        "custom_conversion": "Conversion",
+        "custom_tags": "Balises",
+        "custom_history": "Historique",
+        "custom_help": "Aide",
+        "custom_quality": "Qualité",
+        "custom_scale": "Echelle",
+        "custom_suggestions": "Suggestions",
+        "custom_choice": "Choix",
+        "custom_first_document_out_of": "Premier document (sur",
+        "custom_tag": "Balise",
+        "custom_attributes": "Attributs",
+        "custom_constraint": "Contrainte",
+        "custom_type": "Type",
+        "custom_quantity": "Quantité",
+        "custom_average_length": "Longueur moyenne",
+        "custom_index": "Indice",
+        "custom_project_name": "Nom du projet ",
+        "custom_document_separator": "Séparateur de document",
+        "custom_date": "Date",
+        "custom_file_names": "Noms des fichiers",
+        "custom_reconvert_to_initial_format" : "Reconversion vers le format initial d'un export INCEpTION (pour se faire, faites un export avec comme format additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale qui se trouve dans l'historique) : ",
+        "custom_load_an_inception_file": "Charger un fichier d'export INCEpTION",
+        "custom_index_in_history": "Indice dans l'historique",
+        "custom_reconvert": "Reconvertir",
+        "custom_load_your_documents": "Chargez vos documents",
+        "custom_click_on_pen": "Cliquez sur le crayon pour modifier la balise séparatrice de documents",
+        "custom_fill_document_separator": "Renseignez la balise séparatrice et cliquez sur \"Sauvegarder\"",
+        "custom_fill_captcha": "Remplissez le CAPTCHA",
+        "custom_modify_project_name": "Modifiez le nom du projet si vous le souhaitez, cliquez sur \"GENERER\" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement",
+        "custom_inception_import": "Une fois dans INCEpTION, dans l'onglet \"Projects\", importez le fichier téléchargé en cliquant sur \"Import project\"",
+        "dxDataGrid-noDataText": "Pas de données",
+        "dxDataGrid-editingSaveRowChanges": "Sauvegarder"
+      },
+      'en': {
+        "test": "test english",
+        "custom_generate": "GENERATE",
+        "custom_load_xml_files": "Load XML files",
+        "custom_conversion": "Converting",
+        "custom_tags": "Tags",
+        "custom_history": "History",
+        "custom_help": "Help",
+        "custom_quality": "Quality",
+        "custom_scale": "Scale",
+        "custom_suggestions": "Suggestions",
+        "custom_choice": "Choice",
+        "custom_first_document_out_of": "First document (out of",
+        "custom_tag": "Tag",
+        "custom_attributes": "Attributes",
+        "custom_constraint": "Constraint",
+        "custom_type": "Type",
+        "custom_quantity": "Quantity",
+        "custom_average_length": "Average length",
+        "custom_index": "Index",
+        "custom_project_name": "Project name",
+        "custom_document_separator": "Document separator",
+        "custom_date": "Date",
+        "custom_file_names": "File names",
+        "custom_reconvert_to_initial_format" : "Converting back to the initial format from an INCEpTION export (to do so, export with UIMA CAS XML 1.1 as an additional format, put the ZIP file just below and indicate the index of the initial converting that may be found in the history): ",
+        "custom_load_an_inception_file": "Load an INCEpTION export file",
+        "custom_index_in_history": "Index in history",
+        "custom_reconvert": "Convert back",
+        "custom_load_your_documents": "Load your documents",
+        "custom_click_on_pen": "Click on the pen to modify the document-separating tag",
+        "custom_fill_document_separator": "Fill in the document-separating tag and click on \"Save\"",
+        "custom_fill_captcha": "Fill in the CAPTCHA",
+        "custom_modify_project_name": "Modify the project name if you wish to, click on \"Generate\" and wait until your converted corpus is downloaded automatically",
+        "custom_inception_import": "Once in INCEpTION, in the \"Projects\" tab, import the downloaded file by clicking on \"Import project\"",
+        "dxDataGrid-noDataText": "No data",
+        "dxDataGrid-editingSaveRowChanges": "Save"
+      }
+    });
+
+    locale(navigator.language);
+
   }
+
+  get custom_generate(){return formatMessage("custom_generate")}
+  get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
+  get custom_conversion(){return formatMessage("custom_conversion")}
+  get custom_tags(){return formatMessage("custom_tags")}
+  get custom_history(){return formatMessage("custom_history")}
+  get custom_help(){return formatMessage("custom_help")}
+  get custom_quality(){return formatMessage("custom_quality")}
+  get custom_scale(){return formatMessage("custom_scale")}
+  get custom_suggestions(){return formatMessage("custom_suggestions")}
+  get custom_choice(){return formatMessage("custom_choice")}
+  get custom_first_document_out_of(){return formatMessage("custom_first_document_out_of")}
+  get custom_tag(){return formatMessage("custom_tag")}
+  get custom_attributes(){return formatMessage("custom_attributes")}
+  get custom_constraint(){return formatMessage("custom_constraint")}
+  get custom_type(){return formatMessage("custom_type")}
+  get custom_quantity(){return formatMessage("custom_quantity")}
+  get custom_average_length(){return formatMessage("custom_average_length")}
+  get custom_index(){return formatMessage("custom_index")}
+  get custom_project_name(){return formatMessage("custom_project_name")}
+  get custom_document_separator(){return formatMessage("custom_document_separator")}
+  get custom_date(){return formatMessage("custom_date")}
+  get custom_file_names(){return formatMessage("custom_file_names")}
+  get custom_reconvert_to_initial_format(){return formatMessage("custom_reconvert_to_initial_format")}
+  get custom_load_an_inception_file(){return formatMessage("custom_load_an_inception_file")}
+  get custom_index_in_history(){return formatMessage("custom_index_in_history")}
+  get custom_reconvert(){return formatMessage("custom_reconvert")}
+  get custom_load_your_documents(){return formatMessage("custom_load_your_documents")}
+  get custom_click_on_pen(){return formatMessage("custom_click_on_pen")}
+  get custom_fill_document_separator(){return formatMessage("custom_fill_document_separator")}
+  get custom_fill_captcha(){return formatMessage("custom_fill_captcha")}
+  get custom_modify_project_name(){return formatMessage("custom_modify_project_name")}
+  get custom_inception_import(){return formatMessage("custom_inception_import")}
+  // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
+  // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
+  // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
+  // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
+  // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
+  // "custom_conversion": "Conversion",
+  // "custom_tags": "Balises",
+  // "custom_history": "Historique",
+  // "custom_help": "Aide",
+  // "custom_tag": "Balise",
+  // "custom_attributes": "Attributs",
+  // "custom_constraint": "Contrainte",
+  // "custom_type": "Type",
+  // "custom_quantity": "Quantité",
+  // "custom_average_length": "Longueur moyenne",
+  // "custom_index": "Indice",
+  // "custom_project_name": "Nom du projet",
+  // "custom_document_separator": "Séparateur de document",
+  // "custom_date": "Date",
+  // "custom_file_names": "Noms des fichiers",
+  // "custom_load_your_documents": "Chargez vos documents",
+  // "custom_click_on_pen": "Cliquez sur le crayon pour modifier la balise séparatrice de documents",
+  // "custom_fill_document_separator": "Renseignez la balise séparatrice et cliquez sur \"Sauvegarder\"",
+  // "custom_fill_captcha": "Remplissez le CAPTCHA",
+  // "custom_modify_project_name": "Modifiez le nom du projet si vous le souhaitez, cliquez sur \"GENERER\" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement",
+  // "custom_inception_import": "Une fois dans INCEpTION, dans l'onglet \"Projects\", importez le fichier téléchargé en cliquant sur \"Import project\"",
+  // "dxDataGrid-noDataText": "Pas de données",
+  // "dxDataGrid-editingSaveRowChanges": "Sauvegarder"
 
   generate_captcha(){
     var element_a = ~~(Math.random() * 20) - 10;

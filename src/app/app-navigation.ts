@@ -1,6 +1,6 @@
 export const navigation = [
   {
-    text: 'Accueil / Home',
+    text: 'Home / Accueil',
     path: '/home',
     icon: 'home'
   },
@@ -23,16 +23,19 @@ export const navigation = [
   */
  
   {
-    text: '[FR] Conversion',
+    // text: '[FR] Conversion',
+    text: 'Converting / Conversion',
     path: '/sax2',
     icon: 'folder'
   },
  
+  /*
   {
     text: '[EN] Converting',
     path: '/sax2_english',
     icon: 'folder'
   }
+  */
 ];
 
 
