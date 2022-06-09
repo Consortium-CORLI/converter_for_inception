@@ -1232,6 +1232,179 @@ export class Sax2Component implements OnInit {
   }
 
 
+  reconvertir_n(){
+    /* <LOUIS> */
+    var zis = this;
+    // var local_history = window.localStorage.getItem('history');
+    var local_history = JSON.parse(window.localStorage.getItem('history'));
+    var num_index_in_history = Number(this.index_in_history);
+    if(this.index_in_history === null || this.index_in_history === undefined || num_index_in_history >= local_history.length){
+      alert('Veuillez insérer un indice d\'historique valide.');
+      return;
+    }
+    /*
+    console.log('A');
+    var reconv_traces_xhr = new XMLHttpRequest();
+    // reconv_traces_xhr.open('POST','traces_bridge.php',true);
+    reconv_traces_xhr.open('POST','http://localhost:9000/traces_bridge.php',true);
+    reconv_traces_xhr.setRequestHeader("Content-Type", "application/json");
+    // reconv_traces_xhr.open('POST','traces_bridge.php',true);
+    reconv_traces_xhr.onreadystatechange = function(){
+      if(reconv_traces_xhr.readyState === 4 && reconv_traces_xhr.status === 200){
+        console.log(reconv_traces_xhr.responseText);
+        // reconv_traces_xhr.send(JSON.stringify(local_history[Number(this.index_in_history)]['traces']));
+        // reconv_traces_xhr.send(JSON.stringify(local_history[num_index_in_history]['traces']));
+        
+        console.log('B');
+        var reconv_zip_xhr = new XMLHttpRequest();
+        // reconv_zip_xhr.setRequestHeader("Content-Type", this.file_to_reconvert.type);
+        // reconv_zip_xhr.open('POST','reconv_zip_bridge.php',true);
+        reconv_zip_xhr.open('POST','http://localhost:9001/reconv_zip_bridge.php',true);
+        reconv_zip_xhr.setRequestHeader("Content-Type", "octet/stream");
+        // reconv_zip_xhr.open('POST','reconv_zip_bridge.php',true);
+        // reconv_traces_xhr.send(JSON.stringify(local_history[Number(this.index_in_history)]['traces']));
+        // reconv_zip_xhr.send(this.file_to_reconvert);
+        // reconv_zip_xhr.send(this.file_to_reconvert_content);
+        // setTimeout(function(){
+        //   reconv_zip_xhr.send(this.file_to_reconvert_content);
+        // },500);
+        // reconv_zip_xhr.send(this.file_to_reconvert_content);
+        // reconv_zip_xhr.send(zis.file_to_reconvert_content);
+        reconv_zip_xhr.send(zis.file_to_reconvert);
+      }
+    }
+    
+    console.log('C');
+    // reconv_traces_xhr.open('POST','traces_bridge.php',true);
+    reconv_traces_xhr.send(JSON.stringify(local_history[num_index_in_history]['traces']));
+    // window.localStorage.setItem('history',JSON.stringify(this.history_list));
+    */
+
+
+
+
+    /*
+    var reconv_zip_xhr = new XMLHttpRequest();
+    reconv_zip_xhr.onreadystatechange = function(){
+      if(reconv_zip_xhr.readyState === 4 && reconv_zip_xhr.status === 200){
+        var token = JSON.parse(reconv_zip_xhr.responseText)['token'];
+        console.log(token);
+        var reconv_traces_xhr = new XMLHttpRequest();
+        reconv_traces_xhr.onreadystatechange = function(){
+          if(reconv_traces_xhr.readyState === 4 && reconv_traces_xhr.status === 200){
+            var reconv_check_status_interval = setInterval(
+              () => {
+                var reconv_check_status = new XMLHttpRequest();
+                reconv_check_status
+                reconv_check_status.open("POST","http://localhost:9002/reconv_check_status.php",true);
+                reconv_check_status.setRequestHeader("Content-Type", "application/json");
+                reconv_check_status.send(JSON.stringify({
+                  "token": token
+                }));
+              },
+              2000
+            );
+          }
+        }
+        // reconv_traces_xhr.open('POST','traces_bridge.php',true);
+        reconv_traces_xhr.open('POST','http://localhost:9000/traces_bridge.php',true);
+        reconv_traces_xhr.setRequestHeader("Content-Type", "application/json");
+        // reconv_traces_xhr.send(JSON.stringify(local_history[num_index_in_history]['traces']));
+        reconv_traces_xhr.send(JSON.stringify({
+          "token":token,
+          "traces":local_history[num_index_in_history]['traces'] || []
+        }));
+      }
+    }
+    reconv_zip_xhr.open('POST','http://localhost:9001/reconv_zip_bridge.php',true);
+    reconv_zip_xhr.setRequestHeader("Content-Type", "octet/stream");
+    reconv_zip_xhr.send(zis.file_to_reconvert);
+    */
+
+
+
+
+
+
+
+    var reconv_token_xhr = new XMLHttpRequest();
+    reconv_token_xhr.onreadystatechange = function(){
+      if(reconv_token_xhr.readyState === 4 && reconv_token_xhr.status === 200){
+        var reconv_zip_xhr = new XMLHttpRequest();
+        reconv_zip_xhr.onreadystatechange = function(){
+          if(reconv_zip_xhr.readyState === 4 && reconv_zip_xhr.status === 200){
+            /*
+            var token = JSON.parse(reconv_zip_xhr.responseText)['token'];
+            console.log(token);
+            var reconv_traces_xhr = new XMLHttpRequest();
+            reconv_traces_xhr.onreadystatechange = function(){
+              if(reconv_traces_xhr.readyState === 4 && reconv_traces_xhr.status === 200){
+                var reconv_check_status_interval = setInterval(
+                  () => {
+                    var reconv_check_status = new XMLHttpRequest();
+                    reconv_check_status
+                    // reconv_check_status.open("POST","http://localhost:9002/reconv_check_status.php",true);
+                    reconv_check_status.open("POST","reconv_check_status.php",true);
+                    reconv_check_status.setRequestHeader("Content-Type", "application/json");
+                    reconv_check_status.send(JSON.stringify({
+                      "token": token
+                    }));
+                  },
+                  2000
+                );
+              }
+            }
+            // reconv_traces_xhr.open('POST','traces_bridge.php',true);
+            reconv_traces_xhr.open('POST','http://localhost:9000/traces_bridge.php',true);
+            reconv_traces_xhr.setRequestHeader("Content-Type", "application/json");
+            // reconv_traces_xhr.send(JSON.stringify(local_history[num_index_in_history]['traces']));
+            reconv_traces_xhr.send(JSON.stringify({
+              "token":token,
+              "traces":local_history[num_index_in_history]['traces'] || []
+            }));
+            */
+
+
+
+            var reconv_download_xhr = new XMLHttpRequest();
+            reconv_download_xhr.open('POST','reconv_download_project.php',true);
+
+            reconv_download_xhr.onreadystatechange = function(){
+              if(reconv_download_xhr.readyState === 4 && reconv_download_xhr.status === 200){
+                // console.log(dl_xhr.responseText);
+                // var blob = new Blob([dl_xhr.response], { type: "application/zip" });
+                // var blob = new Blob([dl_xhr.response], { type: "application/zip;charset=utf-8" });
+                // var blob = new Blob([dl_xhr.responseText], { type: "application/zip;charset=utf-8" });
+                // var blob = new Blob([dl_xhr.responseText], { type: "text/plain;charset=utf-8" });
+                
+                var blob = new Blob([reconv_download_xhr.response], { type: "octet/stream" });
+                saveAs(blob, "inception-project-reconverted"+Date.now()+".zip");
+                
+                // ;charset=utf-8
+              }
+            }
+            // THIS LINE RIGHT HERE MADE THE DIFFERENCE
+            reconv_download_xhr.responseType = 'arraybuffer';
+            reconv_download_xhr.send(reconv_zip_xhr.responseText);
+          }
+        }
+        // reconv_zip_xhr.open('POST','http://localhost:9001/reconv_zip_bridge.php',true);
+        reconv_zip_xhr.open('POST','reconv_zip_bridge_n.php',true);
+        // reconv_zip_xhr.setRequestHeader("Content-Type", "application/json");
+        reconv_zip_xhr.setRequestHeader("Content-Type", "octet/stream");
+        // console.log(local_history[num_index_in_history]['token']);
+        // reconv_zip_xhr.send(JSON.stringify({"token":local_history[num_index_in_history]['token'],"zip":zis.file_to_reconvert}));
+        reconv_zip_xhr.send(zis.file_to_reconvert);
+      }
+    }
+    reconv_token_xhr.open("POST","reconv_get_token.php",true);
+    reconv_token_xhr.setRequestHeader("Content-Type", "application/json");
+    reconv_token_xhr.send(JSON.stringify({"token":local_history[num_index_in_history]['token']}));
+      
+    /* </LOUIS> */
+  }
+
+
   toggle_input_display(){
     /*
     var new_display = 'none';

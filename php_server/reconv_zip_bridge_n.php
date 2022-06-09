@@ -79,11 +79,11 @@
 
     $shell_command = '';
     if(substr(PHP_OS,0,3) == 'WIN'){
-        $shell_command = 'cd ' . sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . ' && python3 ../export8.py';
+        $shell_command = 'cd ' . sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . ' && python3 ../export8_vALT.py';
     }else{
-        // $shell_command = 'cd ' . sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . ' ; python3 ../export8.py';
-        // $shell_command = 'cd ' . sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . ' ; source /sites/corliweb/www/python_venv_convinception/bin/activate ; export PYTHONIOENCODING=UTF-8 ; export LANG=fr_FR.UTF-8 ; python3 /sites/corliweb/www/web_main/export8.py';
-	$shell_command = 'cd ' . '/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $token . ' ; source /sites/corliweb/www/python_venv_convinception/bin/activate ; export PYTHONIOENCODING=UTF-8 ; export LANG=fr_FR.UTF-8 ; env python3 /sites/corliweb/www/web_main/export8.py';
+        // $shell_command = 'cd ' . sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . ' ; python3 ../export8_vALT.py';
+        // $shell_command = 'cd ' . sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . ' ; source /sites/corliweb/www/python_venv_convinception/bin/activate ; export PYTHONIOENCODING=UTF-8 ; export LANG=fr_FR.UTF-8 ; python3 /sites/corliweb/www/web_main/export8_vALT.py';
+	$shell_command = 'cd ' . '/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $token . ' ; source /sites/corliweb/www/python_venv_convinception/bin/activate ; export PYTHONIOENCODING=UTF-8 ; export LANG=fr_FR.UTF-8 ; env python3 /sites/corliweb/www/web_main/export8_vALT.py';
     }
     shell_exec($shell_command);
 
