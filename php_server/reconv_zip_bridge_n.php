@@ -94,19 +94,22 @@
 
     $zip = new ZipArchive();
     // $zip->open('./reconverted.zip', ZIPARCHIVE::CREATE);
-    $zip->open(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . '/reconverted.zip', ZIPARCHIVE::CREATE);
+    // $zip->open(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . '/reconverted.zip', ZIPARCHIVE::CREATE);
+    $zip->open('/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $token . '/reconverted.zip',ZIPARCHIVE::CREATE);
     $zip->addEmptyDir('source');
     
     $found_files = '';
     $all_files = '';
 
     // $list_of_generated_files = scandir('.');
-    $list_of_generated_files = scandir(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token);
+    // $list_of_generated_files = scandir(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token);
+    $list_of_generated_files = scandir('/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $token);
     $i_limit = count($list_of_generated_files);
     for($i = 0 ; $i < $i_limit ; $i += 1){
-        if(preg_match('/^inception_export_[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}(_[0-9]+)?_file[0-9]+\.xml$/mi',$list_of_generated_files[$i])){
+        if(preg_match('/^inception_export_[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}(_[0-9]+)?_file[0-9]+(_.*)?\.xml$/mi',$list_of_generated_files[$i])){
             // $zip->addFile('./' . $list_of_generated_files[$i], 'source/' . $list_of_generated_files[$i]);
-            $zip->addFile(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . '/' . $list_of_generated_files[$i], 'source/' . $list_of_generated_files[$i]);
+            // $zip->addFile(sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $token . '/' . $list_of_generated_files[$i], 'source/' . $list_of_generated_files[$i]);
+            $zip->addFile('/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $token . '/' . $list_of_generated_files[$i], 'source/' . $list_of_generated_files[$i]);
             $found_files = $found_files . $list_of_generated_files[$i] . ', ';
         }
         $all_files = $all_files . $list_of_generated_files[$i] . ', ';

@@ -53,3 +53,8 @@ Thumbs.db
 *test2.php
 *index.php
 *phpinfo.php
+*/en.json
+*/fr.json
+src/app/pages/sax2_english*
+src/app/pages/sax2_v2*
+src/app/pages/sax2_v3*

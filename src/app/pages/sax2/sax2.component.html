@@ -230,10 +230,11 @@
           [(value)]="index_in_history"></dx-text-box>
       <!-- <dx-button stylingMode="contained" text="Reconvertir" type="normal" [width]="200" [visible]="true"
         (onClick)="reconvertir()"> -->
-      <dx-button stylingMode="contained" text="{{ custom_reconvert }} (1)" type="normal" [width]="200" [visible]="true"
+      <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_a_single_corpus }})" type="normal" [visible]="true"
         (onClick)="reconvertir()">
       </dx-button>
-      <dx-button stylingMode="contained" text="{{ custom_reconvert }} (n)" type="normal" [width]="200" [visible]="true"
+      <br/>
+      <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_one_corpus_per_annotator }})" type="normal" [visible]="true"
         (onClick)="reconvertir_n()">
       </dx-button>
 

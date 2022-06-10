@@ -230,6 +230,8 @@ export class Sax2Component implements OnInit {
         "custom_fill_captcha": "Remplissez le CAPTCHA",
         "custom_modify_project_name": "Modifiez le nom du projet si vous le souhaitez, cliquez sur \"GENERER\" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement",
         "custom_inception_import": "Une fois dans INCEpTION, dans l'onglet \"Projects\", importez le fichier téléchargé en cliquant sur \"Import project\"",
+        "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
+        "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
         "dxDataGrid-noDataText": "Pas de données",
         "dxDataGrid-editingSaveRowChanges": "Sauvegarder"
       },
@@ -267,6 +269,8 @@ export class Sax2Component implements OnInit {
         "custom_fill_captcha": "Fill in the CAPTCHA",
         "custom_modify_project_name": "Modify the project name if you wish to, click on \"Generate\" and wait until your converted corpus is downloaded automatically",
         "custom_inception_import": "Once in INCEpTION, in the \"Projects\" tab, import the downloaded file by clicking on \"Import project\"",
+        "custom_a_single_corpus": "merge the annotations of annotators into a single corpus",
+        "custom_one_corpus_per_annotator": "one version of the corpus for each annotator",
         "dxDataGrid-noDataText": "No data",
         "dxDataGrid-editingSaveRowChanges": "Save"
       }
@@ -308,6 +312,8 @@ export class Sax2Component implements OnInit {
   get custom_fill_captcha(){return formatMessage("custom_fill_captcha")}
   get custom_modify_project_name(){return formatMessage("custom_modify_project_name")}
   get custom_inception_import(){return formatMessage("custom_inception_import")}
+  get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
+  get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
