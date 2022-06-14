@@ -39,6 +39,7 @@ export class HomeComponent {
         "custom_and_wait": "et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement sous la forme d'un fichier ZIP.",
         "custom_no_need_to_decompress": "Vous n'avez pas besoin de décompresser ce fichier, il pourra directement être chargé dans INCEpTION",
         "custom_import_inception": "Dans l'onglet \"Projects\" d'INCEpTION, cliquez sur \"Import project\" et sélectionnez le fichier ZIP.",
+        "custom_requires_role_project_creator": "Pour que cela apparaisse à l'écran, il faut le ROLE_PROJECT_CREATOR disponible dans les paramètres d'utilisateurs (demandez à votre administrateur INCEpTION).",
         "custom_please_note": "Veuillez noter que cet outil a été testé sur INCEpTION 23.6. Au besoin, veuillez contacter",
         "custom_or_directly": "ou directement",
         "custom_on_github": "sur GitHub",
@@ -67,7 +68,7 @@ export class HomeComponent {
         "custom_fill_captcha": "Remplissez le CAPTCHA",
         "custom_modify_project_name": "Modifiez le nom du projet si vous le souhaitez, cliquez sur \"GENERER\" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement",
         "custom_inception_import": "Une fois dans INCEpTION, dans l'onglet \"Projects\", importez le fichier téléchargé en cliquant sur \"Import project\"",
-        "custom_already_existing_project": "si vous souhaitez incorporer les fichiers convertis vers un projet déjà existant dans INCEpTION, dézippez le ZIP et chargez, en sélectionnant UIMA comme format d'import, tous les fichiers se trouvant dans le répertoire \"source\" dans le project INCEpTION déjà existant",
+        "custom_already_existing_project": "si vous souhaitez incorporer les fichiers convertis vers un projet déjà existant dans INCEpTION, dézippez le ZIP et chargez, en sélectionnant UIMA comme format d'import, tous les fichiers se trouvant dans le répertoire \"source\", vers le project INCEpTION déjà existant",
         "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
         "dxDataGrid-noDataText": "Pas de données",
@@ -93,6 +94,7 @@ export class HomeComponent {
         "custom_and_wait": "and wait until your converted corpus is automatically downloaded as a ZIP file.",
         "custom_no_need_to_decompress": "You don't need to decompress this file, it is to be directly uploaded into INCEpTION.",
         "custom_import_inception": "In the \"Projects\" tab of INCEpTION, click on \"Import project\" and select the ZIP file.",
+        "custom_requires_role_project_creator": "For this to appear on the screen, it requires the ROLE_PROJECT_CREATOR in user settings (ask your INCEpTION administrator).",
         "custom_please_note": "Please note that this tool has been tested on INCEpTION 23.6. If needed, you may contact us at",
         "custom_or_directly": "or directly",
         "custom_on_github": "on GitHub",
@@ -159,6 +161,7 @@ export class HomeComponent {
   get custom_already_existing_project(){return formatMessage("custom_already_existing_project")};
   get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
   get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
+  get custom_requires_role_project_creator(){return formatMessage("custom_requires_role_project_creator")};
 
   // ngOnInit(): void {
       
