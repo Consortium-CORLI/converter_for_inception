@@ -7,7 +7,7 @@ import zipfile
 # import platform
 
 path_to_data_files = r'./source'
-lang = 'en'
+lang = 'fr'
 limit_n_char = 100
 out_zip_path = 'inception_project_stanza.zip'
 
@@ -56,7 +56,7 @@ ld = os.listdir(path_to_data_files)
 for i in ld:
     if i.endswith('.xml'):
         # print(i,end='\r')
-        print(f'Processing {i}')
+        print(f'Processing {i}',end=' ')
         p = f'{path_to_data_files}/{i}'
         f = open(p,'rt',encoding='utf-8')
         d = f.read()
@@ -70,7 +70,7 @@ for i in ld:
         # print(f'Total number of spaces: {sofa.count(" ")}')
         t = time.time()
         stanza_parsed_data = nlp(sofa[:limit_n_char])
-        print(f'{time.time()-t}s')
+        print(f'{time.time()-t}s',end='\r')
         # print(stanza_parsed_data.entities[:5])
 
         xmi_id_list = xmi_id_regex.findall(d)
@@ -87,6 +87,8 @@ for i in ld:
         s_group = ''
         for j in stanza_parsed_data:
             for k in j:
+                if ("start_char" not in k.keys()) or ("end_char" not in k.keys()):
+                    continue
                 s = f'<custom:stanza_tag xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
                 for m in k.keys():
                     # s = f'{s} {str(m)}="{str(k[m]).replace("\"","\\\"")}"'
@@ -158,6 +160,7 @@ if os.path.exists(json_path):
             "lemma",
             "upos",
             "xpos",
+            "feats",
             "head",
             "deprel",
             "start_char",
