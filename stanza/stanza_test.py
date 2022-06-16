@@ -89,6 +89,7 @@ for i in ld:
             for k in j:
                 if ("start_char" not in k.keys()) or ("end_char" not in k.keys()):
                     continue
+                """
                 s = f'<custom:stanza_tag xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
                 for m in k.keys():
                     # s = f'{s} {str(m)}="{str(k[m]).replace("\"","\\\"")}"'
@@ -99,6 +100,54 @@ for i in ld:
                 # print(f'Generated tag: {s}')
                 # print(sofa[k["start_char"]:k["end_char"]])
                 xmi_id_current += 1
+                """
+
+                keys = k.keys()
+                if 'lemma' in keys:
+                    # s = f'<type5:Lemma xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
+                    s = f'<type5:Lemma xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
+                    s = f'{s} value="{k["lemma"]}"'
+                    s = f'{s}/>'
+                    s_group = f'{s_group}\n  {s}'
+                    cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                    xmi_id_current += 1
+                if 'feats' in keys:
+                    # s = f'<morph:MorphologicalFeatures xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
+                    s = f'<morph:MorphologicalFeatures xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
+                    s = f'{s} value="{k["feats"]}"'
+                    s = f'{s}/>'
+                    s_group = f'{s_group}\n  {s}'
+                    cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                    xmi_id_current += 1
+                #POTENTIAL CHANGE HERE WITH multiner?
+                if 'ner' in keys:
+                    # s = f'<type4:NamedEntity xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
+                    s = f'<type4:NamedEntity xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
+                    s = f'{s} identifier="" value="{k["ner"]}"'
+                    s = f'{s}/>'
+                    s_group = f'{s_group}\n  {s}'
+                    cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                    xmi_id_current += 1
+                if 'upos' in keys:
+                    # s = f'<pos:POS xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
+                    s = f'<pos:POS xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
+                    s = f'{s} coarseValue="{k["upos"]}"'
+                    if 'xpos' in keys:
+                        s = f'{s} PosValue="{k["xpos"]}"'
+                    s = f'{s}/>'
+                    s_group = f'{s_group}\n  {s}'
+                    cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                    xmi_id_current += 1
+        
+        
+
+        ################################
+        #XMI FIX
+        xmi_pattern = '(<xmi:XMI)([^<>]*)( xmlns:custom="http:///webanno/custom.ecore" xmi:version="2.0">)'
+        xmi_regex = re.compile(xmi_pattern)
+        d = xmi_regex.sub(r'\1 xmlns:pos="http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/pos.ecore" xmlns:tcas="http:///uima/tcas.ecore" xmlns:xmi="http://www.omg.org/XMI" xmlns:cas="http:///uima/cas.ecore" xmlns:tweet="http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/pos/tweet.ecore" xmlns:morph="http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/morph.ecore" xmlns:type="http:///de/tudarmstadt/ukp/clarin/webanno/api/type.ecore" xmlns:dependency="http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/dependency.ecore" xmlns:type6="http:///de/tudarmstadt/ukp/dkpro/core/api/semantics/type.ecore" xmlns:type9="http:///de/tudarmstadt/ukp/dkpro/core/api/transform/type.ecore" xmlns:type8="http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type.ecore" xmlns:type3="http:///de/tudarmstadt/ukp/dkpro/core/api/metadata/type.ecore" xmlns:type10="http:///org/dkpro/core/api/xml/type.ecore" xmlns:type4="http:///de/tudarmstadt/ukp/dkpro/core/api/ner/type.ecore" xmlns:type5="http:///de/tudarmstadt/ukp/dkpro/core/api/segmentation/type.ecore" xmlns:type2="http:///de/tudarmstadt/ukp/dkpro/core/api/coref/type.ecore" xmlns:type7="http:///de/tudarmstadt/ukp/dkpro/core/api/structure/type.ecore" xmlns:constituent="http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/constituent.ecore" xmlns:chunk="http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/chunk.ecore"\3',d)
+
+        ################################
         
 
         new_d = sofa_regex_for_implementation.sub(f'{s_group}\n  \\1',d)
