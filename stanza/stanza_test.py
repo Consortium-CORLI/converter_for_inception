@@ -8,7 +8,7 @@ import zipfile
 
 path_to_data_files = r'./source'
 lang = 'fr'
-limit_n_char = 100
+limit_n_char = 200
 out_zip_path = 'inception_project_stanza.zip'
 
 """
@@ -38,12 +38,12 @@ cas_view_members_pattern = '(<cas:View[^<>]*members=")([^"]*)("/>)'
 cas_view_members_regex = re.compile(cas_view_members_pattern)
 
 xml_special_chars_pattern_list = [
+    ['&amp;','&'],
     ['&#10;','\n'],
     ['&quot;','"'],
     ['&apos;','\''],
     ['&lt;','<'],
-    ['&gt;','>'],
-    ['&amp;','&']
+    ['&gt;','>']
 ]
 # xml_special_chars_regex_list = []
 # for i in xml_special_chars_pattern_list:
@@ -53,10 +53,14 @@ xmi_id_pattern = '<[^ ]+ xmi:id="([0-9]+)"'
 xmi_id_regex = re.compile(xmi_id_pattern)
 
 ld = os.listdir(path_to_data_files)
+count_ld = 0
+len_ld = len(ld)
+m = 32
 for i in ld:
     if i.endswith('.xml'):
+        print(f'[{"="*int((count_ld/len_ld)*m)}{" "*(m-int((count_ld/len_ld)*m))}] {int((count_ld/len_ld)*100)}% {i}',end='\r')
         # print(i,end='\r')
-        print(f'Processing {i}',end=' ')
+        # print(f'Processing {i}',end=' ')
         p = f'{path_to_data_files}/{i}'
         f = open(p,'rt',encoding='utf-8')
         d = f.read()
@@ -70,7 +74,7 @@ for i in ld:
         # print(f'Total number of spaces: {sofa.count(" ")}')
         t = time.time()
         stanza_parsed_data = nlp(sofa[:limit_n_char])
-        print(f'{time.time()-t}s',end='\r')
+        # print(f'{time.time()-t}s',end='\r')
         # print(stanza_parsed_data.entities[:5])
 
         xmi_id_list = xmi_id_regex.findall(d)
@@ -106,7 +110,11 @@ for i in ld:
                 if 'lemma' in keys:
                     # s = f'<type5:Lemma xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
                     s = f'<type5:Lemma xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
-                    s = f'{s} value="{k["lemma"]}"'
+                    local_lemma = k["lemma"]
+                    for p in xml_special_chars_pattern_list:
+                        local_lemma = local_lemma.replace(p[1],p[0])
+                    # s = f'{s} value="{k["lemma"]}"'
+                    s = f'{s} value="{local_lemma}"'
                     s = f'{s}/>'
                     s_group = f'{s_group}\n  {s}'
                     cas_view_group = f'{cas_view_group} {xmi_id_current}'
@@ -114,7 +122,11 @@ for i in ld:
                 if 'feats' in keys:
                     # s = f'<morph:MorphologicalFeatures xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
                     s = f'<morph:MorphologicalFeatures xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
-                    s = f'{s} value="{k["feats"]}"'
+                    local_feats = k["feats"]
+                    for p in xml_special_chars_pattern_list:
+                        local_feats = local_feats.replace(p[1],p[0])
+                    # s = f'{s} value="{k["feats"]}"'
+                    s = f'{s} value="{local_feats}"'
                     s = f'{s}/>'
                     s_group = f'{s_group}\n  {s}'
                     cas_view_group = f'{cas_view_group} {xmi_id_current}'
@@ -123,7 +135,11 @@ for i in ld:
                 if 'ner' in keys:
                     # s = f'<type4:NamedEntity xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
                     s = f'<type4:NamedEntity xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
-                    s = f'{s} identifier="" value="{k["ner"]}"'
+                    local_ner = k["ner"]
+                    for p in xml_special_chars_pattern_list:
+                        local_ner = local_ner.replace(p[1],p[0])
+                    # s = f'{s} identifier="" value="{k["ner"]}"'
+                    s = f'{s} identifier="" value="{local_ner}"'
                     s = f'{s}/>'
                     s_group = f'{s_group}\n  {s}'
                     cas_view_group = f'{cas_view_group} {xmi_id_current}'
@@ -131,9 +147,17 @@ for i in ld:
                 if 'upos' in keys:
                     # s = f'<pos:POS xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
                     s = f'<pos:POS xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
-                    s = f'{s} coarseValue="{k["upos"]}"'
+                    local_upos = k["upos"]
+                    for p in xml_special_chars_pattern_list:
+                        local_upos = local_upos.replace(p[1],p[0])
+                    # s = f'{s} coarseValue="{k["upos"]}"'
+                    s = f'{s} coarseValue="{local_upos}"'
                     if 'xpos' in keys:
-                        s = f'{s} PosValue="{k["xpos"]}"'
+                        local_xpos = k["xpos"]
+                        for p in xml_special_chars_pattern_list:
+                            local_xpos = local_xpos.replace(p[1],p[0])
+                        # s = f'{s} PosValue="{k["xpos"]}"'
+                        s = f'{s} PosValue="{local_xpos}"'
                     s = f'{s}/>'
                     s_group = f'{s_group}\n  {s}'
                     cas_view_group = f'{cas_view_group} {xmi_id_current}'
@@ -158,7 +182,10 @@ for i in ld:
         out_f.write(new_d)
         out_f.close()
         # print(f'Wrote file __{i}')
-        print(f'Wrote file {i}')
+        # print(f'Wrote file {i}')
+    count_ld += 1
+
+print(f'[{"="*m}] 100% All files have been processed.')
 
 json_path = 'exportedproject.json'
 if os.path.exists(json_path):
@@ -251,11 +278,17 @@ if os.path.exists(json_path):
         print(f'Adding to ZIP: {json_path}')
         local_zip.write(json_path)
         ld = os.listdir('source')
+        count_ld = 0
+        len_ld = len(ld)
+        m = 32
         for i in ld:
+            print(f'[{"="*int((count_ld/len_ld)*m)}{" "*(m-int((count_ld/len_ld)*m))}] {int((count_ld/len_ld)*100)}% Adding to the ZIP: {i}',end='\r')
+            count_ld += 1
             if not i.endswith('.xml'):
                 continue
-            print(f'Adding to ZIP: source/{i}',end='\r')
+            # print(f'Adding to ZIP: source/{i}',end='\r')
             local_zip.write(f'source/{i}')
+    print(f'[{"="*m}] 100% All files have been added to the ZIP.')
     print(f'Created {out_zip_path}')
 else:
     print(f'[ERROR] {json_path} does not exist.')
