@@ -14,9 +14,13 @@ xml_tag_regex = re.compile(xml_tag_pattern)
 # unit_pattern = '<unit[^<>]*>\\b*<metadata[^<>]*>\\b*<author[^<>]*>[^<>]*</author>\\b*<creation\\-date[^<>]*>[^<>]*</creation\\-date>\\b*</metadata></unit>'
 # unit_pattern = '<unit[^<>]*>[\\b\\B]*?</unit>'
 # unit_pattern = '<unit[^<>]*>.*?</unit>'
-unit_pattern = '(<unit[^<>]*(id="([^"]*)")?[^<>]*>[\\w\\W]*?</unit>)'
+# unit_pattern = '(<unit[^<>]*(id="([^"]*)")?[^<>]*>[\\w\\W]*?</unit>)'
+unit_pattern = '(<unit[^<>]*(id="([^"]*)"){0,1}[^<>]*>[\\w\\W]*?</unit>)'
 # unit_regex = re.compile(unit_pattern,'s')
 unit_regex = re.compile(unit_pattern)
+
+unit_id_pattern = '(?<=\\<unit id=")[^"]*(?=")'
+unit_id_regex = re.compile(unit_id_pattern)
 
 relation_pattern = '(<relation[^<>]*(id="([^"]*)")?[^<>]*>[\\w\\W]*?</relation>)'
 relation_regex = re.compile(relation_pattern)
@@ -24,7 +28,8 @@ relation_regex = re.compile(relation_pattern)
 schema_pattern = '(<schema[^<>]*(id="([^"]*)")?[^<>]*>[\\w\\W]*?</schema>)'
 schema_regex = re.compile(schema_pattern)
 
-start_pattern = '<start[^<>]*>[\\w\\W]*?index="([0-9])*"[\\w\\W]*?</start>'
+# start_pattern = '<start[^<>]*>[\\w\\W]*?index="([0-9])*"[\\w\\W]*?</start>'
+start_pattern = '<start[^<>]*>[\\w\\W]*?index="([0-9]*)"[\\w\\W]*?</start>'
 start_regex = re.compile(start_pattern)
 
 # end_pattern = '<end[^<>]*>[\\w\\W]*?index="([0-9])*"[\\w\\W]*?</end>'
@@ -90,6 +95,11 @@ for i in ld:
         type = 'undefined'
         feature_list = []
         id = j[2]
+        if len(id) == 0:
+            try:
+                id = unit_id_regex.findall(j[0])[0]
+            except:
+                pass
         try:
             start = start_regex.findall(j[0])[0]
         except:

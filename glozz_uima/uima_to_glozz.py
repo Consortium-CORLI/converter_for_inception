@@ -43,7 +43,8 @@ for i in ld:
 
     for j in uima_tags_list:
         # if j[1].lower() == 'cas' or (j[1].lower() == 'xmi' and j[2].lower() == 'xmi'):
-        if j[1].lower() == 'cas' or j[1].lower() == 'xmi':
+        if j[1].lower() == 'cas' or (j[1].lower() == 'xmi' or j[2].lower() == 'xmi'):
+        # if j[1].lower() == 'cas' or j[1].lower() == 'xmi':
             continue
         # print(depth)
         depth += 1
@@ -105,7 +106,7 @@ for i in ld:
 
         depth += 1
         for k in attributes_list:
-            if k[0].lower() in ['id','author','creation_date','begin','end']:
+            if k[0].lower() in ['id','author','creation_date','begin','end'] or k[0].lower().startswith('xmi:'):
                 continue
             s_out = f'{s_out}\n{tab*depth}<feature name="{k[0]}">{k[1]}</feature>'
 
