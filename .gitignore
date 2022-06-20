@@ -60,3 +60,10 @@ src/app/pages/sax2_v2*
 src/app/pages/sax2_v3*
 glozz_uima/glozz_test*
 glozz_uima/glozz_uima_test*
+
+segmentation_check/segmentation_check.py
+segmentation_check/segmentation_check2.py
+segmentation_check/*.xml
+segmentation_check/*.xmi
+segmentation_check/*.csv
+segmentation_check/*.txt
