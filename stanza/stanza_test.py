@@ -89,8 +89,44 @@ for i in ld:
 
         stanza_parsed_data = stanza_parsed_data.to_dict() # ACTUALLY, GENERATES A LIST
         s_group = ''
+        memory_stanza_id_to_xmi_id = []
+        memory_dependencies = []
         for j in stanza_parsed_data:
             for k in j:
+                #<DEPENDENCIES_FIX>
+                if (type(k["id"]) == tuple and (1 in k["id"] or "1" in k["id"])) or (type(k["id"]) != tuple and int(k["id"]) == 1):
+                    for q in memory_dependencies:
+                        keys = q.keys()
+                        if 'deprel' in keys:
+                            if q["deprel"].lower() == 'root':
+                                s = f'<dependency:ROOT xmi:id="{xmi_id_current}" sofa="1" begin="{q["start_char"]}" end="{q["end_char"]}" Governor="{id_token}" Dependent="{id_token}" DependencyType="{q["deprel"]}" flavor="basic"/>'
+                                s_group = f'{s_group}\n  {s}'
+                                cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                                xmi_id_current += 1
+                            else:
+                                s = f'<dependency:Dependency xmi:id="{xmi_id_current}" sofa="1" begin="{q["start_char"]}" end="{q["end_char"]}"'
+                                
+                                if 'head' not in keys:
+                                    continue
+
+                                head_xmi_id = None
+                                for u in memory_stanza_id_to_xmi_id:
+                                    if u[0] == q["head"]:
+                                        head_xmi_id = u[1]
+                                        break
+                                
+                                if head_xmi_id == None:
+                                    continue
+
+                                # s = f'{s} Governor="{head_xmi_id}" Dependent="{xmi_id_current}" DependencyType="{q["deprel"]}" flavor="basic"/>'
+                                s = f'{s} Governor="{head_xmi_id}" Dependent="{q["id_token"]}" DependencyType="{q["deprel"]}" flavor="basic"/>'
+                                s_group = f'{s_group}\n  {s}'
+                                cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                                xmi_id_current += 1
+                    memory_stanza_id_to_xmi_id = []
+                    memory_dependencies = []
+                #</DEPENDENCIES_FIX>
+
                 if ("start_char" not in k.keys()) or ("end_char" not in k.keys()):
                     continue
                 """
@@ -107,6 +143,9 @@ for i in ld:
                 """
 
                 keys = k.keys()
+                id_lemma = None
+                id_pos = None
+                id_morph = None
                 if 'lemma' in keys:
                     # s = f'<type5:Lemma xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
                     s = f'<type5:Lemma xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
@@ -118,6 +157,7 @@ for i in ld:
                     s = f'{s}/>'
                     s_group = f'{s_group}\n  {s}'
                     cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                    id_lemma = xmi_id_current
                     xmi_id_current += 1
                 if 'feats' in keys:
                     # s = f'<morph:MorphologicalFeatures xmi:id="{xmi_id_current}" begin="{k["start_char"]}" end="{k["end_char"]}" sofa="1"'
@@ -130,6 +170,7 @@ for i in ld:
                     s = f'{s}/>'
                     s_group = f'{s_group}\n  {s}'
                     cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                    id_morph = xmi_id_current
                     xmi_id_current += 1
                 #POTENTIAL CHANGE HERE WITH multiner?
                 if 'ner' in keys:
@@ -161,8 +202,67 @@ for i in ld:
                     s = f'{s}/>'
                     s_group = f'{s_group}\n  {s}'
                     cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                    id_pos = xmi_id_current
                     xmi_id_current += 1
-        
+                
+                # CREATE THE TOKEN, ALSO IN PREPARTION FOR DEPENDENCIES
+                s = f'<type5:Token xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
+                if id_lemma != None:
+                    s = f'{s} lemma="{id_lemma}"'
+                if id_pos != None:
+                    s = f'{s} pos="{id_pos}"'
+                if id_morph != None:
+                    s = f'{s} morph="{id_morph}"'
+                s = f'{s} order="0"/>'
+                s_group = f'{s_group}\n  {s}'
+                cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                id_token = xmi_id_current
+                if type(k["id"]) == int:
+                    memory_stanza_id_to_xmi_id.append([k["id"],xmi_id_current])
+                else:
+                    #?!
+                    memory_stanza_id_to_xmi_id.append([k["id"][0],xmi_id_current])
+                xmi_id_current += 1
+
+                if 'deprel' in keys:
+                    k["id_token"] = id_token
+                    k["id_lemma"] = id_lemma
+                    k["id_morph"] = id_morph
+                    memory_dependencies.append(k)
+        """
+        print(memory_stanza_id_to_xmi_id)
+        for j in stanza_parsed_data:
+            for k in j:
+                if ("start_char" not in k.keys()) or ("end_char" not in k.keys()):
+                    continue
+
+                keys = k.keys()
+                if 'deprel' in keys:
+                    if k["deprel"].lower() == 'root':
+                        s = f'<dependency:ROOT xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}" Governor="{id_token}" Dependent="{id_token}" DependencyType="{k["deprel"]}" flavor="basic"/>'
+                        s_group = f'{s_group}\n  {s}'
+                        cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                        xmi_id_current += 1
+                    else:
+                        s = f'<dependency:Dependency xmi:id="{xmi_id_current}" sofa="1" begin="{k["start_char"]}" end="{k["end_char"]}"'
+                        
+                        if 'head' not in keys:
+                            continue
+
+                        head_xmi_id = None
+                        for q in memory_stanza_id_to_xmi_id:
+                            if q[0] == k["head"]:
+                                head_xmi_id = q[1]
+                                break
+                        
+                        if head_xmi_id == None:
+                            continue
+
+                        s = f'{s} Governor="{head_xmi_id}" Dependent="{xmi_id_current}" DependencyType="{k["deprel"]}" flavor="basic"/>'
+                        s_group = f'{s_group}\n  {s}'
+                        cas_view_group = f'{cas_view_group} {xmi_id_current}'
+                        xmi_id_current += 1
+        """
         
 
         ################################
@@ -189,6 +289,7 @@ print(f'[{"="*m}] 100% All files have been processed.')
 
 json_path = 'exportedproject.json'
 if os.path.exists(json_path):
+    """
     f = open(json_path,'rt',encoding='utf-8')
     d = f.read()
     f.close()
@@ -272,6 +373,7 @@ if os.path.exists(json_path):
     f.write(json.dumps(d))
     f.close()
     print(f'Wrote updated {json_path}')
+    """
 
     print(f'Creating {out_zip_path}...')
     with zipfile.ZipFile(out_zip_path,'w') as local_zip:
