@@ -273,8 +273,10 @@ for i in ld:
 
         ################################
         
-
-        new_d = sofa_regex_for_implementation.sub(f'{s_group}\n  \\1',d)
+        memory_d = sofa_regex_for_implementation.findall(d)[0]
+        memory_d = memory_d.replace('\\','\\\\')
+        # new_d = sofa_regex_for_implementation.sub(f'{s_group}\n  \\1',d)
+        new_d = sofa_regex_for_implementation.sub(f'{s_group}\n  {memory_d}',d) #FIX TEST, WITH LINES ABOVE
         new_d = cas_view_members_regex.sub(f'\\1\\2{cas_view_group}\\3',new_d)
         # print(new_d)
         # out_f = open(f'{path_to_data_files}/__{i}','wt',encoding='utf-8')
