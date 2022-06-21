@@ -20,6 +20,20 @@ uima_sofa_regex = re.compile(uima_sofa_pattern)
 xml_attribute_pattern = '\\s([^=]+)="([^"]*)"'
 xml_attribute_regex = re.compile(xml_attribute_pattern)
 
+tab = '\t'
+
+quote = '"'
+
+aam_s_out = '<?xml version="1.0" encoding="UTF-8"?>\n<annotationModel>'
+
+aam_units = f'{tab*1}<units>'
+aam_relations = f'{tab*1}<relations>'
+aam_schemas = f'{tab*1}<schemas>'
+
+aam_units_list = []
+aam_relations_list = []
+aam_schemas_list = []
+
 ld = os.listdir(path)
 for i in ld:
     if not i.endswith('.xml'):
@@ -33,12 +47,10 @@ for i in ld:
     f.close()
 
     depth = 0
-    tab = '\t'
-
-    quote = '"'
 
     s_out = f'{xml_tag_regex.findall(d)[0]}\n{tab*depth}<annotations>'
 
+    """
     aam_s_out = '<?xml version="1.0" encoding="UTF-8"?>\n<annotationModel>'
 
     aam_units = f'{tab*1}<units>'
@@ -48,6 +60,7 @@ for i in ld:
     aam_units_list = []
     aam_relations_list = []
     aam_schemas_list = []
+    """
 
     # depth += 1
 
@@ -242,6 +255,7 @@ for i in ld:
     f.close()
     print(f'Wrote {path_out}')
 
+    """
     aam_units = f'{aam_units}\n{tab*1}</units>'
     aam_relations = f'{aam_relations}\n{tab*1}</relations>'
     aam_schemas = f'{aam_schemas}\n{tab*1}</schemas>'
@@ -251,4 +265,13 @@ for i in ld:
     f.write(aam_s_out)
     f.close()
     print(f'Wrote {path_out}')
-    
+    """
+aam_units = f'{aam_units}\n{tab*1}</units>'
+aam_relations = f'{aam_relations}\n{tab*1}</relations>'
+aam_schemas = f'{aam_schemas}\n{tab*1}</schemas>'
+aam_s_out = f'{aam_s_out}\n{aam_units}\n{aam_relations}\n{aam_schemas}\n</annotationModel>'
+path_out = f'{path}/annotation_model.aam'
+f = open(path_out,'wt',encoding='utf-8')
+f.write(aam_s_out)
+f.close()
+print(f'Wrote {path_out}')
