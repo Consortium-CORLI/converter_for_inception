@@ -54,6 +54,14 @@ type_regex = re.compile(type_pattern)
 feature_pattern = '<feature[^<>]*name="([^"]*)"[^<>]*>\\s*([\\w\\W]*?)\\s*</feature>'
 feature_regex = re.compile(feature_pattern)
 
+xml_special_chars = [
+    ['&amp;','&'],
+    ['&gt;','>'],
+    ['&lt;','<'],
+    ['&quot;','"'],
+    ['&apos;','\'']
+]
+
 ld = os.listdir(path)
 for i in ld:
     if not i.endswith('.aa'):
@@ -122,7 +130,8 @@ for i in ld:
             pass
         feature_list = feature_regex.findall(j[0])
         
-        s_out = f'{s_out}\n<custom:unit_{type} xmi:id="{xmi_id_current}" id="{id}" begin="{start}" end="{end}" author="{author}" creation_date="{creation_date}"'
+        # s_out = f'{s_out}\n<custom:unit_{type} xmi:id="{xmi_id_current}" id="{id}" begin="{start}" end="{end}" author="{author}" creation_date="{creation_date}"'
+        s_out = f'{s_out}\n<custom:{type} xmi:id="{xmi_id_current}" id="{id}" begin="{start}" end="{end}" author="{author}" creation_date="{creation_date}"'
         for k in feature_list:
             s_out = f'{s_out} {k[0]}="{k[1]}"'
         s_out = f'{s_out}/>'
@@ -263,6 +272,9 @@ for i in ld:
 
     linefeed = "\n"
 
+    for j in xml_special_chars:
+        d_ac = d_ac.replace(j[1],j[0])
+
     # s_out = f'{s_out}\n<cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView" sofaString="{d_ac.replace("\n"," ")}"/>'
     s_out = f'{s_out}\n<cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView" sofaString="{d_ac.replace(linefeed," ")}"/>'
 
@@ -274,7 +286,8 @@ for i in ld:
 
     # print(s_out)
 
-    path_out = f'{path}/__{i[:-3]}.xml'
+    # path_out = f'{path}/__{i[:-3]}.xml'
+    path_out = f'{path}/{i[:-3]}.xml'
     f = open(path_out,'wt',encoding='utf-8')
     f.write(s_out)
     f.close()

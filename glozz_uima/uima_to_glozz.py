@@ -20,6 +20,14 @@ uima_sofa_regex = re.compile(uima_sofa_pattern)
 xml_attribute_pattern = '\\s([^=]+)="([^"]*)"'
 xml_attribute_regex = re.compile(xml_attribute_pattern)
 
+xml_special_chars = [
+    ['&gt;','>'],
+    ['&lt;','<'],
+    ['&quot;','"'],
+    ['&apos;','\''],
+    ['&amp;','&']
+]
+
 tab = '\t'
 
 quote = '"'
@@ -113,7 +121,8 @@ for i in ld:
             depth -= 1
         if len(s_creation_date) == 0:
             depth += 1
-            s_creation_date = f'{tab*depth}<creation-date>{str(int(time.time() * 1000))}</creation-date>'
+            # s_creation_date = f'{tab*depth}<creation-date>{str(int(time.time() * 1000))}</creation-date>'
+            s_creation_date = f'{tab*depth}<creation-date>0</creation-date>'
             depth -= 1
         
         has_author = (len(s_author) > 0)
@@ -242,16 +251,22 @@ for i in ld:
     # print(s_out)
 
     
-    path_out = f'{path}/__{i[:-4]}.aa'
+    # path_out = f'{path}/__{i[:-4]}.aa'
+    path_out = f'{path}/{i[:-4]}.aa'
     f = open(path_out,'wt',encoding='utf-8')
     f.write(s_out)
     f.close()
     print(f'Wrote {path_out}')
 
-    path_out = f'{path}/__{i[:-4]}.ac'
+    # path_out = f'{path}/__{i[:-4]}.ac'
+    path_out = f'{path}/{i[:-4]}.ac'
     f = open(path_out,'wt',encoding='utf-8')
     # f.write(uima_sofa_regex.findall(d)[0].replace("&#10;","\n"))
-    f.write(uima_sofa_regex.findall(d)[0].replace("&#10;"," "))
+    # f.write(uima_sofa_regex.findall(d)[0].replace("&#10;"," "))
+    sofa = uima_sofa_regex.findall(d)[0].replace("&#10;"," ")
+    for j in xml_special_chars:
+        sofa = sofa.replace(j[0],j[1])
+    f.write(sofa)
     f.close()
     print(f'Wrote {path_out}')
 
