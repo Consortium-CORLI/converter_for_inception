@@ -3,6 +3,7 @@ import re
 import time
 
 path = 'source'
+allow_dependencies = True
 
 ######################################################
 
@@ -31,6 +32,8 @@ xml_special_chars = [
 tab = '\t'
 
 quote = '"'
+
+unix_time = int(time.time() * 1000)
 
 aam_s_out = '<?xml version="1.0" encoding="UTF-8"?>\n<annotationModel>'
 
@@ -72,6 +75,7 @@ for i in ld:
 
     # depth += 1
 
+    id_conversion_memory = []
 
     uima_tags_list = uima_annotation_regex.findall(d)
 
@@ -82,19 +86,199 @@ for i in ld:
             continue
         # print(depth)
 
+        unix_time += 1
+
+        if j[1].lower() == 'dependency':
+            if not allow_dependencies:
+                continue
+            adding_to_aam = False
+
+            depth += 1
+            attributes_list = xml_attribute_regex.findall(j[0])
+            s_out = f'{s_out}\n{tab*depth}<relation'
+            for k in attributes_list:
+                # if k[0].lower() == 'id':
+                if k[0].lower() in ['xmi:id','id']:
+                    s_out = f'{s_out} id="{k[1]}"'
+                    # if k[1] not in aam_units_list:
+                    #     aam_units = f'{aam_units}\n<type name="{k[1]}" groups="Syntaxe">'
+                    #     aam_units_list.append(k[1])
+                    #     adding_to_aam = True
+                    break
+            s_out = f'{s_out}>'
+
+            depth += 1
+
+            s_out = f'{s_out}\n{tab*depth}<metadata'
+
+            # metadata_has_content = False
+            s_author = ''
+            s_creation_date = ''
+            for k in attributes_list:
+                if k[0].lower() == 'author':
+                    depth += 1
+                    s_author = f'{tab*depth}<author>{k[1]}</author>'
+                    depth -= 1
+                elif k[0].lower() == 'creation_date':
+                    depth += 1
+                    s_creation_date = f'{tab*depth}<creation-date>{k[1]}</creation-date>'
+                    depth -= 1
+            
+            if len(s_author) == 0:
+                depth += 1
+                s_author = f'{tab*depth}<author>anonymous</author>'
+                depth -= 1
+            if len(s_creation_date) == 0:
+                depth += 1
+                # s_creation_date = f'{tab*depth}<creation-date>{str(int(time.time() * 1000))}</creation-date>'
+                s_creation_date = f'{tab*depth}<creation-date>0</creation-date>'
+                depth -= 1
+            
+            has_author = (len(s_author) > 0)
+            has_creation_date = (len(s_creation_date) > 0)
+            if has_author or has_creation_date:
+                s_out = f'{s_out}>'
+                if has_author:
+                    s_out = f'{s_out}\n{s_author}'
+                if has_creation_date:
+                    s_out = f'{s_out}\n{s_creation_date}'
+                # if not has_author:
+                #     s_author = 'anonymous'
+                # s_out = f'{s_out}\n{s_author}'
+                # if not has_creation_date:
+                #     s_creation_date = str(int(time.time() * 1000))
+                #     s_out = f'{s_out}\n{s_creation_date}'
+
+                # depth -= 1
+                s_out = f'{s_out}\n{tab*depth}</metadata>'
+                depth -= 1
+            else:
+                s_out = f'{s_out}/>'
+                depth -= 1
+            
+
+            
+            
+            
+
+
+            depth += 1
+
+            s_out = f'{s_out}\n{tab*depth}<characterisation>'
+
+            depth += 1
+
+            s_out = f'{s_out}\n{tab*depth}<type>{j[2]}</type>'
+
+            if j[2] not in aam_relations_list:
+                aam_relations = f'{aam_relations}\n{tab*2}<type name="{j[2]}">'
+                aam_relations_list.append(j[2])
+                adding_to_aam = True
+
+            depth -= 1
+
+            depth += 1
+
+            s_out = f'{s_out}\n{tab*depth}<featureSet>'
+
+            if adding_to_aam:
+                aam_relations = f'{aam_relations}\n{tab*3}<featureSet>'
+
+            depth += 1
+            for k in attributes_list:
+                if k[0].lower() in ['id','author','creation_date','begin','end','Governor','Dependent'] or k[0].lower().startswith('xmi:'):
+                    continue
+                s_out = f'{s_out}\n{tab*depth}<feature name="{k[0]}">{k[1]}</feature>'
+                
+                if adding_to_aam:
+                    aam_relations = f'{aam_relations}\n{tab*4}<feature name="{k[0]}">\n{tab*5}<value type="free" default=""/>\n{tab*4}</feature>'
+
+            depth -= 1
+            s_out = f'{s_out}\n{tab*depth}</featureSet>'
+
+            if adding_to_aam:
+                aam_relations = f'{aam_relations}\n{tab*3}</featureSet>'
+                aam_relations = f'{aam_relations}\n{tab*2}</type>'
+
+            depth -= 1
+
+            s_out = f'{s_out}\n{tab*depth}</characterisation>'
+
+            depth -= 1
+
+            depth += 1
+
+            s_out = f'{s_out}\n{tab*depth}<positioning>'
+
+            depth += 1
+            s_out = f'{s_out}\n{tab*depth}<term'
+
+            for k in attributes_list:
+                if k[0].lower() == 'governor':
+                    # s_out = f'{s_out} id="{k[1]}"/>'
+                    converted_id = None
+                    for q in id_conversion_memory:
+                        if q[0] == k[1]:
+                            converted_id = q[1]
+                            break
+                    if converted_id != None:
+                        s_out = f'{s_out} id="{converted_id}"/>'
+                    else:
+                        s_out = f'{s_out}/>'
+                    break
+
+            depth -= 1
+
+            depth += 1
+            s_out = f'{s_out}\n{tab*depth}<term'
+            for k in attributes_list:
+                if k[0].lower() == 'dependent':
+                    # s_out = f'{s_out} id="{k[1]}"/>'
+                    converted_id = None
+                    for q in id_conversion_memory:
+                        if q[0] == k[1]:
+                            converted_id = q[1]
+                            break
+                    if converted_id != None:
+                        s_out = f'{s_out} id="{converted_id}"/>'
+                    else:
+                        s_out = f'{s_out}/>'
+                    break
+
+            # depth -= 1
+
+            depth -= 1
+            s_out = f'{s_out}\n{tab*depth}</positioning>'
+
+            depth -= 1
+
+            s_out = f'{s_out}\n{tab*depth}</relation>'
+
+            depth -= 1
+            continue
+
         adding_to_aam = False
 
-        depth += 1
+        
         attributes_list = xml_attribute_regex.findall(j[0])
+        author = 'anonymous'
+        creation_date = unix_time
+        for k in attributes_list:
+            if k[0].lower() == 'author':
+                author = k[1]
+            elif k[0].lower() == 'creation_date':
+                creation_date = k[1]
+
+        depth += 1
+        # attributes_list = xml_attribute_regex.findall(j[0])
         s_out = f'{s_out}\n{tab*depth}<unit'
         for k in attributes_list:
             # if k[0].lower() == 'id':
             if k[0].lower() in ['xmi:id','id']:
-                s_out = f'{s_out} id="{k[1]}"'
-                # if k[1] not in aam_units_list:
-                #     aam_units = f'{aam_units}\n<type name="{k[1]}" groups="Syntaxe">'
-                #     aam_units_list.append(k[1])
-                #     adding_to_aam = True
+                # s_out = f'{s_out} id="{k[1]}"'
+                new_id = f'{author}_{creation_date}'
+                s_out = f'{s_out} id="{new_id}"'
+                id_conversion_memory.append([k[1],new_id])
                 break
         s_out = f'{s_out}>'
 
@@ -117,12 +301,13 @@ for i in ld:
         
         if len(s_author) == 0:
             depth += 1
-            s_author = f'{tab*depth}<author>anonymous_from_converter</author>'
+            s_author = f'{tab*depth}<author>anonymous</author>'
             depth -= 1
         if len(s_creation_date) == 0:
             depth += 1
             # s_creation_date = f'{tab*depth}<creation-date>{str(int(time.time() * 1000))}</creation-date>'
-            s_creation_date = f'{tab*depth}<creation-date>0</creation-date>'
+            # s_creation_date = f'{tab*depth}<creation-date>0</creation-date>'
+            s_creation_date = f'{tab*depth}<creation-date>{unix_time}</creation-date>'
             depth -= 1
         
         has_author = (len(s_author) > 0)
@@ -134,7 +319,7 @@ for i in ld:
             if has_creation_date:
                 s_out = f'{s_out}\n{s_creation_date}'
             # if not has_author:
-            #     s_author = 'anonymous_from_converter'
+            #     s_author = 'anonymous'
             # s_out = f'{s_out}\n{s_author}'
             # if not has_creation_date:
             #     s_creation_date = str(int(time.time() * 1000))
@@ -162,7 +347,8 @@ for i in ld:
         s_out = f'{s_out}\n{tab*depth}<type>{j[2]}</type>'
 
         if j[2] not in aam_units_list:
-            aam_units = f'{aam_units}\n{tab*2}<type name="{j[2]}" groups="Syntaxe">'
+            # aam_units = f'{aam_units}\n{tab*2}<type name="{j[2]}" groups="Syntaxe">'
+            aam_units = f'{aam_units}\n{tab*2}<type name="{j[2]}">'
             aam_units_list.append(j[2])
             adding_to_aam = True
 
@@ -182,7 +368,8 @@ for i in ld:
             s_out = f'{s_out}\n{tab*depth}<feature name="{k[0]}">{k[1]}</feature>'
             
             if adding_to_aam:
-                aam_units = f'{aam_units}\n{tab*4}<feature name="{k[0]}">\n{tab*5}<value type="free" default="{k[1].replace(quote,"&quot;")}"/>\n{tab*4}</feature>'
+                # aam_units = f'{aam_units}\n{tab*4}<feature name="{k[0]}">\n{tab*5}<value type="free" default="{k[1].replace(quote,"&quot;")}"/>\n{tab*4}</feature>'
+                aam_units = f'{aam_units}\n{tab*4}<feature name="{k[0]}">\n{tab*5}<value type="free" default=""/>\n{tab*4}</feature>'
 
         depth -= 1
         s_out = f'{s_out}\n{tab*depth}</featureSet>'

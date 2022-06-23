@@ -83,7 +83,7 @@ for i in ld:
     d_ac = f_ac.read()
     f_ac.close()
 
-    s_out = f'{xml_tag_regex.findall(d_aa)[0]}\n<xmi:XMI xmlns:xmi="http://www.omg.org/XMI" xmlns:cas="http:///uima/cas.ecore" xmlns:custom="http:///webanno/custom.ecore" xmi:version="2.0">\n<cas:NULL xmi:id="0"/>'
+    s_out = f'{xml_tag_regex.findall(d_aa)[0]}\n<xmi:XMI xmlns:pos="http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/pos.ecore" xmlns:tcas="http:///uima/tcas.ecore" xmlns:xmi="http://www.omg.org/XMI" xmlns:cas="http:///uima/cas.ecore" xmlns:tweet="http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/pos/tweet.ecore" xmlns:morph="http:///de/tudarmstadt/ukp/dkpro/core/api/lexmorph/type/morph.ecore" xmlns:type="http:///de/tudarmstadt/ukp/clarin/webanno/api/type.ecore" xmlns:dependency="http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/dependency.ecore" xmlns:type6="http:///de/tudarmstadt/ukp/dkpro/core/api/semantics/type.ecore" xmlns:type9="http:///de/tudarmstadt/ukp/dkpro/core/api/transform/type.ecore" xmlns:type8="http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type.ecore" xmlns:type3="http:///de/tudarmstadt/ukp/dkpro/core/api/metadata/type.ecore" xmlns:type10="http:///org/dkpro/core/api/xml/type.ecore" xmlns:type4="http:///de/tudarmstadt/ukp/dkpro/core/api/ner/type.ecore" xmlns:type5="http:///de/tudarmstadt/ukp/dkpro/core/api/segmentation/type.ecore" xmlns:type2="http:///de/tudarmstadt/ukp/dkpro/core/api/coref/type.ecore" xmlns:type7="http:///de/tudarmstadt/ukp/dkpro/core/api/structure/type.ecore" xmlns:constituent="http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/constituent.ecore" xmlns:chunk="http:///de/tudarmstadt/ukp/dkpro/core/api/syntax/type/chunk.ecore" xmlns:custom="http:///webanno/custom.ecore" xmi:version="2.0">\n<cas:NULL xmi:id="0"/>'
 
     xmi_id_current = 2
 
@@ -129,9 +129,23 @@ for i in ld:
         except:
             pass
         feature_list = feature_regex.findall(j[0])
+
+        namespace = 'custom'
+        # type_lower = type.lower()
+        # if type_lower == 'lemma':
+        if type in ['Token','Lemma']:
+            namespace = 'type5'
+        # elif type_lower == 'namedentity':
+        elif type == 'NamedEntity':
+            namespace = 'type4'
+        elif type == 'POS':
+            namespace = 'pos'
+        elif type == 'MorphologicalFeatures':
+            namespace = 'morph'
         
         # s_out = f'{s_out}\n<custom:unit_{type} xmi:id="{xmi_id_current}" id="{id}" begin="{start}" end="{end}" author="{author}" creation_date="{creation_date}"'
-        s_out = f'{s_out}\n<custom:{type} xmi:id="{xmi_id_current}" id="{id}" begin="{start}" end="{end}" author="{author}" creation_date="{creation_date}"'
+        # s_out = f'{s_out}\n<custom:{type} xmi:id="{xmi_id_current}" id="{id}" begin="{start}" end="{end}" author="{author}" creation_date="{creation_date}"'
+        s_out = f'{s_out}\n<{namespace}:{type} xmi:id="{xmi_id_current}" id="{id}" begin="{start}" end="{end}" author="{author}" creation_date="{creation_date}"'
         for k in feature_list:
             s_out = f'{s_out} {k[0]}="{k[1]}"'
         s_out = f'{s_out}/>'
@@ -153,7 +167,7 @@ for i in ld:
 
 
 
-
+    """
     # RELATIONS
 
     # units_list = unit_regex.findall(d_ac)
@@ -183,8 +197,18 @@ for i in ld:
         except:
             pass
         feature_list = feature_regex.findall(j[0])
+
+        if type == 'undefined':
+            try:
+                if term_list[0] == term_list[1]:
+                    type = 'ROOT'
+                else:
+                    type = 'Dependency'
+            except:
+                pass
         
-        s_out = f'{s_out}\n<custom:relation_{type} xmi:id="{xmi_id_current}" id="{id}" author="{author}" creation_date="{creation_date}"'
+        # s_out = f'{s_out}\n<custom:relation_{type} xmi:id="{xmi_id_current}" id="{id}" author="{author}" creation_date="{creation_date}"'
+        s_out = f'{s_out}\n<dependency:{type} xmi:id="{xmi_id_current}" id="{id}" author="{author}" creation_date="{creation_date}"'
         for k in feature_list:
             s_out = f'{s_out} {k[0]}="{k[1]}"'
         term_count = 0
@@ -251,6 +275,7 @@ for i in ld:
             cas_view = f'{cas_view} '
         cas_view = f'{cas_view}{xmi_id_current}'
         xmi_id_current += 1
+    """
 
 
 
