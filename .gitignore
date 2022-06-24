@@ -55,11 +55,19 @@ Thumbs.db
 *phpinfo.php
 */en.json
 */fr.json
+fr.json
+src/app/pages/home/en.json
+src/app/pages/home/fr.json
 src/app/pages/sax2_english*
 src/app/pages/sax2_v2*
 src/app/pages/sax2_v3*
 glozz_uima/glozz_test*
 glozz_uima/glozz_uima_test*
+glozz_uima/source*
+glozz_uima/screenshot*
+glozz_uima/inception_project*
+glozz_uima/exportedproject.json
+glozz_uima/stanza_parse.py
 
 segmentation_check/segmentation_check.py
 segmentation_check/segmentation_check2.py
@@ -67,3 +75,6 @@ segmentation_check/*.xml
 segmentation_check/*.xmi
 segmentation_check/*.csv
 segmentation_check/*.txt
+
+stanza/test_stanza*
+stanza/test.txt

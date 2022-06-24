@@ -202,7 +202,7 @@ export class Sax2Component implements OnInit {
         "custom_load_xml_files": "Charger des fichiers XML",
         "custom_conversion": "Conversion",
         "custom_tags": "Balises",
-        "custom_history": "Historique",
+        "custom_history_and_converting_back": "Historique et reconversion",
         "custom_help": "Aide",
         "custom_quality": "Qualité",
         "custom_scale": "Echelle",
@@ -241,7 +241,7 @@ export class Sax2Component implements OnInit {
         "custom_load_xml_files": "Load XML files",
         "custom_conversion": "Converting",
         "custom_tags": "Tags",
-        "custom_history": "History",
+        "custom_history_and_converting_back": "History and converting back",
         "custom_help": "Help",
         "custom_quality": "Quality",
         "custom_scale": "Scale",
@@ -284,7 +284,7 @@ export class Sax2Component implements OnInit {
   get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
   get custom_conversion(){return formatMessage("custom_conversion")}
   get custom_tags(){return formatMessage("custom_tags")}
-  get custom_history(){return formatMessage("custom_history")}
+  get custom_history_and_converting_back(){return formatMessage("custom_history_and_converting_back")}
   get custom_help(){return formatMessage("custom_help")}
   get custom_quality(){return formatMessage("custom_quality")}
   get custom_scale(){return formatMessage("custom_scale")}

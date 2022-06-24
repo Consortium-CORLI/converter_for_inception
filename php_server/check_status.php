@@ -137,6 +137,11 @@
                             $zip->addFile($dir_path .'/source/' . $list_of_generated_files[$i], 'source/' . $list_of_generated_files[$i]);
                         }
                     }
+                    $zip->addFile($dir_path . '/data' . '/typesystem.xml','typesystem.xml');
+                    $zip->addFile('/sites' . '/corliweb' . '/www' . '/web_main' . '/stanza_parse.py','stanza_parse.py');
+                    $zip->addFile('/sites' . '/corliweb' . '/www' . '/web_main' . '/glozz_to_uima.py','glozz_to_uima.py');
+                    $zip->addFile('/sites' . '/corliweb' . '/www' . '/web_main' . '/uima_to_glozz.py','uima_to_glozz.py');
+                    $zip->addFile('/sites' . '/corliweb' . '/www' . '/web_main' . '/segmentation_check3.py','segmentation_check.py');
                     $zip->addFromString('exportedproject.json',json_encode($project,JSON_PRETTY_PRINT));
                     $zip->close();
 
