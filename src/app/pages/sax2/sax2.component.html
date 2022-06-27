@@ -1,7 +1,7 @@
 <dx-tab-panel #tabPanel id="main_tab_panel">
   <!-- <dxi-item title="Conversion"> -->
   <dxi-item title="{{ custom_conversion }}">
-  <!-- <dxi-item [title]="LANG_title_converting"> -->
+    <!-- <dxi-item [title]="LANG_title_converting"> -->
 
     <div class="content-block">
       <!-- <dx-button stylingMode="contained" type="normal" (onClick)="switch_to_french()">
@@ -17,11 +17,11 @@
         <!-- <dx-file-uploader #up id="dx-file-uploader_xml_files" selectButtonText="Charger des fichiers XML" labelText="" accept=".xml"
           uploadMode="useForm" multiple="true" [showFileList]="false"
           (onValueChanged)="onFileUploaderValueChanged($event)"> -->
-          <dx-file-uploader #up id="dx-file-uploader_xml_files" selectButtonText="{{ custom_load_xml_files }}" labelText="" accept=".xml"
-            uploadMode="useForm" multiple="true" [showFileList]="false"
-            (onValueChanged)="onFileUploaderValueChanged($event)">
+        <dx-file-uploader #up id="dx-file-uploader_xml_files" selectButtonText="{{ custom_load_xml_files }}"
+          labelText="" accept=".xml" uploadMode="useForm" multiple="true" [showFileList]="false"
+          (onValueChanged)="onFileUploaderValueChanged($event)">
         </dx-file-uploader>
-          <!-- <dx-file-uploader #up id="dx-file-uploader_xml_files" [selectButtonText]="LANG_dx_file_uploader_xml_files" labelText="" accept=".xml"
+        <!-- <dx-file-uploader #up id="dx-file-uploader_xml_files" [selectButtonText]="LANG_dx_file_uploader_xml_files" labelText="" accept=".xml"
             uploadMode="useForm" multiple="true" [showFileList]="false"
             (onValueChanged)="onFileUploaderValueChanged($event)">
         </dx-file-uploader> -->
@@ -68,7 +68,8 @@
       </dx-data-grid>
       <br />
       <!-- <span id="first_document_announcer_span" style="display:block">Premier document (sur <span id="number_of_documents_span"></span>)</span> -->
-      <span id="first_document_announcer_span" style="display:block">{{ custom_first_document_out_of }} <span id="number_of_documents_span"></span>)</span>
+      <span id="first_document_announcer_span" style="display:block">{{ custom_first_document_out_of }} <span
+          id="number_of_documents_span"></span>)</span>
       <br />
       <dx-text-area [spellcheck]="false" [value]="first_document" [visible]="firstDocumentVisible" height="15%">
       </dx-text-area>
@@ -85,9 +86,9 @@
         </dx-text-box>
         <canvas id="captcha_canvas" style="display:inline; position: absolute; right: 22%" width="180"
           height="50"></canvas>
-          <dx-text-box placeholder="CAPTCHA" id="captcha_input"
-            style="display:inline; position:absolute; right: 2%" [(value)]="captcha_user_answer"></dx-text-box>
-            <!-- <dx-text-box [placeholder]="LANG_captcha_placeholder" id="captcha_input"
+        <dx-text-box placeholder="CAPTCHA" id="captcha_input" style="display:inline; position:absolute; right: 2%"
+          [(value)]="captcha_user_answer"></dx-text-box>
+        <!-- <dx-text-box [placeholder]="LANG_captcha_placeholder" id="captcha_input"
               style="display:inline; position:absolute; right: 2%" [(value)]="captcha_user_answer"></dx-text-box> -->
 
       </dxi-item>
@@ -96,8 +97,8 @@
         <!-- <dx-button stylingMode="contained" text="Générer" type="normal" [width]="300" [visible]="firstDocumentVisible"
           (onClick)="generer()">
         </dx-button> -->
-        <dx-button stylingMode="contained" text="{{ custom_generate }}" type="normal" [width]="300" [visible]="firstDocumentVisible"
-          (onClick)="generer()">
+        <dx-button stylingMode="contained" text="{{ custom_generate }}" type="normal" [width]="300"
+          [visible]="firstDocumentVisible" (onClick)="generer()">
         </dx-button>
         <!-- <dx-button stylingMode="contained" [text]="LANG_generate" type="normal" [width]="200" [visible]="firstDocumentVisible"
         (onClick)="generer()">
@@ -110,7 +111,7 @@
   </dxi-item>
   <!-- <dxi-item title="Balises"> -->
   <dxi-item title="{{ custom_tags }}">
-  <!-- <dxi-item [title]="LANG_title_tags"> -->
+    <!-- <dxi-item [title]="LANG_title_tags"> -->
     <!-- <h2 class="content-block">Conversion (alt. sax parser) {{fichierXML}} </h2> -->
     <div class="content-block">
 
@@ -165,7 +166,8 @@
         <!-- <dxi-column dataField="quantity" caption="Quantité" [allowEditing]="false"></dxi-column> -->
         <dxi-column dataField="quantity" caption="{{ custom_quantity }}" [allowEditing]="false"></dxi-column>
         <!-- <dxi-column dataField="averageCharCount" caption="Longueur moyenne" [allowEditing]="false"></dxi-column> -->
-        <dxi-column dataField="averageCharCount" caption="{{ custom_average_length }}" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="averageCharCount" caption="{{ custom_average_length }}" [allowEditing]="false">
+        </dxi-column>
 
 
         <div *dxTemplate="let data of 'cellTemplate'">
@@ -188,7 +190,7 @@
 
   <!-- <dxi-item title="Historique"> -->
   <dxi-item title="{{ custom_history_and_converting_back }}">
-  <!-- <dxi-item [title]="LANG_title_history"> -->
+    <!-- <dxi-item [title]="LANG_title_history"> -->
     <div class="content-block">
       <dx-data-grid [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="history_list" keyExpr="id"
         [showColumnHeaders]="true" (onRowUpdated)="onRowUpdated($event)" [showBorders]="true"
@@ -203,7 +205,8 @@
         <!-- <dxi-column dataField="project_name" caption="Nom du projet" [allowEditing]="false"></dxi-column> -->
         <dxi-column dataField="project_name" caption="{{ custom_project_name }}" [allowEditing]="false"></dxi-column>
         <!-- <dxi-column dataField="doc_separator" caption="Séparateur de document" [allowEditing]="false"></dxi-column> -->
-        <dxi-column dataField="doc_separator" caption="{{ custom_document_separator }}" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="doc_separator" caption="{{ custom_document_separator }}" [allowEditing]="false">
+        </dxi-column>
         <!-- <dxi-column dataField="date" caption="Date" [allowEditing]="false"></dxi-column> -->
         <dxi-column dataField="date" caption="{{ custom_date }}" [allowEditing]="false"></dxi-column>
         <!-- <dxi-column dataField="file_name" caption="Noms des fichiers" [allowEditing]="false"></dxi-column> -->
@@ -219,23 +222,23 @@
       <!-- <dx-file-uploader #up selectButtonText="Charger un fichier d'export INCEpTION" labelText="" accept=".zip"
         uploadMode="useForm" multiple="true" [showFileList]="false"
         (onValueChanged)="onReconverterFileUploaderValueChanged($event)"> -->
-        <dx-file-uploader #up selectButtonText="{{ custom_load_an_inception_file }}" labelText="" accept=".zip"
-          uploadMode="useForm" multiple="true" [showFileList]="false"
-          (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
+      <dx-file-uploader #up selectButtonText="{{ custom_load_an_inception_file }}" labelText="" accept=".zip"
+        uploadMode="useForm" multiple="true" [showFileList]="false"
+        (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
       </dx-file-uploader>
       <p id="reconverter_filename_p"></p>
       <!-- <dx-text-box placeholder="Indice dans l'historique" id="index_in_history_input" style="display:inline"
         [(value)]="index_in_history"></dx-text-box> -->
-        <dx-text-box placeholder="{{ custom_index_in_history }}" id="index_in_history_input" style="display:inline"
-          [(value)]="index_in_history"></dx-text-box>
+      <dx-text-box placeholder="{{ custom_index_in_history }}" id="index_in_history_input" style="display:inline"
+        [(value)]="index_in_history"></dx-text-box>
       <!-- <dx-button stylingMode="contained" text="Reconvertir" type="normal" [width]="200" [visible]="true"
         (onClick)="reconvertir()"> -->
-      <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_a_single_corpus }})" type="normal" [visible]="true"
-        (onClick)="reconvertir()">
+      <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_a_single_corpus }})" type="normal"
+        [visible]="true" (onClick)="reconvertir()">
       </dx-button>
-      <br/>
-      <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_one_corpus_per_annotator }})" type="normal" [visible]="true"
-        (onClick)="reconvertir_n()">
+      <br />
+      <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_one_corpus_per_annotator }})"
+        type="normal" [visible]="true" (onClick)="reconvertir_n()">
       </dx-button>
 
     </div>
@@ -243,34 +246,126 @@
 
   <!-- <dxi-item title="Aide"> -->
   <dxi-item title="{{ custom_help }}">
-  <!-- <dxi-item [title]="LANG_title_help"> -->
-    <div class="content-block">
-      <!-- <p>1. Chargez vos documents</p> -->
-      <p>1. {{ custom_load_your_documents }}</p>
-      <img src="aide1.png" style="max-width:100%">
-      <br>
-      <!-- <p>2. Cliquez sur le crayon pour modifier la balise séparatrice de documents</p> -->
-      <p>2. {{ custom_click_on_pen }}</p>
-      <img src="aide2.png" style="max-width:100%">
-      <br>
-      <!-- <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p> -->
-      <p>3.{{ custom_fill_document_separator }}</p>
-      <img src="aide3.png" style="max-width:100%">
-      <br>
-      <!-- <p>4. Remplissez le CAPTCHA</p> -->
-      <p>4. {{ custom_fill_captcha }}</p>
-      <img src="aide4.png" style="max-width:100%">
-      <br>
-      <!-- <p>5. Modifiez le nom du projet si vous le souhaitez, cliquez sur "GENERER" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement</p> -->
-      <p>5. {{ custom_modify_project_name }}</p>
-      <img src="aide5.png" style="max-width:100%">
-      <br>
-      <!-- <p>6. Une fois dans INCEpTION, dans l'onglet "Projects", importez le fichier téléchargé en cliquant sur "Import project"</p> -->
-      <p>6. {{ custom_inception_import }}</p>
-      <img src="aide6.png" style="max-width:100%">
-      <!-- <br> -->
+    <!-- <dx-accordion
+    #accordion
+    [dataSource]="companies"
+    [collapsible]="false"
+    [multiple]="false"
+    [animationDuration]="300"
+    [selectedItems]="[companies[0]]"
+    id="accordion-container"
+  > -->
+    <!-- <h5><a href="#automated_corpus_import">1. Importer un corpus automatiquement</a></h5> -->
+    <!-- <h5><a id="#automated_corpus_import">1. Importer un corpus automatiquement</a></h5> -->
+    <!-- <h5><a href="#manual_corpus_import">2. Importer un corpus manuellement</a></h5> -->
+    <!-- <h5><a id="#manual_corpus_import">2. Importer un corpus manuellement</a></h5> -->
+    <!-- <br/> -->
+    <!-- <br/> -->
+    <!-- <h5 href="#automated_corpus_import">1. Importer un corpus automatiquement</h5> -->
+    <dx-tab-panel>
+      <!-- <dxi-item title="Import automatique"> -->
+      <dxi-item title="{{ custom_automated_import }}">
+        <!-- <h5 id="automated_corpus_import">1. Importer un corpus automatiquement</h5> -->
+        <!-- <dxi-item [title]="LANG_title_help"> -->
+        <div class="content-block">
+          <!-- <p>1. Chargez vos documents</p> -->
+          <p>1.1. {{ custom_load_your_documents }}</p>
+          <img src="aide1.png" style="max-width:100%">
+          <br>
+          <!-- <p>2. Cliquez sur le crayon pour modifier la balise séparatrice de documents</p> -->
+          <p>1.2. {{ custom_click_on_pen }}</p>
+          <img src="aide2.png" style="max-width:100%">
+          <br>
+          <!-- <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p> -->
+          <p>1.3.{{ custom_fill_document_separator }}</p>
+          <img src="aide3.png" style="max-width:100%">
+          <br>
+          <!-- <p>4. Remplissez le CAPTCHA</p> -->
+          <p>1.4. {{ custom_fill_captcha }}</p>
+          <img src="aide4.png" style="max-width:100%">
+          <br>
+          <!-- <p>5. Modifiez le nom du projet si vous le souhaitez, cliquez sur "GENERER" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement</p> -->
+          <p>1.5. {{ custom_modify_project_name }}</p>
+          <img src="aide5.png" style="max-width:100%">
+          <br>
+          <!-- <p>6. Une fois dans INCEpTION, dans l'onglet "Projects", importez le fichier téléchargé en cliquant sur "Import project"</p> -->
+          <p>1.6. {{ custom_inception_import }}</p>
+          <img src="aide6.png" style="max-width:100%">
+          <!-- <br> -->
 
-    </div>
+        </div>
+        <!-- </dx-accordion> -->
+      </dxi-item>
+
+      <!-- <dxi-item title="Import manuel"> -->
+      <dxi-item title="{{ custom_manual_import }}">
+        <!-- <h5 href="#manuel_corpus_import">2. Importer un corpus automatiquement</h5> -->
+        <!-- <h5 id="#manuel_corpus_import">2. Importer un corpus automatiquement</h5> -->
+        <!-- <dxi-item [title]="LANG_title_help"> -->
+        <div class="content-block">
+          <!-- <p>1. Chargez vos documents</p> -->
+          <p>2.1. {{ custom_load_your_documents }}</p>
+          <img src="aide1.png" style="max-width:100%">
+          <br>
+          <!-- <p>2. Cliquez sur le crayon pour modifier la balise séparatrice de documents</p> -->
+          <p>2.2. {{ custom_click_on_pen }}</p>
+          <img src="aide2.png" style="max-width:100%">
+          <br>
+          <!-- <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p> -->
+          <p>2.3. {{ custom_fill_document_separator }}</p>
+          <img src="aide3.png" style="max-width:100%">
+          <br>
+          <!-- <p>4. Remplissez le CAPTCHA</p> -->
+          <p>2.4. {{ custom_fill_captcha }}</p>
+          <img src="aide4.png" style="max-width:100%">
+          <br>
+          <!-- <p>5. Modifiez le nom du projet si vous le souhaitez, cliquez sur "GENERER" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement</p> -->
+          <p>2.5. {{ custom_modify_project_name }}</p>
+          <img src="aide5.png" style="max-width:100%">
+          <br>
+          <!-- <p>6. Une fois dans INCEpTION, dans l'onglet "Projects", importez le fichier téléchargé en cliquant sur "Import project"</p> -->
+          <p>2.6. {{ custom_help_settings }}</p>
+          <img src="aide_settings.png" style="max-width:100%">
+          <br>
+          <p>2.7. {{ custom_help_layers }}</p>
+          <img src="aide_layers.png" style="max-width:100%">
+          <br>
+          <p>2.8. {{ custom_help_import_typesystem }}</p>
+          <img src="aide_import_typesystem.png" style="max-width:100%">
+          <br>
+          <p>2.9. {{ custom_help_documents }}</p>
+          <img src="aide_documents.png" style="max-width:100%">
+          <br>
+          <p>2.10. {{ custom_help_import_documents }}</p>
+          <img src="aide_import_documents.png" style="max-width:100%">
+          <br>
+          <p>2.11. {{ custom_help_dashboard }}</p>
+          <img src="aide_dashboard.png" style="max-width:100%">
+          <br>
+          <p>2.12. {{ custom_help_annotation }}</p>
+          <img src="aide_annotation.png" style="max-width:100%">
+          <br>
+          <p>2.13. {{ custom_help_result }}</p>
+          <img src="aide_resultat.png" style="max-width:100%">
+          <!-- <br> -->
+
+        </div>
+      </dxi-item>
+
+      <dxi-item title="{{ custom_advanced_tools }}">
+        <div class="content-block">
+          <b>{{ custom_advanced_users_note }}</b>
+          <br />
+          <p>1. {{ custom_segmentation_check }}</p>
+          <br />
+          <p>2. {{ custom_uima_to_glozz }}</p>
+          <br />
+          <p>3. {{ custom_glozz_to_uima }}</p>
+          <br />
+          <p>4. {{ custom_stanza_parse_part_one }}<a href="https://stanfordnlp.github.io/stanza/">Stanza</a>{{ custom_stanza_parse_part_two }}</p>
+        </div>
+      </dxi-item>
+    </dx-tab-panel>
   </dxi-item>
 
 

@@ -230,6 +230,23 @@ export class Sax2Component implements OnInit {
         "custom_fill_captcha": "Remplissez le CAPTCHA",
         "custom_modify_project_name": "Modifiez le nom du projet si vous le souhaitez, cliquez sur \"GENERER\" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement",
         "custom_inception_import": "Une fois dans INCEpTION, dans l'onglet \"Projects\", importez le fichier téléchargé en cliquant sur \"Import project\"",
+        "custom_automated_import": "Import automatique",
+        "custom_manual_import": "Import manuel",
+        "custom_help_settings": "Dans le projet en question, cliquez sur \"Settings\"",
+        "custom_help_layers": "Cliquez sur \"Layers\"",
+        "custom_help_import_typesystem": "Après avoir décompressé l'archive ZIP, cliquez sur \"Import\" et sélectionnez le fichier typesystem.xml ; cela indique à INCEpTION les différentes couches d'annotation",
+        "custom_help_documents": "Cliquez ensuite sur \"Documents\"",
+        "custom_help_import_documents": "Sélectionnez les fichiers contenus dans le répertoire \"source\", indiquez qu'il s'agit du format UIMA CAS XML 1.1 et cliquez sur \"Import\"",
+        "custom_help_dashboard": "Pour vérifier que tout a bien été importé, cliquez sur \"Dashboard\"",
+        "custom_help_annotation": "Puis cliquez sur \"Annotation\"",
+        "custom_help_result": "Et en sélectionnant un des fichiers, vous pourrez voir si toutes les couches sont bien présentes",
+        "custom_advanced_tools": "Outils avancés",
+        "custom_advanced_users_note": "Pour les utilisateurs avancés qui souhaitent aller plus loin, nous proposons des scripts Python supplémentaires",
+        "custom_segmentation_check": "Le script segmentation_check.py permet de voir si certaines balises sont à cheval ; en plus du résultat dans le terminal, cela génère un fichier CSV contenant tous les résultats.",
+        "custom_uima_to_glozz": "Le script uima_to_glozz.py permet de convertir les fichiers UIMA vers le format Glozz (*.ac, *.aa, *.aam) pour une possibilité d'exploration dans d'autres logiciels, comme notamment Glozz ou encore TXM avec le module URS.",
+        "custom_glozz_to_uima": "Le script glozz_to_uima.py permet de reconvertir un export Glozz vers de l'UIMA (pour des questions d'indices, cela reconvertit pour l'instant uniquement les <unit>).",
+        "custom_stanza_parse_part_one": "Le script stanza_parse.py permet de faire une annotation du corpus pour une variété de couches en utilisant ",
+        "custom_stanza_parse_part_two": " ; cela vous génère un fichier ZIP qu'il est possible de charger automatiquement (cf. Import automatique) ou manuellement (cf. Import manuel) dans INCEpTION. À noter qu'en haut du fichier stanza_parse.py vous pouvez paramétrer la langue que vous souhaitez.",
         "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
         "dxDataGrid-noDataText": "Pas de données",
@@ -269,6 +286,23 @@ export class Sax2Component implements OnInit {
         "custom_fill_captcha": "Fill in the CAPTCHA",
         "custom_modify_project_name": "Modify the project name if you wish to, click on \"Generate\" and wait until your converted corpus is downloaded automatically",
         "custom_inception_import": "Once in INCEpTION, in the \"Projects\" tab, import the downloaded file by clicking on \"Import project\"",
+        "custom_automated_import": "Automated import",
+        "custom_manual_import": "Manual import",
+        "custom_help_settings": "In the target project, click on \"Settings\"",
+        "custom_help_layers": "Click on \"Layers\"",
+        "custom_help_import_typesystem": "After decompressing the ZIP archive, click on \"Import\" and select the typesystem.xml file; this will tell INCEpTION the different annotation layers",
+        "custom_help_documents": "Then click on \"Documents\"",
+        "custom_help_import_documents": "Select the files from the \"source\" directory, indicate it is the UIMA CAS XML 1.1 format and click on \"Import\"",
+        "custom_help_dashboard": "To verify that everything has been imported correctly, click on \"Dashboard\"",
+        "custom_help_annotation": "Then click on \"Annotation\"",
+        "custom_help_result": "And by selecting one of the files, you can see if all the layers are here",
+        "custom_advanced_tools": "Advanced tools",
+        "custom_advanced_users_note": "For advanced users that wish to go further, we make available additional Python scripts",
+        "custom_segmentation_check": "The segmentation_check.py script allows to see if some tags overlap; beyond the results in the terminal, it generates a CSV file containing all the results.",
+        "custom_uima_to_glozz": "The uima_to_glozz.py script allows to convert from UIMA format to Glozz format (*.ac, *.aa, *.aam) so as to be compatible with other software, such as Glozz or TXM with the URS module.",
+        "custom_glozz_to_uima": "The glozz_to_uima.py script allows to convert back from Glozz format to UIMA format (due to index issues, it only converts back the different <unit> for now).",
+        "custom_stanza_parse_part_one": "The stanza_parse.py script allows to annotate the corpus for a variety of layers by using ",
+        "custom_stanza_parse_part_two": "; it generates a ZIP file that can be loaded automatically (cf. Automated import) or manualy (cf. Manual import) into INCEpTION. Please note that at the top of the stanza_parse.py file you may change the target language.",
         "custom_a_single_corpus": "merge the annotations of annotators into a single corpus",
         "custom_one_corpus_per_annotator": "one version of the corpus for each annotator",
         "dxDataGrid-noDataText": "No data",
@@ -312,6 +346,23 @@ export class Sax2Component implements OnInit {
   get custom_fill_captcha(){return formatMessage("custom_fill_captcha")}
   get custom_modify_project_name(){return formatMessage("custom_modify_project_name")}
   get custom_inception_import(){return formatMessage("custom_inception_import")}
+  get custom_automated_import(){return formatMessage("custom_automated_import")}
+  get custom_manual_import(){return formatMessage("custom_manual_import")}
+  get custom_help_settings(){return formatMessage("custom_help_settings")}
+  get custom_help_layers(){return formatMessage("custom_help_layers")}
+  get custom_help_import_typesystem(){return formatMessage("custom_help_import_typesystem")}
+  get custom_help_documents(){return formatMessage("custom_help_documents")}
+  get custom_help_import_documents(){return formatMessage("custom_help_import_documents")}
+  get custom_help_dashboard(){return formatMessage("custom_help_dashboard")}
+  get custom_help_annotation(){return formatMessage("custom_help_annotation")}
+  get custom_help_result(){return formatMessage("custom_help_result")}
+  get custom_advanced_tools(){return formatMessage("custom_advanced_tools")}
+  get custom_advanced_users_note(){return formatMessage("custom_advanced_users_note")}
+  get custom_segmentation_check(){return formatMessage("custom_segmentation_check")}
+  get custom_uima_to_glozz(){return formatMessage("custom_uima_to_glozz")}
+  get custom_glozz_to_uima(){return formatMessage("custom_glozz_to_uima")}
+  get custom_stanza_parse_part_one(){return formatMessage("custom_stanza_parse_part_one")}
+  get custom_stanza_parse_part_two(){return formatMessage("custom_stanza_parse_part_two")}
   get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
   get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
