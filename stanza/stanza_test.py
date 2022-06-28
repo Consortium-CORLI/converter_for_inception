@@ -378,7 +378,7 @@ if os.path.exists(json_path):
     """
 
     print(f'Creating {out_zip_path}...')
-    with zipfile.ZipFile(out_zip_path,'w') as local_zip:
+    with zipfile.ZipFile(out_zip_path,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9) as local_zip:
         print(f'Adding to ZIP: {json_path}')
         local_zip.write(json_path)
         ld = os.listdir('source')
