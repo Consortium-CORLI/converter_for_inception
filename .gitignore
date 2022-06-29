@@ -79,3 +79,5 @@ segmentation_check/*.txt
 
 stanza/test_stanza*
 stanza/test.txt
+
+measures/*
