@@ -186,7 +186,8 @@ for i in ld:
 
             depth += 1
             for k in attributes_list:
-                if k[0].lower() in ['id','author','creation_date','begin','end','Governor','Dependent'] or k[0].lower().startswith('xmi:'):
+                # if k[0].lower() in ['id','author','creation_date','begin','end','Governor','Dependent'] or k[0].lower().startswith('xmi:'):
+                if k[0].lower() in ['id','author','creation_date','Governor','Dependent'] or k[0].lower().startswith('xmi:'):
                     continue
                 s_out = f'{s_out}\n{tab*depth}<feature name="{k[0]}">{k[1]}</feature>'
                 
