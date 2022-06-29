@@ -5,26 +5,9 @@ import zipfile
 
 excluded_tags = ['Token','Dependency','Sentence']
 
-# separating_tag = 'TEXT'
-
-#REPRIS DE PLUS BAS
-# directory_path = './'
-# directory_path = 'C:\\Users\\Louis\\Documents\\universite\\MASTER\\M1\\S2\\STAGE\\corpus-extrait-corli_test\\corpus\\target\\'
-
-# directory_path = 'C:\\Users\\Louis\\Documents\\universite\\MASTER\\M1\\S2\\STAGE\\corpus-extrait-corli_test\\corpus_tests_import\\WIKIDEEP\\target\\'
 directory_path = 'source/'
 
 encoding = 'utf-8'
-
-"""
-log_uri = 'C:\\Users\\Louis\\Documents\\universite\\MASTER\M1\\S2\STAGE\\test_export\\exports_inception\\export1_75\\event.log'
-
-# file = open(log_path,'rt',encoding='utf-8')
-file = open(log_uri,'rt',encoding='utf-8')
-log_data = file.read()
-file.close()
-"""
-
 
 #CELLE-CI SEMBLE FONCTIONNER
 log_annotation_pattern = '\\{[^\\n]*"annotator":"([^"]*)","created":([0-9]+),"details":\\{("feature":"([^"]*)","value":"([^"]*)")?[^\\n]*"addr":([^"]*),"begin":([^"]*),"end":([^"]*),"type":"([^"]*)","text":"([^"]*)"\\}\\}?,"document_name":"([^"]*)"[^\\n]*"user":"([^"]*)"\\}'
@@ -39,7 +22,6 @@ output_str = ''
 
 # def convert_from_uima(full_path,log_path):
 def convert_from_uima(full_path):
-    # path = 'C:\\Users\\Louis\\Documents\\universite\\MASTER\\M1\\S2\\STAGE\\test_export\\exports_inception\\export1_75\\source\\'
     # local_file = 'doc1.xml'
     # local_file = 'doc2.xml'
 
