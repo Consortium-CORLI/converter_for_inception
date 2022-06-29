@@ -68,6 +68,7 @@ glozz_uima/screenshot*
 glozz_uima/inception_project*
 glozz_uima/exportedproject.json
 glozz_uima/stanza_parse.py
+glozz_uima/test_export*
 
 segmentation_check/segmentation_check.py
 segmentation_check/segmentation_check2.py

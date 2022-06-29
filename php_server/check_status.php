@@ -113,7 +113,7 @@
                     
 
 
-
+                    $project->description = 'CORLI-converted corpus'."\r\n".'==='."\r\n".'This corpus has been converted from XML to UIMA with a converter available <a href="https://corli.huma-num.fr/convinception/#/home">here</a>.'."\r\n".'You may reconvert your project to its initial XML structure in this converter.'."\r\n".'If you wish to contact us, you may <a href="https://corli.huma-num.fr/contact/">here</a> or directly on <a href="https://github.com/LouisEsteve/inception_converter_applet">GitHub</a>.';//."\r\n".'<img src="https://corli.huma-num.fr/wp-content/uploads/2020/10/corli-logo-ancien.png" style="max-width:100%;" alt="CORLI logo"/>';
                     $project->created = $current_time;
                     $project->updated = $current_time;
                     $project->curation_workflow->project->name = $project->name;
