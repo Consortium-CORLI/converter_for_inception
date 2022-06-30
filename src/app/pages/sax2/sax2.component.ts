@@ -249,6 +249,10 @@ export class Sax2Component implements OnInit {
         "custom_stanza_parse_part_two": " ; cela vous génère un fichier ZIP qu'il est possible de charger automatiquement (cf. Import automatique) ou manuellement (cf. Import manuel) dans INCEpTION. À noter qu'en haut du fichier stanza_parse.py vous pouvez paramétrer la langue que vous souhaitez.",
         "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
+        "custom_converting_example": "Exemple de conversion",
+        "custom_example_consider_this_corpus_file": "Considérons ce fichier de corpus : chaque texte qui nous intéresse est contenu dans un <div> ... </div>",
+        "custom_example_select_div": "En sélectionnant \"div\" (sans guillemets) comme séparateur de document, l'outil crée un fichier unique pour chaque :",
+        "custom_example_it_then_converts_to_UIMA": "Il convertit ensuite chaque fichier vers de l'UIMA (et les place tous dans un ZIP chargeable directement dans INCEpTION) :",
         "dxDataGrid-noDataText": "Pas de données",
         "dxDataGrid-editingSaveRowChanges": "Sauvegarder"
       },
@@ -302,9 +306,13 @@ export class Sax2Component implements OnInit {
         "custom_uima_to_glozz": "The uima_to_glozz.py script allows to convert from UIMA format to Glozz format (*.ac, *.aa, *.aam) so as to be compatible with other software, such as Glozz or TXM with the URS module.",
         "custom_glozz_to_uima": "The glozz_to_uima.py script allows to convert back from Glozz format to UIMA format.",
         "custom_stanza_parse_part_one": "The stanza_parse.py script allows to annotate the corpus for a variety of layers by using ",
-        "custom_stanza_parse_part_two": "; it generates a ZIP file that can be loaded automatically (cf. Automated import) or manualy (cf. Manual import) into INCEpTION. Please note that at the top of the stanza_parse.py file you may change the target language.",
+        "custom_stanza_parse_part_two": "; it generates a ZIP file that can be loaded automatically (cf. Automated import) or manually (cf. Manual import) into INCEpTION. Please note that at the top of the stanza_parse.py file you may change the target language.",
         "custom_a_single_corpus": "merge the annotations of annotators into a single corpus",
         "custom_one_corpus_per_annotator": "one version of the corpus for each annotator",
+        "custom_converting_example": "Converting example",
+        "custom_example_consider_this_corpus_file": "Let's consider this corpus file: each text is contained within a <div> ... </div>",
+        "custom_example_select_div": "By selecting \"div\" (without quotes) as a document separator, the tool creates a unique file for each:",
+        "custom_example_it_then_converts_to_UIMA": "It then converts each file to UIMA (and places them into a ZIP that can directly be loaded into INCEpTION):",
         "dxDataGrid-noDataText": "No data",
         "dxDataGrid-editingSaveRowChanges": "Save"
       }
@@ -365,6 +373,10 @@ export class Sax2Component implements OnInit {
   get custom_stanza_parse_part_two(){return formatMessage("custom_stanza_parse_part_two")}
   get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
   get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
+  get custom_converting_example(){return formatMessage("custom_converting_example")};
+  get custom_example_consider_this_corpus_file(){return formatMessage("custom_example_consider_this_corpus_file")};
+  get custom_example_select_div(){return formatMessage("custom_example_select_div")};
+  get custom_example_it_then_converts_to_UIMA(){return formatMessage("custom_example_it_then_converts_to_UIMA")};
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
@@ -395,9 +407,12 @@ export class Sax2Component implements OnInit {
   // "dxDataGrid-editingSaveRowChanges": "Sauvegarder"
 
   generate_captcha(){
-    var element_a = ~~(Math.random() * 20) - 10;
-    var element_b = ~~(Math.random() * 20) - 10;
-    var element_c = ~~(Math.random() * 20) - 10;
+    // var element_a = ~~(Math.random() * 20) - 10;
+    // var element_b = ~~(Math.random() * 20) - 10;
+    // var element_c = ~~(Math.random() * 20) - 10;
+    var element_a = ~~(Math.random() * 10);
+    var element_b = ~~(Math.random() * 10);
+    var element_c = ~~(Math.random() * 10);
     // console.log(element_a, element_b, element_c);
     
     var sign_a = ~~(Math.random() * 3);
