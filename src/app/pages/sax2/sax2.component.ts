@@ -229,10 +229,10 @@ export class Sax2Component implements OnInit {
         "custom_average_length": "Longueur moyenne",
         "custom_index": "Indice",
         "custom_project_name": "Nom du projet ",
-        "custom_document_separator": "Séparateur de document",
+        "custom_document_separator": "Séparateur de documents",
         "custom_date": "Date",
         "custom_file_names": "Noms des fichiers",
-        "custom_reconvert_to_initial_format" : "Reconversion vers le format initial d'un export INCEpTION (pour se faire, faites un export avec comme format additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale qui se trouve dans l'historique) : ",
+        "custom_reconvert_to_initial_format" : "Reconversion vers le format initial d'un export INCEpTION (pour ce faire, faites un export avec comme format additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale qui se trouve dans l'historique) : ",
         "custom_load_an_inception_file": "Charger un fichier d'export INCEpTION",
         "custom_index_in_history": "Indice dans l'historique",
         "custom_reconvert": "Reconvertir",
@@ -263,11 +263,12 @@ export class Sax2Component implements OnInit {
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
         "custom_converting_example": "Exemple de conversion",
         "custom_example_consider_this_corpus_file": "Considérons ce fichier de corpus : chaque texte qui nous intéresse est contenu dans un <div> ... </div>",
-        "custom_example_select_div": "En sélectionnant \"div\" (sans guillemets) comme séparateur de document, l'outil crée un fichier unique pour chaque :",
+        "custom_example_select_div": "En sélectionnant \"div\" (sans guillemets) comme séparateur de documents, l'outil crée un fichier unique pour chaque :",
         "custom_example_it_then_converts_to_UIMA": "Il convertit ensuite chaque fichier vers de l'UIMA (et les place tous dans un ZIP chargeable directement dans INCEpTION) :",
-        "custom_your_corpus_will_be_split": "Votre corpus sera séparé en unités textuelles, veuillez au moins sélectionner le séparateur de document (un exemple du processus est disponible dans l'onglet \"Exemple de conversion\") :",
+        "custom_your_corpus_will_be_split": "Votre corpus sera séparé en unités textuelles. Veuillez sélectionner le séparateur de documents (un exemple du processus est disponible dans l'onglet \"Exemple de conversion\") :",
         "dxDataGrid-noDataText": "Pas de données",
-        "dxDataGrid-editingSaveRowChanges": "Sauvegarder"
+        "dxDataGrid-editingSaveRowChanges": "Sauvegarder",
+        "dxDataGrid-editingCancelRowChanges": "Annuler"
       },
       'en': {
         "test": "test english",
@@ -329,9 +330,10 @@ export class Sax2Component implements OnInit {
         "custom_example_consider_this_corpus_file": "Let's consider this corpus file: each text is contained within a <div> ... </div>",
         "custom_example_select_div": "By selecting \"div\" (without quotes) as a document separator, the tool creates a unique file for each:",
         "custom_example_it_then_converts_to_UIMA": "It then converts each file to UIMA (and places them into a ZIP that can directly be loaded into INCEpTION):",
-        "custom_your_corpus_will_be_split": "Your corpus will be split in textual units, please select at least the document separator (an example of the process is avaiable in the \"Converting example\" tab):",
+        "custom_your_corpus_will_be_split": "Your corpus will be split in textual units. Please select the document separator (an example of the process is avaiable in the \"Converting example\" tab):",
         "dxDataGrid-noDataText": "No data",
-        "dxDataGrid-editingSaveRowChanges": "Save"
+        "dxDataGrid-editingSaveRowChanges": "Save",
+        "dxDataGrid-editingCancelRowChanges": "Cancel"
       }
     });
 
@@ -785,7 +787,8 @@ export class Sax2Component implements OnInit {
         return;
       }
       this.file_to_reconvert_name = file.name;
-      document.getElementById('reconverter_filename_p').innerText = this.file_to_reconvert_name;
+      // document.getElementById('reconverter_filename_p').innerText = this.file_to_reconvert_name;
+      document.getElementById('div_reconv_details').style.display = 'block';
       this.file_to_reconvert = file;
       if(!(file.name.endsWith('.zip'))){
         console.error("Nom de fichier invalide.");

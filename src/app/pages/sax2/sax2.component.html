@@ -3,7 +3,8 @@
   <dxi-item title="{{ custom_conversion }}">
     <!-- <dxi-item [title]="LANG_title_converting"> -->
 
-    <div class="content-block">
+      <div class="content-block">
+    <div class="dx-card">
       <!-- <dx-button stylingMode="contained" type="normal" (onClick)="switch_to_french()">
         <img src="french_flag.svg" height="20">
       </dx-button>
@@ -18,7 +19,7 @@
           uploadMode="useForm" multiple="true" [showFileList]="false"
           (onValueChanged)="onFileUploaderValueChanged($event)"> -->
         <dx-file-uploader #up id="dx-file-uploader_xml_files" selectButtonText="{{ custom_load_xml_files }}"
-          labelText="" accept=".xml" uploadMode="useForm" multiple="true" [showFileList]="false"
+          labelText="" accept=".xml" uploadMode="useForm" multiple="true" [showFileList]="true"
           (onValueChanged)="onFileUploaderValueChanged($event)">
         </dx-file-uploader>
         <!-- <dx-file-uploader #up id="dx-file-uploader_xml_files" [selectButtonText]="LANG_dx_file_uploader_xml_files" labelText="" accept=".xml"
@@ -34,10 +35,13 @@
 
       <!-- </dx-toolbar> -->
     </div>
+    </div>
 
     <!-- <div class="content-block"> -->
     <div id="suggestion_div" class="content-block" style="display:none">
-      {{ custom_your_corpus_will_be_split }}
+       <!-- <div class="dx-card responsive-paddings"> -->
+        <div class="dx-card" style="padding:14px;">
+        <span style="font-family:Roboto;font-size:14px;"><b>{{ custom_your_corpus_will_be_split }}</b></span>
       <br/>
       <br/>
       <dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true"
@@ -71,29 +75,36 @@
       </dx-data-grid>
       <br />
       <!-- <span id="first_document_announcer_span" style="display:block">Premier document (sur <span id="number_of_documents_span"></span>)</span> -->
-      <span id="first_document_announcer_span" style="display:block">{{ custom_first_document_out_of }} <span
-          id="number_of_documents_span"></span>)</span>
+      <span id="first_document_announcer_span" style="display:block;font-family:Roboto;font-size:14px;"><b>{{ custom_first_document_out_of }} <span
+          id="number_of_documents_span"></span>)</b></span>
       <br />
       <dx-text-area [spellcheck]="false" [value]="first_document" [visible]="firstDocumentVisible" height="15%">
       </dx-text-area>
       <br />
 
+    <!-- </div> -->
+    <!-- <div class="dx-card responsive-paddings"> -->
       <!-- <dxi-item location="before" [visible]="auto_authentication"> -->
       <!-- <dxi-item location="before" [visible]="suggestionPopupTagsVisible"> -->
       <dxi-item location="before">
 
         <!-- <span id="project_name_span">Nom du projet :</span> -->
-        <span id="project_name_span">{{ custom_project_name }}:</span>
+        <span id="project_name_span" style="font-family:Roboto;font-size:14px;"><b>{{ custom_project_name }}:</b></span>
         <dx-text-box placeholder="Nom du projet" id="project_name_input" style="display:inline"
           [(value)]="project_name">
         </dx-text-box>
-        <canvas id="captcha_canvas" style="display:inline; position: absolute; right: 22%" width="180"
-          height="50"></canvas>
-        <dx-text-box placeholder="CAPTCHA" id="captcha_input" style="display:inline; position:absolute; right: 2%"
-          [(value)]="captcha_user_answer"></dx-text-box>
+        <!-- <div style="float:left;position:absolute;right:5%;"> -->
+          <canvas id="captcha_canvas" style="display:inline; position: absolute; right: 282px" width="180"
+            height="50"></canvas>
+            <!-- <canvas id="captcha_canvas" style="display:inline;" width="180"
+              height="50"></canvas> -->
+              <dx-text-box placeholder="CAPTCHA" id="captcha_input" style="display:inline; position:absolute; right: 96px;" width="180" height="50"
+                [(value)]="captcha_user_answer"></dx-text-box>
+                <!-- <dx-text-box placeholder="CAPTCHA" id="captcha_input" style="display:inline;"
+                  [(value)]="captcha_user_answer"></dx-text-box> -->
         <!-- <dx-text-box [placeholder]="LANG_captcha_placeholder" id="captcha_input"
               style="display:inline; position:absolute; right: 2%" [(value)]="captcha_user_answer"></dx-text-box> -->
-
+          <!-- </div> -->
       </dxi-item>
       <dxi-item location="after">
 
@@ -110,6 +121,7 @@
       </dxi-item>
       <br />
       <dx-progress-bar [min]="0" [max]="100" [value]="conversion_progress"></dx-progress-bar>
+    </div>
     </div>
   </dxi-item>
   <!-- <dxi-item title="Balises"> -->
@@ -195,9 +207,43 @@
   <dxi-item title="{{ custom_history_and_converting_back }}">
     <!-- <dxi-item [title]="LANG_title_history"> -->
     <div class="content-block">
+    <!-- <div class="dx-card responsive-paddings"> -->
+    <div class="dx-card" style="padding:14px;">
+      <!-- <p>Reconversion vers le format initial d'un export INCEpTION (pour se faire, faites un export avec comme format
+        additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale
+        qui se trouve dans l'historique) : </p> -->
+        <span style="font-family:Roboto;font-size:14px;"><b>{{ custom_reconvert_to_initial_format }}</b></span>
+
+        <!-- <dx-file-uploader #up selectButtonText="Charger un fichier d'export INCEpTION" labelText="" accept=".zip"
+          uploadMode="useForm" multiple="true" [showFileList]="false"
+          (onValueChanged)="onReconverterFileUploaderValueChanged($event)"> -->
+        <dx-file-uploader #up selectButtonText="{{ custom_load_an_inception_file }}" labelText="" accept=".zip"
+          uploadMode="useForm" multiple="true" [showFileList]="true"
+          (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
+        </dx-file-uploader>
+        <div id="div_reconv_details" style="display:none;">
+        <!-- <p id="reconverter_filename_p"></p> -->
+        <!-- <dx-text-box placeholder="Indice dans l'historique" id="index_in_history_input" style="display:inline"
+          [(value)]="index_in_history"></dx-text-box> -->
+        <dx-text-box placeholder="{{ custom_index_in_history }}" id="index_in_history_input" style="display:inline"
+          [(value)]="index_in_history"></dx-text-box>
+        <!-- <dx-button stylingMode="contained" text="Reconvertir" type="normal" [width]="200" [visible]="true"
+          (onClick)="reconvertir()"> -->
+        <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_a_single_corpus }})" type="normal"
+          [visible]="true" (onClick)="reconvertir()">
+        </dx-button>
+        <br/>
+        <br/>
+        <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_one_corpus_per_annotator }})"
+          type="normal" [visible]="true" (onClick)="reconvertir_n()">
+        </dx-button>
+        </div>
+      </div>
+      </div>
+      <div class="content-block">
       <dx-data-grid [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="history_list" keyExpr="id"
         [showColumnHeaders]="true" (onRowUpdated)="onRowUpdated($event)" [showBorders]="true"
-        (onToolbarPreparing)="onToolbarPreparing($event)" height="100%">
+        (onToolbarPreparing)="onToolbarPreparing($event)" height="50%" style="max-height:50%;">
 
         <dxo-selection mode="single"></dxo-selection>
 
@@ -217,32 +263,7 @@
 
       </dx-data-grid>
 
-      <!-- <p>Reconversion vers le format initial d'un export INCEpTION (pour se faire, faites un export avec comme format
-        additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale
-        qui se trouve dans l'historique) : </p> -->
-      <p>{{ custom_reconvert_to_initial_format }} </p>
-
-      <!-- <dx-file-uploader #up selectButtonText="Charger un fichier d'export INCEpTION" labelText="" accept=".zip"
-        uploadMode="useForm" multiple="true" [showFileList]="false"
-        (onValueChanged)="onReconverterFileUploaderValueChanged($event)"> -->
-      <dx-file-uploader #up selectButtonText="{{ custom_load_an_inception_file }}" labelText="" accept=".zip"
-        uploadMode="useForm" multiple="true" [showFileList]="false"
-        (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
-      </dx-file-uploader>
-      <p id="reconverter_filename_p"></p>
-      <!-- <dx-text-box placeholder="Indice dans l'historique" id="index_in_history_input" style="display:inline"
-        [(value)]="index_in_history"></dx-text-box> -->
-      <dx-text-box placeholder="{{ custom_index_in_history }}" id="index_in_history_input" style="display:inline"
-        [(value)]="index_in_history"></dx-text-box>
-      <!-- <dx-button stylingMode="contained" text="Reconvertir" type="normal" [width]="200" [visible]="true"
-        (onClick)="reconvertir()"> -->
-      <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_a_single_corpus }})" type="normal"
-        [visible]="true" (onClick)="reconvertir()">
-      </dx-button>
-      <br />
-      <dx-button stylingMode="contained" text="{{ custom_reconvert }} ({{ custom_one_corpus_per_annotator }})"
-        type="normal" [visible]="true" (onClick)="reconvertir_n()">
-      </dx-button>
+      
 
     </div>
   </dxi-item>
@@ -272,29 +293,65 @@
         <!-- <dxi-item [title]="LANG_title_help"> -->
         <div class="content-block">
           <!-- <p>1. Chargez vos documents</p> -->
-          <p>1.1. {{ custom_load_your_documents }}</p>
+        <div class="dx-card" style="padding:14px;">
+          <span style="font-family:Roboto;font-size:14px;">
+            <b>1.1. {{ custom_load_your_documents }}</b>
+          </span>
+          <br/>
+          <br/>
           <img src="aide1.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
           <!-- <p>2. Cliquez sur le crayon pour modifier la balise séparatrice de documents</p> -->
-          <p>1.2. {{ custom_click_on_pen }}</p>
+        <div class="dx-card" style="padding:14px;">
+          <span style="font-family:Roboto;font-size:14px;">
+          <b>1.2. {{ custom_click_on_pen }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide2.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
           <!-- <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p> -->
-          <p>1.3.{{ custom_fill_document_separator }}</p>
+        <div class="dx-card" style="padding:14px;">
+          <span style="font-family:Roboto;font-size:14px;">
+          <b>1.3.{{ custom_fill_document_separator }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide3.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
           <!-- <p>4. Remplissez le CAPTCHA</p> -->
-          <p>1.4. {{ custom_fill_captcha }}</p>
+        <div class="dx-card" style="padding:14px;">
+          <span style="font-family:Roboto;font-size:14px;">
+          <b>1.4. {{ custom_fill_captcha }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide4.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
           <!-- <p>5. Modifiez le nom du projet si vous le souhaitez, cliquez sur "GENERER" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement</p> -->
-          <p>1.5. {{ custom_modify_project_name }}</p>
+        <div class="dx-card" style="padding:14px;">
+          <span style="font-family:Roboto;font-size:14px;">
+          <b>1.5. {{ custom_modify_project_name }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide5.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
           <!-- <p>6. Une fois dans INCEpTION, dans l'onglet "Projects", importez le fichier téléchargé en cliquant sur "Import project"</p> -->
-          <p>1.6. {{ custom_inception_import }}</p>
+        <div class="dx-card" style="padding:14px;">
+          <span style="font-family:Roboto;font-size:14px;">
+          <b>1.6. {{ custom_inception_import }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide6.png" style="max-width:100%">
-          <!-- <br> -->
+        </div>
+          <!-- <br/> -->
 
         </div>
         <!-- </dx-accordion> -->
@@ -306,66 +363,160 @@
         <!-- <h5 id="#manuel_corpus_import">2. Importer un corpus automatiquement</h5> -->
         <!-- <dxi-item [title]="LANG_title_help"> -->
         <div class="content-block">
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
           <!-- <p>1. Chargez vos documents</p> -->
-          <p>2.1. {{ custom_load_your_documents }}</p>
+          <b>2.1. {{ custom_load_your_documents }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide1.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
           <!-- <p>2. Cliquez sur le crayon pour modifier la balise séparatrice de documents</p> -->
-          <p>2.2. {{ custom_click_on_pen }}</p>
+          <b>2.2. {{ custom_click_on_pen }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide2.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
           <!-- <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p> -->
-          <p>2.3. {{ custom_fill_document_separator }}</p>
+          <b>2.3. {{ custom_fill_document_separator }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide3.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
           <!-- <p>4. Remplissez le CAPTCHA</p> -->
-          <p>2.4. {{ custom_fill_captcha }}</p>
+          <b>2.4. {{ custom_fill_captcha }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide4.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
           <!-- <p>5. Modifiez le nom du projet si vous le souhaitez, cliquez sur "GENERER" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement</p> -->
-          <p>2.5. {{ custom_modify_project_name }}</p>
+          <b>2.5. {{ custom_modify_project_name }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide5.png" style="max-width:100%">
-          <br>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
           <!-- <p>6. Une fois dans INCEpTION, dans l'onglet "Projects", importez le fichier téléchargé en cliquant sur "Import project"</p> -->
-          <p>2.6. {{ custom_help_settings }}</p>
+          <b>2.6. {{ custom_help_settings }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide_settings.png" style="max-width:100%">
-          <br>
-          <p>2.7. {{ custom_help_layers }}</p>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
+          <b>2.7. {{ custom_help_layers }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide_layers.png" style="max-width:100%">
-          <br>
-          <p>2.8. {{ custom_help_import_typesystem }}</p>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
+          <b>2.8. {{ custom_help_import_typesystem }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide_import_typesystem.png" style="max-width:100%">
-          <br>
-          <p>2.9. {{ custom_help_documents }}</p>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
+          <b>2.9. {{ custom_help_documents }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide_documents.png" style="max-width:100%">
-          <br>
-          <p>2.10. {{ custom_help_import_documents }}</p>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
+          <b>2.10. {{ custom_help_import_documents }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide_import_documents.png" style="max-width:100%">
-          <br>
-          <p>2.11. {{ custom_help_dashboard }}</p>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
+          <b>2.11. {{ custom_help_dashboard }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide_dashboard.png" style="max-width:100%">
-          <br>
-          <p>2.12. {{ custom_help_annotation }}</p>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
+          <b>2.12. {{ custom_help_annotation }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide_annotation.png" style="max-width:100%">
-          <br>
-          <p>2.13. {{ custom_help_result }}</p>
+        </div>
+          <br/>
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
+          <b>2.13. {{ custom_help_result }}</b>
+        </span>
+        <br/>
+        <br/>
           <img src="aide_resultat.png" style="max-width:100%">
-          <!-- <br> -->
+        </div>
+          <!-- <br/> -->
 
         </div>
       </dxi-item>
 
       <dxi-item title="{{ custom_advanced_tools }}">
         <div class="content-block">
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
           <b>{{ custom_advanced_users_note }}</b>
-          <br />
-          <p>1. {{ custom_segmentation_check }}</p>
-          <br />
-          <p>2. {{ custom_uima_to_glozz }}</p>
-          <br />
-          <p>3. {{ custom_glozz_to_uima }}</p>
-          <br />
-          <p>4. {{ custom_stanza_parse_part_one }}<a href="https://stanfordnlp.github.io/stanza/">Stanza</a>{{ custom_stanza_parse_part_two }}</p>
+        </span>
+        <br/>
+        <br/>
+        <span style="font-family:Roboto;font-size:14px;">
+          1. {{ custom_segmentation_check }}
+        </span>
+        <br/>
+        <br/>
+        <span style="font-family:Roboto;font-size:14px;">
+          2. {{ custom_uima_to_glozz }}
+        </span>
+        <br/>
+        <br/>
+        <span style="font-family:Roboto;font-size:14px;">
+          3. {{ custom_glozz_to_uima }}
+        </span>
+        <br/>
+        <br/>
+        <span style="font-family:Roboto;font-size:14px;">
+          4. {{ custom_stanza_parse_part_one }}<a href="https://stanfordnlp.github.io/stanza/">Stanza</a>{{ custom_stanza_parse_part_two }}
+        </span>
+        </div>
         </div>
       </dxi-item>
     </dx-tab-panel>
@@ -373,8 +524,13 @@
 
   <dxi-item title="{{ custom_converting_example }}">
     <div class="content-block">
-    1. {{ custom_example_consider_this_corpus_file }}
-    <div style="background-color:#dddddd;padding:16px;">
+      <div class="dx-card" style="padding:14px;">
+        <span style="font-family:Roboto;font-size:14px;">
+    <b>1. {{ custom_example_consider_this_corpus_file }}</b>
+    </span>
+    <!-- <div style="background-color:#dddddd;padding:16px;"> -->
+      <br/>
+      <br/>
       <!-- <pre style="position:absolute;left:20%;width:60%;top:5%;height:40%;"> -->
     <!-- <pre style="left:20%;width:60%;top:5%;height:40%;"> -->
 <pre>&lt;?<span style="color:#20ee20;"><b>xml</b></span> version="1.0" encoding="UTF-8"?&gt;
@@ -447,9 +603,15 @@
 
     <br/>
 
-    2. {{ custom_example_select_div }}
+    <div class="dx-card" style="padding:14px;">
+      <span style="font-family:Roboto;font-size:14px;">
+    <b>2. {{ custom_example_select_div }}</b>
+        </span>
 
-    <div style="background-color:#dddddd;padding:16px;">
+    <!-- <div style="background-color:#dddddd;padding:16px;"> -->
+      <br/>
+      <br/>
+      <div class="dx-card" style="padding:14px;">
     <!-- <pre style="position:absolute;left:5%;width:40%;top:55%;height:50%;"> -->
     <!-- <pre style="left:5%;width:40%;top:55%;height:50%;"> -->
 <pre>&lt;?<span style="color:#20ee20;"><b>xml</b></span> version="1.0" encoding="UTF-8"?&gt;
@@ -471,7 +633,8 @@
 
     <br/>
 
-    <div style="background-color:#dddddd;padding:16px;">
+    <!-- <div style="background-color:#dddddd;padding:16px;"> -->
+    <div class="dx-card" style="padding:14px;">
     <!-- <pre style="position:absolute;left:55%;width:40%;top:55%;height:50%;"> -->
     <!-- <pre style="left:55%;width:40%;top:55%;height:50%;"> -->
 <pre>&lt;?<span style="color:#20ee20;"><b>xml</b></span> version="1.0" encoding="UTF-8"?&gt;
@@ -528,12 +691,18 @@
     &lt;/<span style="color:#ee2020;"><b>post</b></span>&gt;
 &lt;/<span style="color:#ee2020;"><b>div</b></span>&gt;</pre>
     </div>
+    </div>
 
     <br/>
 
-    3. {{ custom_example_it_then_converts_to_UIMA }}
-
-    <div style="background-color:#dddddd;padding:16px;">
+    <div class="dx-card" style="padding:14px;">
+      <span style="font-family:Roboto;font-size:14px;">
+    <b>3. {{ custom_example_it_then_converts_to_UIMA }}</b>
+    </span>
+    <br/>
+    <br/>
+    <!-- <div style="background-color:#dddddd;padding:16px;"> -->
+    <div class="dx-card" style="padding:14px;">
       <!-- <pre style="position:absolute;left:55%;width:40%;top:55%;height:50%;"> -->
       <!-- <pre style="left:55%;width:40%;top:55%;height:50%;"> -->
 <pre>&lt;?<span style="color:#20ee20;"><b>xml</b></span> version='1.0' encoding='UTF-8'?&gt;
@@ -558,7 +727,8 @@
 
     <br/>
 
-    <div style="background-color:#dddddd;padding:16px;">
+    <!-- <div style="background-color:#dddddd;padding:16px;"> -->
+    <div class="dx-card" style="padding:14px;">
       <!-- <pre style="position:absolute;left:55%;width:40%;top:55%;height:50%;"> -->
       <!-- <pre style="left:55%;width:40%;top:55%;height:50%;"> -->
 <pre>&lt;?<span style="color:#20ee20;"><b>xml</b></span> version='1.0' encoding='UTF-8'?&gt;
@@ -592,7 +762,17 @@
 &lt;/<span style="color:#20ee20;"><b>xmi:XMI</b></span>&gt;</pre>
     </div>
     </div>
+    </div>
   </dxi-item>
+
+  <!-- <dxi-item title="Window to INCEpTION">
+    <dx-text-box id="dx_text_box_url_to_inception" placeholder="URL to INCEpTION" style="display:inline" [(value)]="inception_url"></dx-text-box>
+      
+      <dx-button stylingMode="contained" text="Update" type="normal"
+        [visible]="true" onclick="document.getElementById('iframe_inception').src=document.getElementById('dx_text_box_url_to_inception').value;">
+      </dx-button>
+    <iframe id="iframe_inception" [(src)]="inception_url" style="width:100%;height:100%;"></iframe>
+  </dxi-item> -->
 
 
 </dx-tab-panel>
