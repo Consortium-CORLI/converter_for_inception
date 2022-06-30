@@ -132,24 +132,33 @@ export class Sax2Component implements OnInit {
   suggestionDataSource: any = [
     {
       id:0,
-      quality: "Nécessaire",
+      // quality: "Nécessaire",
+      // quality: "{{ custom_yes }}",
+      quality: "Oui",
       scale: "Document",
+      // scale: "{{ custom_document }}",
       suggestions: [],
       suggestions_str: '',
       choice: ''
     },
     {
       id:1,
-      quality: "Facultatif",
+      // quality: "Facultatif",
+      // quality: "{{ custom_no }}",
+      quality: "Non",
       scale: "Paragraphe",
+      // scale: "{{ custom_paragraph }}",
       suggestions: [],
       suggestions_str: '',
       choice: ''
     },
     {
       id:2,
-      quality: "Facultatif",
+      // quality: "Facultatif",
+      // quality: "{{ custom_no }}",
+      quality: "Non",
       scale: "Phrase",
+      // scale: "{{ custom_sentence }}",
       suggestions: [],
       suggestions_str: '',
       choice: ''
@@ -198,6 +207,8 @@ export class Sax2Component implements OnInit {
     loadMessages({
       'fr': {
         "test": "test français",
+        "custom_yes": "Oui",
+        "custom_no": "Non",
         "custom_generate": "GENERER",
         "custom_load_xml_files": "Charger des fichiers XML",
         "custom_conversion": "Conversion",
@@ -205,6 +216,7 @@ export class Sax2Component implements OnInit {
         "custom_history_and_converting_back": "Historique et reconversion",
         "custom_help": "Aide",
         "custom_quality": "Qualité",
+        "custom_necessary": "Nécessaire",
         "custom_scale": "Echelle",
         "custom_suggestions": "Suggestions",
         "custom_choice": "Choix",
@@ -253,11 +265,14 @@ export class Sax2Component implements OnInit {
         "custom_example_consider_this_corpus_file": "Considérons ce fichier de corpus : chaque texte qui nous intéresse est contenu dans un <div> ... </div>",
         "custom_example_select_div": "En sélectionnant \"div\" (sans guillemets) comme séparateur de document, l'outil crée un fichier unique pour chaque :",
         "custom_example_it_then_converts_to_UIMA": "Il convertit ensuite chaque fichier vers de l'UIMA (et les place tous dans un ZIP chargeable directement dans INCEpTION) :",
+        "custom_your_corpus_will_be_split": "Votre corpus sera séparé en unités textuelles, veuillez au moins sélectionner le séparateur de document (un exemple du processus est disponible dans l'onglet \"Exemple de conversion\") :",
         "dxDataGrid-noDataText": "Pas de données",
         "dxDataGrid-editingSaveRowChanges": "Sauvegarder"
       },
       'en': {
         "test": "test english",
+        "custom_yes": "Yes",
+        "custom_no": "No",
         "custom_generate": "GENERATE",
         "custom_load_xml_files": "Load XML files",
         "custom_conversion": "Converting",
@@ -265,6 +280,7 @@ export class Sax2Component implements OnInit {
         "custom_history_and_converting_back": "History and converting back",
         "custom_help": "Help",
         "custom_quality": "Quality",
+        "custom_necessary": "Necessary",
         "custom_scale": "Scale",
         "custom_suggestions": "Suggestions",
         "custom_choice": "Choice",
@@ -313,6 +329,7 @@ export class Sax2Component implements OnInit {
         "custom_example_consider_this_corpus_file": "Let's consider this corpus file: each text is contained within a <div> ... </div>",
         "custom_example_select_div": "By selecting \"div\" (without quotes) as a document separator, the tool creates a unique file for each:",
         "custom_example_it_then_converts_to_UIMA": "It then converts each file to UIMA (and places them into a ZIP that can directly be loaded into INCEpTION):",
+        "custom_your_corpus_will_be_split": "Your corpus will be split in textual units, please select at least the document separator (an example of the process is avaiable in the \"Converting example\" tab):",
         "dxDataGrid-noDataText": "No data",
         "dxDataGrid-editingSaveRowChanges": "Save"
       }
@@ -322,6 +339,8 @@ export class Sax2Component implements OnInit {
 
   }
 
+  get custom_yes(){return formatMessage("custom_yes")}
+  get custom_no(){return formatMessage("custom_no")}
   get custom_generate(){return formatMessage("custom_generate")}
   get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
   get custom_conversion(){return formatMessage("custom_conversion")}
@@ -329,6 +348,7 @@ export class Sax2Component implements OnInit {
   get custom_history_and_converting_back(){return formatMessage("custom_history_and_converting_back")}
   get custom_help(){return formatMessage("custom_help")}
   get custom_quality(){return formatMessage("custom_quality")}
+  get custom_necessary(){return formatMessage("custom_necessary")}
   get custom_scale(){return formatMessage("custom_scale")}
   get custom_suggestions(){return formatMessage("custom_suggestions")}
   get custom_choice(){return formatMessage("custom_choice")}
@@ -377,6 +397,7 @@ export class Sax2Component implements OnInit {
   get custom_example_consider_this_corpus_file(){return formatMessage("custom_example_consider_this_corpus_file")};
   get custom_example_select_div(){return formatMessage("custom_example_select_div")};
   get custom_example_it_then_converts_to_UIMA(){return formatMessage("custom_example_it_then_converts_to_UIMA")};
+  get custom_your_corpus_will_be_split(){return formatMessage("custom_your_corpus_will_be_split")};
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
@@ -2308,7 +2329,8 @@ export class Sax2Component implements OnInit {
                       // var blob = new Blob([dl_xhr.responseText], { type: "text/plain;charset=utf-8" });
                       
                       var blob = new Blob([dl_xhr.response], { type: "octet/stream" });
-                      saveAs(blob, "inception-project"+Date.now()+".zip");
+                      // saveAs(blob, "inception-project"+Date.now()+".zip");
+                      saveAs(blob, zis.project_name.replace((new RegExp("\\s","gmi")),"_")+"-inception-project"+Date.now()+".zip");
                       
                       // ;charset=utf-8
                     }

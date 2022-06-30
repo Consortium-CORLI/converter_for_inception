@@ -37,6 +37,9 @@
 
     <!-- <div class="content-block"> -->
     <div id="suggestion_div" class="content-block" style="display:none">
+      {{ custom_your_corpus_will_be_split }}
+      <br/>
+      <br/>
       <dx-data-grid id="tagdefGrid" [allowColumnResizing]="true" [columnAutoWidth]="true"
         [dataSource]="suggestionDataSource" keyExpr="id" [showColumnHeaders]="true"
         (onRowUpdated)="onRowUpdated($event)" [showBorders]="true"
@@ -45,7 +48,7 @@
         <dxo-scrolling mode="normal"></dxo-scrolling>
 
         <!-- <dxi-column dataField="quality" caption="Qualité" [allowEditing]="false"></dxi-column> -->
-        <dxi-column dataField="quality" caption="{{ custom_quality }}" [allowEditing]="false"></dxi-column>
+        <dxi-column dataField="quality" caption="{{ custom_necessary }}" [allowEditing]="false"></dxi-column>
         <!-- <dxi-column dataField="quality" [caption]="LANG_caption_quality" [allowEditing]="false"></dxi-column> -->
         <!-- <dxi-column dataField="scale" caption="Echelle" [allowEditing]="false"></dxi-column> -->
         <dxi-column dataField="scale" caption="{{ custom_scale }}" [allowEditing]="false"></dxi-column>
