@@ -84,6 +84,7 @@ export class Sax2Component implements OnInit {
   file_contents = [];
   JSONForServerRequest = '';
   conversion_progress = 0.0;
+  converting = false;
   // captcha_answer = null;
   // captcha_answer = this.generate_captcha();
   captcha = this.generate_captcha();
@@ -1088,6 +1089,7 @@ export class Sax2Component implements OnInit {
     this.display_captcha();
      return;
    }
+   this.converting = true;
     /* </LOUIS> */
     this.typesystemGeneration();
     // this.generatePythonParser();
@@ -2336,6 +2338,8 @@ export class Sax2Component implements OnInit {
                       saveAs(blob, zis.project_name.replace((new RegExp("\\s","gmi")),"_")+"-inception-project"+Date.now()+".zip");
                       
                       // ;charset=utf-8
+
+                      zis.converting = false;
                     }
                   }
                   // dl_xhr.send(xhr.responseText);

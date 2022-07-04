@@ -1,6 +1,6 @@
 <dx-tab-panel #tabPanel id="main_tab_panel">
   <!-- <dxi-item title="Conversion"> -->
-  <dxi-item title="{{ custom_conversion }}">
+  <dxi-item title="{{ custom_conversion }}" icon="preferences">
     <!-- <dxi-item [title]="LANG_title_converting"> -->
 
       <div class="content-block">
@@ -20,7 +20,7 @@
           (onValueChanged)="onFileUploaderValueChanged($event)"> -->
         <dx-file-uploader #up id="dx-file-uploader_xml_files" selectButtonText="{{ custom_load_xml_files }}"
           labelText="" accept=".xml" uploadMode="useForm" multiple="true" [showFileList]="true"
-          (onValueChanged)="onFileUploaderValueChanged($event)">
+          (onValueChanged)="onFileUploaderValueChanged($event)" icon="file">
         </dx-file-uploader>
         <!-- <dx-file-uploader #up id="dx-file-uploader_xml_files" [selectButtonText]="LANG_dx_file_uploader_xml_files" labelText="" accept=".xml"
             uploadMode="useForm" multiple="true" [showFileList]="false"
@@ -112,7 +112,7 @@
           (onClick)="generer()">
         </dx-button> -->
         <dx-button stylingMode="contained" text="{{ custom_generate }}" type="normal" [width]="300"
-          [visible]="firstDocumentVisible" (onClick)="generer()">
+          [visible]="firstDocumentVisible" [disabled]="converting" (onClick)="generer()">
         </dx-button>
         <!-- <dx-button stylingMode="contained" [text]="LANG_generate" type="normal" [width]="200" [visible]="firstDocumentVisible"
         (onClick)="generer()">
@@ -125,7 +125,7 @@
     </div>
   </dxi-item>
   <!-- <dxi-item title="Balises"> -->
-  <dxi-item title="{{ custom_tags }}">
+  <dxi-item title="{{ custom_tags }}" icon="codeblock">
     <!-- <dxi-item [title]="LANG_title_tags"> -->
     <!-- <h2 class="content-block">Conversion (alt. sax parser) {{fichierXML}} </h2> -->
     <div class="content-block">
@@ -204,7 +204,7 @@
   </dxi-item>
 
   <!-- <dxi-item title="Historique"> -->
-  <dxi-item title="{{ custom_history_and_converting_back }}">
+  <dxi-item title="{{ custom_history_and_converting_back }}" icon="revert">
     <!-- <dxi-item [title]="LANG_title_history"> -->
     <div class="content-block">
     <!-- <div class="dx-card responsive-paddings"> -->
@@ -219,7 +219,7 @@
           (onValueChanged)="onReconverterFileUploaderValueChanged($event)"> -->
         <dx-file-uploader #up selectButtonText="{{ custom_load_an_inception_file }}" labelText="" accept=".zip"
           uploadMode="useForm" multiple="true" [showFileList]="true"
-          (onValueChanged)="onReconverterFileUploaderValueChanged($event)">
+          (onValueChanged)="onReconverterFileUploaderValueChanged($event)" icon="file">
         </dx-file-uploader>
         <div id="div_reconv_details" style="display:none;">
         <!-- <p id="reconverter_filename_p"></p> -->
@@ -269,7 +269,7 @@
   </dxi-item>
 
   <!-- <dxi-item title="Aide"> -->
-  <dxi-item title="{{ custom_help }}">
+  <dxi-item title="{{ custom_help }}" icon="help">
     <!-- <dx-accordion
     #accordion
     [dataSource]="companies"
@@ -522,7 +522,7 @@
     </dx-tab-panel>
   </dxi-item>
 
-  <dxi-item title="{{ custom_converting_example }}">
+  <dxi-item title="{{ custom_converting_example }}" icon="info">
     <div class="content-block">
       <div class="dx-card" style="padding:14px;">
         <span style="font-family:Roboto;font-size:14px;">
