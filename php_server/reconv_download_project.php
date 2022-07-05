@@ -20,13 +20,17 @@
                 $dir_to_remove = true;
                 $i_limit = count($local_content);
                 for($i = 0 ; $i < $i_limit ; $i += 1){
+/*
                     if(preg_match('/.*\.trace$/mi',$local_content[$i])){
                         $dir_to_remove = false;
                     }else{
+*/
 			if(!(preg_match('/^\..*/mi',$local_content[$i]))){
                         	recursive_cleaning($local_path . '/' . $local_content[$i]);
 			}
+/*
                     }
+*/
                 }
                 if($dir_to_remove){
                     rmdir($local_path);
@@ -34,9 +38,10 @@
             }
         }
 
-        recursive_cleaning('/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $data->token . '/__current_inception_export_to_reconvert.zip');
+        /*recursive_cleaning('/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $data->token . '/__current_inception_export_to_reconvert.zip');*/
+        recursive_cleaning('/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $data->token);
 
-        $path_cleaning = '/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $data->token . '/';
+        /*$path_cleaning = '/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $data->token . '/';*/
         // if(!(file_exists($path_cleaning . 'reconv_err.log'))){
 	// 	$f_err = fopen('/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $data->token . '/' . 'f_err.log','a');
 	// 	fwrite($f_err,'cannot find file ' . $path_cleaning . 'reconv_err.log');
@@ -46,7 +51,8 @@
 	// fwrite($f_log,$path_cleaning . 'reconv_err.log' . "\n");
 	// fclose($f_log);
 	
-	
+	// THINGS TO REENABLE HERE
+/*
 	unlink($path_cleaning . 'reconv_err.log');
         unlink($path_cleaning . 'reconv_out.log');
         unlink($path_cleaning . 'current_inception_export_to_reconvert.zip');
@@ -60,7 +66,7 @@
                 unlink($local_path);
             }
         }
-
+*/
         http_response_code(200);
     }else{
         http_response_code(404);

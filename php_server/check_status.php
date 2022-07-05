@@ -113,7 +113,19 @@
                     
 
 
-                    $project->description = 'CORLI-converted corpus'."\r\n".'==='."\r\n".'This corpus has been converted from XML to UIMA with a converter available <a href="https://corli.huma-num.fr/convinception/#/home">here</a>.'."\r\n".'You may reconvert your project to its initial XML structure in this converter.'."\r\n".'If you wish to contact us, you may <a href="https://corli.huma-num.fr/contact/">here</a> or directly on <a href="https://github.com/LouisEsteve/inception_converter_applet">GitHub</a>.';//."\r\n".'<img src="https://corli.huma-num.fr/wp-content/uploads/2020/10/corli-logo-ancien.png" style="max-width:100%;" alt="CORLI logo"/>';
+                    $project->description = 'CORLI-converted corpus'."\r\n".'==='."\r\n".'This corpus has been converted from XML to UIMA with a converter available <a href="https://corli.huma-num.fr/convinception/#/home">here</a>.'."\r\n".'You may reconvert your project to its initial XML structure in this converter.'."\r\n".'If you wish to contact us, you may <a href="https://corli.huma-num.fr/contact/">here</a> or directly on <a href="https://github.com/LouisEsteve/inception_converter_applet">GitHub</a>.'."\r\n".'<invisible_memory_for_reconverter warning="DO NOT REMOVE, IF YOU DO SO YOU WILL NOT BE ABLE TO RECONVERT THIS CORPUS TO ITS INITIAL FORMAT">';//."\r\n".'<img src="https://corli.huma-num.fr/wp-content/uploads/2020/10/corli-logo-ancien.png" style="max-width:100%;" alt="CORLI logo"/>';
+                    $source_dir_content = scandir($dir_path . '/source');
+                    $i_limit = count($source_dir_content);
+                    for($i = 0 ; $i < $i_limit ; $i += 1){
+                        if(preg_match('/.+\.xml\.trace$/mi',$source_dir_content[$i])){
+                            $current_trace_uri = $dir_path . '/source' . '/' . $source_dir_content[$i];
+                            $current_file = fopen($current_trace_uri,'r');
+                            $current_file_content = fread($current_file,filesize($current_trace_uri));
+                            $project->description = $project->description . "\r\n" . '<invisible_trace_memory src="' . $source_dir_content[$i] . '" content="' . preg_replace('/"/mi','&quot;',preg_replace('/\n/mi','&#10;',$current_file_content)) . '"/>';
+                            fclose($current_file);
+                        }
+                    }
+                    $project->description = $project->description . "\r\n" . '</invisible_memory_for_reconverter>';
                     $project->created = $current_time;
                     $project->updated = $current_time;
                     $project->curation_workflow->project->name = $project->name;

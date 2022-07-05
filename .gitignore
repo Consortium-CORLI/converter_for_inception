@@ -81,3 +81,7 @@ stanza/test_stanza*
 stanza/test.txt
 
 measures/*
+
+glozz_uima/text_export/*
+src/assets/help/*example*
+src/assets/help/index.html

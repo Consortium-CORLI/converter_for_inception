@@ -85,6 +85,7 @@ export class Sax2Component implements OnInit {
   JSONForServerRequest = '';
   conversion_progress = 0.0;
   converting = false;
+  reconverting = false;
   // captcha_answer = null;
   // captcha_answer = this.generate_captcha();
   captcha = this.generate_captcha();
@@ -233,7 +234,7 @@ export class Sax2Component implements OnInit {
         "custom_document_separator": "Séparateur de documents",
         "custom_date": "Date",
         "custom_file_names": "Noms des fichiers",
-        "custom_reconvert_to_initial_format" : "Reconversion vers le format initial d'un export INCEpTION (pour ce faire, faites un export avec comme format additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et indiquez le numéro de la conversion initiale qui se trouve dans l'historique) : ",
+        "custom_reconvert_to_initial_format" : "Reconversion vers le format initial d'un export INCEpTION (pour ce faire, faites un export avec comme format additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et sélectionnez votre mode de reconversion) : ",
         "custom_load_an_inception_file": "Charger un fichier d'export INCEpTION",
         "custom_index_in_history": "Indice dans l'historique",
         "custom_reconvert": "Reconvertir",
@@ -298,7 +299,7 @@ export class Sax2Component implements OnInit {
         "custom_document_separator": "Document separator",
         "custom_date": "Date",
         "custom_file_names": "File names",
-        "custom_reconvert_to_initial_format" : "Converting back to the initial format from an INCEpTION export (to do so, export with UIMA CAS XML 1.1 as an additional format, put the ZIP file just below and indicate the index of the initial converting that may be found in the history): ",
+        "custom_reconvert_to_initial_format" : "Converting back to the initial format from an INCEpTION export (to do so, export with UIMA CAS XML 1.1 as an additional format, put the ZIP file just below and select the reconverting mode): ",
         "custom_load_an_inception_file": "Load an INCEpTION export file",
         "custom_index_in_history": "Index in history",
         "custom_reconvert": "Convert back",
@@ -1498,6 +1499,101 @@ export class Sax2Component implements OnInit {
     reconv_token_xhr.open("POST","reconv_get_token.php",true);
     reconv_token_xhr.setRequestHeader("Content-Type", "application/json");
     reconv_token_xhr.send(JSON.stringify({"token":local_history[num_index_in_history]['token']}));
+      
+    /* </LOUIS> */
+  }
+
+  reconvertir_autover(){
+    /* <LOUIS> */
+    var zis = this;
+    zis.reconverting = true;
+   
+
+
+    // var reconv_token_xhr = new XMLHttpRequest();
+    // reconv_token_xhr.onreadystatechange = function(){
+    //   if(reconv_token_xhr.readyState === 4 && reconv_token_xhr.status === 200){
+        var reconv_zip_xhr = new XMLHttpRequest();
+        reconv_zip_xhr.onreadystatechange = function(){
+          if(reconv_zip_xhr.readyState === 4 && reconv_zip_xhr.status === 200){
+            
+            var reconv_download_xhr = new XMLHttpRequest();
+            reconv_download_xhr.open('POST','reconv_download_project.php',true);
+
+            reconv_download_xhr.onreadystatechange = function(){
+              if(reconv_download_xhr.readyState === 4 && reconv_download_xhr.status === 200){
+                // console.log(dl_xhr.responseText);
+                
+                var blob = new Blob([reconv_download_xhr.response], { type: "octet/stream" });
+                saveAs(blob, "inception-project-reconverted"+Date.now()+".zip");
+                
+                // ;charset=utf-8
+                zis.reconverting = false;
+              }
+            }
+            // THIS LINE RIGHT HERE MADE THE DIFFERENCE
+            reconv_download_xhr.responseType = 'arraybuffer';
+            reconv_download_xhr.send(reconv_zip_xhr.responseText);
+          }
+        }
+        // reconv_zip_xhr.open('POST','http://localhost:9001/reconv_zip_bridge.php',true);
+        reconv_zip_xhr.open('POST','reconv_zip_bridge_autover.php',true);
+        // reconv_zip_xhr.setRequestHeader("Content-Type", "application/json");
+        reconv_zip_xhr.setRequestHeader("Content-Type", "octet/stream");
+        // console.log(local_history[num_index_in_history]['token']);
+        // reconv_zip_xhr.send(JSON.stringify({"token":local_history[num_index_in_history]['token'],"zip":zis.file_to_reconvert}));
+        reconv_zip_xhr.send(zis.file_to_reconvert);
+      // }
+    // }
+    // reconv_token_xhr.open("POST","reconv_get_token.php",true);
+    // reconv_token_xhr.setRequestHeader("Content-Type", "application/json");
+    // reconv_token_xhr.send(JSON.stringify({"token":local_history[num_index_in_history]['token']}));
+      
+    /* </LOUIS> */
+  }
+
+  reconvertir_n_autover(){
+    /* <LOUIS> */
+    var zis = this;
+    zis.reconverting = true;
+
+    // var reconv_token_xhr = new XMLHttpRequest();
+    // reconv_token_xhr.onreadystatechange = function(){
+    //   if(reconv_token_xhr.readyState === 4 && reconv_token_xhr.status === 200){
+        var reconv_zip_xhr = new XMLHttpRequest();
+        reconv_zip_xhr.onreadystatechange = function(){
+          if(reconv_zip_xhr.readyState === 4 && reconv_zip_xhr.status === 200){
+            
+            var reconv_download_xhr = new XMLHttpRequest();
+            reconv_download_xhr.open('POST','reconv_download_project.php',true);
+
+            reconv_download_xhr.onreadystatechange = function(){
+              if(reconv_download_xhr.readyState === 4 && reconv_download_xhr.status === 200){
+                               
+                var blob = new Blob([reconv_download_xhr.response], { type: "octet/stream" });
+                saveAs(blob, "inception-project-reconverted"+Date.now()+".zip");
+                
+                // ;charset=utf-8
+                zis.reconverting = false;
+              }
+            }
+            // THIS LINE RIGHT HERE MADE THE DIFFERENCE
+            reconv_download_xhr.responseType = 'arraybuffer';
+            reconv_download_xhr.send(reconv_zip_xhr.responseText);
+          }
+        }
+        // reconv_zip_xhr.open('POST','http://localhost:9001/reconv_zip_bridge.php',true);
+        reconv_zip_xhr.open('POST','reconv_zip_bridge_n_autover.php',true);
+        // reconv_zip_xhr.setRequestHeader("Content-Type", "application/json");
+        reconv_zip_xhr.setRequestHeader("Content-Type", "octet/stream");
+        // console.log(local_history[num_index_in_history]['token']);
+        // reconv_zip_xhr.send(JSON.stringify({"token":local_history[num_index_in_history]['token'],"zip":zis.file_to_reconvert}));
+        reconv_zip_xhr.send(zis.file_to_reconvert);
+    //   }
+    // }
+    // reconv_token_xhr.open("POST","reconv_get_token.php",true);
+    // reconv_token_xhr.setRequestHeader("Content-Type", "application/json");
+    // reconv_token_xhr.send(JSON.stringify({"token":local_history[num_index_in_history]['token']}));
       
     /* </LOUIS> */
   }
