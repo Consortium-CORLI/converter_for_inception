@@ -114,13 +114,20 @@ for i in ld:
                     break
             if xmi_id == None:
                 continue
+
+            local_form = sofa[begin:end]
+            # for k in xml_special_chars:
+            #     local_form = local_form.replace(k[1],k[0])
+
+            local_form = local_form.replace('&','&amp;')
             
             tokens_list.append({
                 "regex_result": j,
                 "xmi_id": xmi_id,
                 "begin": begin,
                 "end": end,
-                "out_str": f'<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{sofa[begin:end]}</txm:form>'
+                # "out_str": f'<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{sofa[begin:end]}</txm:form>'
+                "out_str": f'<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{local_form}</txm:form>'
             })
     # print(f'Number of tokens in {i}: {len(tokens_list)}')
 
@@ -196,7 +203,7 @@ for i in ld:
                     if m[0] in ['xmi:id','begin','end','sofa']:
                         continue
                     k["out_str"] = f'{k["out_str"]}\n\t<txm:ana resp="none" type="#{j[2]}_attr_{m[0]}">'
-                    k["out_str"] = f'{k["out_str"]}{m[1]}'
+                    k["out_str"] = f'{k["out_str"]}{m[1].replace("&","amp;")}'
                     k["out_str"] = f'{k["out_str"]}</txm:ana>'
                 stand_in = True
                 break
@@ -227,7 +234,7 @@ for i in ld:
                     if m[0] in ['xmi:id','begin','end','sofa']:
                         continue
                     j["out_str"] = f'{j["out_str"]}\n\t<txm:ana resp="none" type="#{k["regex_result"][2]}_attr_{m[0]}">'
-                    j["out_str"] = f'{j["out_str"]}{m[1]}'
+                    j["out_str"] = f'{j["out_str"]}{m[1].replace("&","&amp;")}'
                     j["out_str"] = f'{j["out_str"]}</txm:ana>'
         #</TEST TAGS GREATER THAN TOKEN>
         j["out_str"] = f'{j["out_str"]}\n</w>'
