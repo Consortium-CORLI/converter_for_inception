@@ -676,7 +676,11 @@ export class Sax2Component implements OnInit {
       this.depth = 0;
       reader.onload = () => {
         this.initParser();
-        this.parser.write(reader.result).close();
+        // <TEST_DEBUG_REVERSED_ATTR_NAMES>
+        var reader_result = reader.result.toString().replace((new RegExp("(<[^<>]+\\s)(sofa|begin|end)(=\"[^\"]*\"[^<>]*>)","gmi")),"$1$2_$3")
+        // </TEST DEBUG_RESERVED_ATTR_NAMES>
+        // this.parser.write(reader.result).close();
+        this.parser.write(reader_result).close();
         
         
         this.collectTags();
@@ -703,8 +707,10 @@ export class Sax2Component implements OnInit {
 
 
 
-        this.file_list[0]["content"] = reader.result;
-        this.file_contents[0] = reader.result;
+        // this.file_list[0]["content"] = reader.result;
+        this.file_list[0]["content"] = reader_result;
+        // this.file_contents[0] = reader.result;
+        this.file_contents[0] = reader_result;
       }
 
       reader.readAsText(file);
