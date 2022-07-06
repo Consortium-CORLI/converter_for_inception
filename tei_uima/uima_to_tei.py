@@ -22,11 +22,12 @@ xml_attribute_pattern = '\\s([^=]+)="([^"]*)"'
 xml_attribute_regex = re.compile(xml_attribute_pattern)
 
 xml_special_chars = [
+    ['&amp;','&'],
     ['&gt;','>'],
     ['&lt;','<'],
     ['&quot;','"'],
-    ['&apos;','\''],
-    ['&amp;','&']
+    ['&apos;','\'']#,
+    # ['&amp;','&']
 ]
 
 tab = '\t'
@@ -87,6 +88,8 @@ for i in ld:
     sofa = uima_sofa_regex.findall(d)[0].replace("&#10;","\n") #CHANGED FROM SPACE TO LINEFEED FOR REPLACEMENT
     for j in xml_special_chars:
         sofa = sofa.replace(j[0],j[1])
+    
+    # print(lp,'; sofa after special chars removal :',sofa)
 
     #<TEI_SPECIAL>
     tokens_list = []
@@ -203,7 +206,7 @@ for i in ld:
                     if m[0] in ['xmi:id','begin','end','sofa']:
                         continue
                     k["out_str"] = f'{k["out_str"]}\n\t<txm:ana resp="none" type="#{j[2]}_attr_{m[0]}">'
-                    k["out_str"] = f'{k["out_str"]}{m[1].replace("&","amp;")}'
+                    k["out_str"] = f'{k["out_str"]}{m[1].replace("&","&amp;")}'
                     k["out_str"] = f'{k["out_str"]}</txm:ana>'
                 stand_in = True
                 break
