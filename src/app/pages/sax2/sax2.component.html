@@ -500,31 +500,36 @@
           <div class="dx-card" style="padding:14px;">
             <span style="font-family:Roboto;font-size:14px;">
           <b>{{ custom_advanced_users_note }}</b>
+          <br/>
+          <i>
+          {{ custom_scripts_are_in_zip }}
+          {{ custom_please_note_source_directory }}
+          </i>
         </span>
         <br/>
         <br/>
         <span style="font-family:Roboto;font-size:14px;">
-          1. {{ custom_segmentation_check }}
+          <b>1. segmentation_check.py</b><br/>{{ custom_segmentation_check }}
         </span>
         <br/>
         <br/>
         <span style="font-family:Roboto;font-size:14px;">
-          2. {{ custom_uima_to_glozz }}
+          <b>2. uima_to_glozz.py</b><br/>{{ custom_uima_to_glozz }}
         </span>
         <br/>
         <br/>
         <span style="font-family:Roboto;font-size:14px;">
-          3. {{ custom_glozz_to_uima }}
+          <b>3. glozz_to_uima.py</b><br/>{{ custom_glozz_to_uima }}
         </span>
         <br/>
         <br/>
         <span style="font-family:Roboto;font-size:14px;">
-          4. {{ custom_stanza_parse_part_one }}<a href="https://stanfordnlp.github.io/stanza/">Stanza</a>{{ custom_stanza_parse_part_two }}
+          <b>4. stanza_parse.py</b><br/>{{ custom_stanza_parse_part_one }}<a href="https://stanfordnlp.github.io/stanza/">Stanza</a>{{ custom_stanza_parse_part_two }}
         </span>
         <br/>
         <br/>
         <span style="font-family:Roboto;font-size:14px;">
-          5. {{ custom_uima_to_tei_txm }}
+          <b>5. uima_to_tei_txm.py</b><br/>{{ custom_uima_to_tei_txm }}
         </span>
         </div>
         </div>

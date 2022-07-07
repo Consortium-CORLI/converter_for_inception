@@ -256,6 +256,8 @@ export class Sax2Component implements OnInit {
         "custom_help_result": "Et en sélectionnant un des fichiers, vous pourrez voir si toutes les couches sont bien présentes",
         "custom_advanced_tools": "Outils avancés",
         "custom_advanced_users_note": "Pour les utilisateurs avancés qui souhaitent aller plus loin, nous proposons des scripts Python supplémentaires",
+        "custom_scripts_are_in_zip": "Les scripts sont dans le ZIP, et vous pouvez y accéder une fois que celui-ci est décompressé ; vous n'avez pas besoin d'enlever ces scripts du ZIP si vous souhaitez l'importer automatiquement (cf. Import automatique) dans INCEpTION.",
+        "custom_please_note_source_directory": "Veuillez noter que ces scripts ciblent le répertoire /source du dossier dans lequel ils se trouvent, si jamais vous souhaitez les utiliser dans un autre contexte.",
         "custom_segmentation_check": "Le script segmentation_check.py permet de voir si certaines balises sont à cheval ; en plus du résultat dans le terminal, cela génère un fichier CSV contenant tous les résultats.",
         "custom_uima_to_glozz": "Le script uima_to_glozz.py permet de convertir les fichiers UIMA vers le format Glozz (*.ac, *.aa, *.aam) pour une possibilité d'exploration dans d'autres logiciels, comme notamment Glozz ou encore TXM avec le module URS.",
         "custom_glozz_to_uima": "Le script glozz_to_uima.py permet de reconvertir un export Glozz vers de l'UIMA.",
@@ -322,6 +324,8 @@ export class Sax2Component implements OnInit {
         "custom_help_result": "And by selecting one of the files, you can see if all the layers are here",
         "custom_advanced_tools": "Advanced tools",
         "custom_advanced_users_note": "For advanced users that wish to go further, we make available additional Python scripts",
+        "custom_scripts_are_in_zip": "The scripts are in the ZIP, and you may access them once it's been decompressed; you don't need to remove these scripts from the ZIP if you wish to import it automatically (cf. Automated import) into INCEpTION.",
+        "custom_please_note_source_directory": "Please note that these scripts target the /source directory in the directory they're currently in, if you wish to use them in a different context.",
         "custom_segmentation_check": "The segmentation_check.py script allows to see if some tags overlap; beyond the results in the terminal, it generates a CSV file containing all the results.",
         "custom_uima_to_glozz": "The uima_to_glozz.py script allows to convert from UIMA format to Glozz format (*.ac, *.aa, *.aam) so as to be compatible with other software, such as Glozz or TXM with the URS module.",
         "custom_glozz_to_uima": "The glozz_to_uima.py script allows to convert back from Glozz format to UIMA format.",
@@ -392,6 +396,8 @@ export class Sax2Component implements OnInit {
   get custom_help_result(){return formatMessage("custom_help_result")}
   get custom_advanced_tools(){return formatMessage("custom_advanced_tools")}
   get custom_advanced_users_note(){return formatMessage("custom_advanced_users_note")}
+  get custom_scripts_are_in_zip(){return formatMessage("custom_scripts_are_in_zip")}
+  get custom_please_note_source_directory(){return formatMessage("custom_please_note_source_directory")}
   get custom_segmentation_check(){return formatMessage("custom_segmentation_check")}
   get custom_uima_to_glozz(){return formatMessage("custom_uima_to_glozz")}
   get custom_glozz_to_uima(){return formatMessage("custom_glozz_to_uima")}
