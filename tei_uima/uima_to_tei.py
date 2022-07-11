@@ -34,6 +34,8 @@ tab = '\t'
 
 quote = '"'
 
+linefeed = '\n'
+
 unix_time = int(time.time() * 1000)
 
 aam_s_out = '<?xml version="1.0" encoding="UTF-8"?>\n<annotationModel>'
@@ -84,7 +86,7 @@ for i in ld:
 
     uima_tags_list = uima_annotation_regex.findall(d)
 
-    
+
     sofa = uima_sofa_regex.findall(d)[0].replace("&#10;","\n") #CHANGED FROM SPACE TO LINEFEED FOR REPLACEMENT
     for j in xml_special_chars:
         sofa = sofa.replace(j[0],j[1])
@@ -112,11 +114,25 @@ for i in ld:
                 continue
             xmi_id = None
             for k in local_attributes:
-                if k[0] == 'xmi:id':
+                # if k[0] == 'xmi:id' or k[0] == 'xml:id':
+                if k[0] in ['xmi:id','xml:id','xmi_id','xml_id']:
                     xmi_id = int(k[1])
                     break
             if xmi_id == None:
                 continue
+            
+            lemma = None
+            
+            pos = None
+            
+            morph = None
+            for k in local_attributes:
+                if k[0] == 'lemma':
+                    lemma = int(k[1])
+                elif k[0] == 'pos':
+                    pos = int(k[1])
+                elif k[0] == 'morph':
+                    morph = int(k[1])
 
             local_form = sofa[begin:end]
             # for k in xml_special_chars:
@@ -129,10 +145,16 @@ for i in ld:
                 "xmi_id": xmi_id,
                 "begin": begin,
                 "end": end,
+                "lemma": lemma,
+                "pos": pos,
+                "morph": morph,
                 # "out_str": f'<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{sofa[begin:end]}</txm:form>'
-                "out_str": f'<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{local_form}</txm:form>'
+                # "out_str": f'<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{local_form}</txm:form>'
+                # "out_str": f'\n<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{local_form}</txm:form>\n\t<txm:ana resp="none" type="#xmi:id">{str(xmi_id)}</txm:ana>\n\t<txm:ana resp="none" type="#begin">{str(begin)}</txm:ana>\n\t<txm:ana resp="none" type="#end">{str(end)}</txm:ana>{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#lemma"+quote+">"+str(lemma)+"</txm:ana>") if lemma != None else ""}{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#pos"+quote+">"+str(pos)+"</txm:ana>") if pos != None else ""}{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#morph"+quote+">"+str(morph)+"</txm:ana>") if morph != None else ""}'
+                # "out_str": f'\n<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{local_form}</txm:form>\n\t<txm:ana resp="none" type="#xmi:id">{str(xmi_id)}</txm:ana>\n\t<txm:ana resp="none" type="#begin">{str(begin)}</txm:ana>\n\t<txm:ana resp="none" type="#end">{str(end)}</txm:ana>{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#idlemma"+quote+">"+str(lemma)+"</txm:ana>") if lemma != None else ""}{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#idpos"+quote+">"+str(pos)+"</txm:ana>") if pos != None else ""}{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#idmorph"+quote+">"+str(morph)+"</txm:ana>") if morph != None else ""}'
+                # "out_str": f'\n<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{local_form}</txm:form>\n\t<txm:ana resp="none" type="#xmi:id">{str(xmi_id)}</txm:ana>\n\t<txm:ana resp="none" type="#begin">{str(begin)}</txm:ana>\n\t<txm:ana resp="none" type="#end">{str(end)}</txm:ana>'
+                "out_str": f'\n<w id="w_{i[:-4]}_{len(tokens_list)+1}">\n\t<txm:form>{local_form}</txm:form>\n\t<txm:ana resp="none" type="#xmi_id">{str(xmi_id)}</txm:ana>\n\t<txm:ana resp="none" type="#begin">{str(begin)}</txm:ana>\n\t<txm:ana resp="none" type="#end">{str(end)}</txm:ana>{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#lemma"+quote+">"+str(lemma)+"</txm:ana>") if lemma != None else ""}{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#pos"+quote+">"+str(pos)+"</txm:ana>") if pos != None else ""}{(linefeed+tab+"<txm:ana resp="+quote+"none"+quote+" type="+quote+"#morph"+quote+">"+str(morph)+"</txm:ana>") if morph != None else ""}'
             })
-    # print(f'Number of tokens in {i}: {len(tokens_list)}')
 
     custom_list = []
     for j in uima_tags_list:
@@ -163,6 +185,7 @@ for i in ld:
             custom_list.append({
                 "regex_result": j,
                 "xmi_id": xmi_id,
+                # "xmi:id": xmi_id,
                 "begin": begin,
                 "end": end,
                 "local_attributes": [k for k in local_attributes if k not in ['xmi:id','sofa','begin','end']]
@@ -172,7 +195,8 @@ for i in ld:
     for j in uima_tags_list:
         # if j[1].lower() == 'cas' or (j[1].lower() == 'xmi' and j[2].lower() == 'xmi'):
         # if j[1].lower() == 'cas' or (j[1].lower() == 'xmi' or j[2].lower() == 'xmi'):
-        if j[1].lower() == 'cas' or (j[1].lower() == 'xmi' or j[2].lower() == 'xmi' or j[2].lower() == 'token'):
+        # if j[1].lower() == 'cas' or (j[1].lower() == 'xmi' or j[2].lower() == 'xmi' or j[2].lower() == 'token'):
+        if j[1].lower() == 'cas' or (j[2].lower() == 'xmi' or j[2].lower() == 'token'):
         # if j[1].lower() == 'cas' or j[1].lower() == 'xmi':
             continue
         # print(depth)
@@ -202,10 +226,11 @@ for i in ld:
                     k["out_str"] = f'{k["out_str"]}{}'
                 k["out_str"] = f'{k["out_str"]}</txm:ana>'
                 """
+                # k["out_str"] = f'{k["out_str"]}\n\t<txm:ana resp="none" type="#xmi:id">'
                 for m in local_attributes:
-                    if m[0] in ['xmi:id','begin','end','sofa']:
-                        continue
-                    k["out_str"] = f'{k["out_str"]}\n\t<txm:ana resp="none" type="#{j[2]}_attr_{m[0]}">'
+                    # if m[0] in ['xmi:id','begin','end','sofa']:
+                    #     continue
+                    k["out_str"] = f'{k["out_str"]}\n\t<txm:ana resp="none" type="#{j[2]}_attr_{m[0].replace(":id","_id")}">'
                     k["out_str"] = f'{k["out_str"]}{m[1].replace("&","&amp;")}'
                     k["out_str"] = f'{k["out_str"]}</txm:ana>'
                 stand_in = True
@@ -234,9 +259,9 @@ for i in ld:
             if k["begin"] <= j["begin"] and j["end"] <= k["end"]:
                 j["out_str"] = f'{j["out_str"]}\n\t<txm:ana resp="none" type="#{k["regex_result"][2]}_tag">true</txm:ana>'
                 for m in k["local_attributes"]:
-                    if m[0] in ['xmi:id','begin','end','sofa']:
-                        continue
-                    j["out_str"] = f'{j["out_str"]}\n\t<txm:ana resp="none" type="#{k["regex_result"][2]}_attr_{m[0]}">'
+                    # if m[0] in ['xmi:id','begin','end','sofa']:
+                    #     continue
+                    j["out_str"] = f'{j["out_str"]}\n\t<txm:ana resp="none" type="#{k["regex_result"][2]}_attr_{m[0].replace(":id","_id")}">'
                     j["out_str"] = f'{j["out_str"]}{m[1].replace("&","&amp;")}'
                     j["out_str"] = f'{j["out_str"]}</txm:ana>'
         #</TEST TAGS GREATER THAN TOKEN>
