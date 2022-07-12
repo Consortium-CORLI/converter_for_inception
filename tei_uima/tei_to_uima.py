@@ -110,7 +110,10 @@ if not os.path.exists('UIMA') or os.path.isfile('UIMA'):
     os.mkdir('UIMA')
 
 ld = os.listdir(path)
+progress = 0
+len_ld = len(ld)
 for i in ld:
+    progress += 1
     if not i.endswith('.xml'):
         continue
     lp = f'{path}/{i}'
@@ -252,7 +255,7 @@ for i in ld:
 
 
                 if k[2].startswith('_attr_'):
-                    local_attr_name = k[2][6:]
+                    local_attr_name = k[2][6:].replace('_id',':id')
                     current_token_annotations[k[1]]["attrs"][local_attr_name] = k[3]
 
                 # xmi_id_current += 1
@@ -295,6 +298,58 @@ for i in ld:
                 j["attrs"][k] = str(j["attrs"][k]).replace(m[1],m[0])
         s_out = f'{s_out}\n<{j["namespace"]}:{j["tag_type"]}{"".join([" "+k+"="+quote+j["attrs"][k]+quote for k in j["attrs"].keys()])}/>'
     
+
+    #<TAGS_OTHER_THAN_ANNOTATION>
+    
+    processed_tags_memory = {}
+    for j in w_list:
+        current_annotations = {}
+        txm_ana_w = txm_ana_regex.findall(j[4])
+        for k in txm_ana_w:
+            if k[2] == '_tag':
+                if k[1] not in current_annotations.keys():
+                    current_annotations[k[1]] = {
+                        "is_tag": True,
+                        "tag_type": k[1],
+                        "attrs": {}
+                    }
+                else:
+                    current_annotations[k[1]]["is_tag"] = True
+            elif k[2].startswith('_attr_'):
+                current_attr = k[2][6:].replace('_id',':id')
+                if k[1] not in current_annotations.keys():
+                    current_annotations[k[1]] = {
+                        "is_tag": False,
+                        "tag_type": k[1],
+                        "attrs": {}
+                    }
+                current_annotations[k[1]]["attrs"][current_attr] = k[3]
+        
+        for k in current_annotations.keys():
+            if not current_annotations[k]["is_tag"]:
+                continue
+            local_tag_type = current_annotations[k]["tag_type"]
+            local_begin = current_annotations[k]["attrs"]["begin"]
+            local_end = current_annotations[k]["attrs"]["end"]
+            already_processed = False
+            if local_tag_type in processed_tags_memory.keys():
+                if local_begin in processed_tags_memory[local_tag_type].keys():
+                    if local_end in processed_tags_memory[local_tag_type][local_begin]:
+                        already_processed = True
+            if not already_processed:
+                s_out = f'{s_out}\n<custom:{current_annotations[k]["tag_type"]}{"".join([" "+q+"="+quote+current_annotations[k]["attrs"][q]+quote for q in current_annotations[k]["attrs"].keys()])}/>'
+                if len(view) > 0:
+                    view = f'{view} '
+                view = f'{view}{current_annotations[k]["attrs"]["xmi:id"]}'
+
+                if local_tag_type not in processed_tags_memory.keys():
+                    processed_tags_memory[local_tag_type] = {}
+                if local_begin not in processed_tags_memory[local_tag_type].keys():
+                    processed_tags_memory[local_tag_type][local_begin] = []
+                processed_tags_memory[local_tag_type][local_begin].append(local_end)
+
+    #</TAGS_OTHER_THAN_ANNOTATION>
+    
     for m in xml_special_chars:
         sofa = sofa.replace(m[1],m[0])
     sofa = sofa.replace('\n','&#10;')
@@ -315,4 +370,4 @@ for i in ld:
     # f.write(current_file_out_str)
     f.write(s_out)
     f.close()
-    print(f'Wrote {out_path}',end='\r')
+    print(f'\r[{"="*(int((progress/len_ld)*30))}{" "*(30-int((progress/len_ld)*30))}] {int((progress/len_ld)*100)}% Wrote {out_path}',end='')
