@@ -72,7 +72,7 @@ OUT_DIR = 'source/'
                 for($i = 0 ; $i < $i_limit ; $i += 1){
                     $initCounts = $initCounts . "\t\tself.openedTag[\"" . $tagdefDataSource[$i]->tag . "\"]=0;\n";
 
-                    if($tagdefDataSource[$i]->type == 3){
+                    if($tagdefDataSource[$i]->type == 3 || $tagdefDataSource[$i]->type == 2){
                         $line = "\t\tself.tagAnnos[\"" . $tagdefDataSource[$i]->tag . "\"] = type_system.get_type('webanno.custom." . $tagdefDataSource[$i]->tag . "');\n";
                         $defs = $defs . $line;
                         if($tagdefDataSource[$i]->type == null || count($tagdefDataSource[$i]->attrs) == 0){
@@ -221,7 +221,7 @@ class XML2XMIHandler(xml.sax.ContentHandler):
                 // cas des tags d'annotation
                 $i_limit = count($tagdefDataSource);
                 for($i = 0 ; $i < $i_limit ; $i += 1){
-                    if($tagdefDataSource[$i]->type == 3){
+                    if($tagdefDataSource[$i]->type == 3 || $tagdefDataSource[$i]->type == 2){
                         $test = "
 \t\t#Case of an annotation
 \t\tif tag == '" . $tagdefDataSource[$i]->tag . "':
@@ -357,10 +357,54 @@ with open(TYPESYS_FILE, 'rb') as f:
 \tfor i in listdir_CORPUS_FILES_DIRECTORY:
 \t\tif i == 'typesystem.xml' or (not i.endswith('.xml')):
 \t\t\tcontinue
+\t\tprint(f'Parsing {CORPUS_FILES_DIRECTORY+i}')
 \t\txml.sax.parse(CORPUS_FILES_DIRECTORY+i, contentHandler)
+\tprint('Done parsing files')
 ";
 
-                $pythonCode = $header . $imports . "\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('0')\nfile.close()\n" . $globales . $classe . $code->startTag . $code->endTag . $commonMethods . $main . "\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()\n";
+                $pythonCode = $header . $imports . "\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('0')\nfile.close()\n" . $globales . $classe . $code->startTag . $code->endTag . $commonMethods . $main;
+		$i_limit = count($tagdefDataSource);
+		for($i = 0 ; $i < $i_limit ; $i++){
+			if($tagdefDataSource[$i]->type == 2){
+				$pythonCode = $pythonCode .
+"
+xmi_regex = re.compile('<xmi:XMI')
+sentence_regex = re.compile('(<custom:" . $tagdefDataSource[$i]->tag . "(\\\\s[^<>]*)?>)')
+xmi_id_regex = re.compile('\\\\sxm[il][:_]id=\"([^\"]*)\"')
+begin_regex = re.compile('\\\\sbegin=\"([^\"]*)\"')
+end_regex = re.compile('\\\\send=\"([^\"]*)\"')
+view_regex = re.compile('(<cas:View[^<>]*members=\")([^\"]*)(\"[^<>]*>)')
+sofa_regex = re.compile('(<cas:Sofa\\\\s)')
+ld = listdir('source')
+for i in ld:
+\tif i.endswith('.trace'):
+\t\tcontinue
+\tlp = f'source/{i}'
+\tfile = open(lp,'rt',encoding='utf-8')
+\td = file.read()
+\tfile.close()
+\tcurrent_xmi_id = max([int(j) for j in xmi_id_regex.findall(d)])+1
+\td = xmi_regex.sub('<xmi:XMI xmlns:type5=\"http:///de/tudarmstadt/ukp/dkpro/core/api/segmentation/type.ecore\"',d)
+\t#d = sentence_regex.sub('<type5:Sentence\\\\2>',d)
+\tsentences = sentence_regex.findall(d)
+\tnew_content = ''
+\tnew_view_content = ''
+\tfor j in sentences:
+\t\tlocal_begin = begin_regex.findall(j[0])[0]
+\t\tlocal_end = end_regex.findall(j[0])[0]
+\t\tnew_content = f'{new_content}\\n<type5:Sentence sofa=\"1\" xmi:id=\"{current_xmi_id}\" begin=\"{local_begin}\" end=\"{local_end}\"/>'
+\t\tnew_view_content = f'{new_view_content} {current_xmi_id}'
+\t\tcurrent_xmi_id += 1
+\td = sofa_regex.sub(f'{new_content}\\n\\\\1',d)
+\td = view_regex.sub(f'\\\\1\\\\2{new_view_content}\\\\3',d)
+\tfile = open(lp,'wt',encoding='utf-8')
+\tfile.write(d)
+\tfile.close()
+";
+				break;
+			}
+		}
+		$pythonCode = $pythonCode . "\nfile=open('status.log','wt',encoding='utf-8')\nfile.write('100')\nfile.close()\n";
 
                 return $pythonCode;
             }

@@ -2145,7 +2145,7 @@ export class Sax2Component implements OnInit {
 
     this.tagdefDataSource.map(e => {
 
-      if (e.type == 3) {
+      if (e.type == 3 || e.type == 2) {
 
         typeDescriptions = typeDescriptions + this.typeDescriptionGenerator(e.tag, e.attrs);
 
