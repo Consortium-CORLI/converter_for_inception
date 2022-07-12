@@ -155,6 +155,7 @@
                     $zip->addFile('/sites' . '/corliweb' . '/www' . '/web_main' . '/uima_to_glozz.py','uima_to_glozz.py');
                     $zip->addFile('/sites' . '/corliweb' . '/www' . '/web_main' . '/segmentation_check3.py','segmentation_check.py');
                     $zip->addFile('/sites' . '/corliweb' . '/www' . '/web_main' . '/uima_to_tei.py','uima_to_tei_txm.py');
+                    $zip->addFile('/sites' . '/corliweb' . '/www' . '/web_main' . '/tei_to_uima.py','tei_txm_to_uima.py');
                     $zip->addFromString('exportedproject.json',json_encode($project,JSON_PRETTY_PRINT));
                     $zip->close();
 
