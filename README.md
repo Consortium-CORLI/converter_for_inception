@@ -32,11 +32,14 @@ Launching `python glozz_to_uima.py` does the opposite, regenerating UIMA files b
 
 ### TXM
 
-For the use in [TXM](https://txm.gitpages.huma-num.fr/textometrie), `uima_to_tei_txm.py` allows for the conversion.
+For the use in [TXM](https://txm.gitpages.huma-num.fr/textometrie), `uima_to_tei_txm.py` allows for the conversion and `tei_txm_to_uima.py` for the reconversion.
 Launching `python uima_to_tei_txm.py` will create a `TEI` directory where the script is launched and put all the files converted converted from UIMA in it.
 Please note that this is possible after either launching `stanza_parse.py` or exporting from INCEpTION, as otherwise the corpus wouldn't be tokenised, and TXM won't accept it.
 Each token receives all the tags it is in with `X_tag="true"` and the related attributes with `X_attr_Y="..."`.
 These are then available in CQP queries; for example `[word=".*"&p_tag="true"&p_attr_speaker="Vincent"]` will give you all the words in `<p>` tags with an attribute `speaker="Vincent"`.
+
+
+Launching `python tei_txm_to_uima.py` will target the `TEI` directory where the script is launched, create a `UIMA` directory and put all the converted files in it.
 
 ## Angular compiling
 
