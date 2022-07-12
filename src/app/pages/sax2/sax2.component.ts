@@ -175,7 +175,8 @@ export class Sax2Component implements OnInit {
   tagTypes: any = [
     { value: 0, label: "doc", class: "document", color: "#ff9999" },
     { value: 1, label: "paragraph", class: "paragraph", color: "#99b3ff" },
-    { value: 2, label: "phrase", class: "sentence", color: "#85e085" },
+    // { value: 2, label: "phrase", class: "sentence", color: "#85e085" },
+    { value: 2, label: "phrase", class: "webanno.custom.", color: "#85e085" },
     { value: 3, label: "annotation", class: "webanno.custom.", color: undefined },
     { value: 4, label: "IGNORER", class: undefined, color: "gray" },
     { value: 4, label: "Extérieur", class: undefined, color: "gray" },
@@ -264,6 +265,7 @@ export class Sax2Component implements OnInit {
         "custom_stanza_parse_part_one": "Le script stanza_parse.py permet de faire une annotation du corpus pour une variété de couches en utilisant ",
         "custom_stanza_parse_part_two": " ; cela vous génère un fichier ZIP qu'il est possible de charger automatiquement (cf. Import automatique) ou manuellement (cf. Import manuel) dans INCEpTION. À noter qu'en haut du fichier stanza_parse.py vous pouvez paramétrer la langue que vous souhaitez.",
         "custom_uima_to_tei_txm": "Le script uima_to_tei_txm.py permet de convertir vers un format compatible avec TXM (testé avec la version 0.8.2). Veuillez noter que cela nécessite d'avoir soit lancé stanza_parse.py soit exporté depuis INCEpTION, sinon il n'y aura pas de tokenisation et TXM ne l'acceptera pas. Toutes les annotations ainsi que leurs attributs devraient être disponibles dans les requêtes CQP.",
+        "custom_tei_txm_to_uima": "Le script tei_txm_to_uima.py permet de reconvertir un export XML-TXM vers le format UIMA. Cela récupère toutes les balises initialement présentes dans les fichiers UIMA.",
         "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
         "custom_converting_example": "Exemple de conversion",
@@ -332,6 +334,7 @@ export class Sax2Component implements OnInit {
         "custom_stanza_parse_part_one": "The stanza_parse.py script allows to annotate the corpus for a variety of layers by using ",
         "custom_stanza_parse_part_two": "; it generates a ZIP file that can be loaded automatically (cf. Automated import) or manually (cf. Manual import) into INCEpTION. Please note that at the top of the stanza_parse.py file you may change the target language.",
         "custom_uima_to_tei_txm": "The uima_to_tei_txm.py script allows to convert to a TXM-compatible format (tested with version 0.8.2). Please note that this requires to have either launched stanza_parse.py or exported the corpus from INCEpTION, otherwise there will be no tokenisation and TXM won't accept it. All annotations and their attributes should be available in CQP requests.",
+        "custom_tei_txm_to_uima": "The tei_txm_to_uima.py scripts allows to convert back an XML-TXM export to the UIMA format. This keeps all the tags initially present in the UIMA files.",
         "custom_a_single_corpus": "merge the annotations of annotators into a single corpus",
         "custom_one_corpus_per_annotator": "one version of the corpus for each annotator",
         "custom_converting_example": "Converting example",
@@ -404,6 +407,7 @@ export class Sax2Component implements OnInit {
   get custom_stanza_parse_part_one(){return formatMessage("custom_stanza_parse_part_one")}
   get custom_stanza_parse_part_two(){return formatMessage("custom_stanza_parse_part_two")}
   get custom_uima_to_tei_txm(){return formatMessage("custom_uima_to_tei_txm")}
+  get custom_tei_txm_to_uima(){return formatMessage("custom_tei_txm_to_uima")}
   get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
   get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
   get custom_converting_example(){return formatMessage("custom_converting_example")};
