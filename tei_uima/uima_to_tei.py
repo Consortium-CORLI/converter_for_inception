@@ -52,7 +52,10 @@ if not os.path.exists('TEI') or os.path.isfile('TEI'):
     os.mkdir('TEI')
 
 ld = os.listdir(path)
+progress = 0
+len_ld = len(ld)
 for i in ld:
+    progress += 1
     if not i.endswith('.xml'):
         continue
     lp = f'{path}/{i}'
@@ -273,4 +276,4 @@ for i in ld:
     f = open(out_path,'wt',encoding='utf-8')
     f.write(current_file_out_str)
     f.close()
-    print(f'Wrote {out_path}',end='\r')
+    print(f'\r[{"="*(int((progress/len_ld)*30))}{" "*(30-int((progress/len_ld)*30))}] {int((progress/len_ld)*100)}% Wrote {out_path}',end='')
