@@ -2451,6 +2451,7 @@ export class Sax2Component implements OnInit {
                       // var blob = new Blob([dl_xhr.responseText], { type: "application/zip;charset=utf-8" });
                       // var blob = new Blob([dl_xhr.responseText], { type: "text/plain;charset=utf-8" });
                       
+                      if(zis.converting){
                       var blob = new Blob([dl_xhr.response], { type: "octet/stream" });
                       // saveAs(blob, "inception-project"+Date.now()+".zip");
                       saveAs(blob, zis.project_name.replace((new RegExp("\\s","gmi")),"_")+"-inception-project"+Date.now()+".zip");
@@ -2458,6 +2459,7 @@ export class Sax2Component implements OnInit {
                       // ;charset=utf-8
 
                       zis.converting = false;
+                      }
                     }
                   }
                   // dl_xhr.send(xhr.responseText);
