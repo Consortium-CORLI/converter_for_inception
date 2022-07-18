@@ -291,7 +291,7 @@
     <!-- <br/> -->
     <!-- <br/> -->
     <!-- <h5 href="#automated_corpus_import">1. Importer un corpus automatiquement</h5> -->
-    <dx-tab-panel>
+    <dx-tab-panel style="border-top:solid 1px gray;">
       <!-- <dxi-item title="Import automatique"> -->
       <dxi-item title="{{ custom_automated_import }}">
         <!-- <h5 id="automated_corpus_import">1. Importer un corpus automatiquement</h5> -->
@@ -320,7 +320,7 @@
           <!-- <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p> -->
         <div class="dx-card" style="padding:14px;">
           <span style="font-family:Roboto;font-size:14px;">
-          <b>1.3.{{ custom_fill_document_separator }}</b>
+          <b>1.3. {{ custom_fill_document_separator }}</b>
         </span>
         <br/>
         <br/>
@@ -537,6 +537,51 @@
           <b>6. tei_txm_to_uima.py</b><br/>{{ custom_tei_txm_to_uima }}
         </span>
         </div>
+        </div>
+      </dxi-item>
+
+      <dxi-item title="TXM">
+        <div class="content-block">
+          <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;">
+              <b>{{ custom_TXM }}</b>
+            </span>
+            <br/>
+            <br/>
+            <span style="font-family:Roboto;font-size:14px;">
+              <b>1.</b> {{ custom_after_conversion_unzip }}
+            </span>
+            <br/>
+            <br/>
+            <span style="font-family:Roboto;font-size:14px;">
+              <b>2.</b> {{ custom_open_terminal_and_launch }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">python stanza_parse.py</span>. {{ custom_stanza_easiest }}
+            </span>
+            <br/>
+            <br/>
+            <span style="font-family:Roboto;font-size:14px;">
+              <b>3.</b> {{ custom_then_launch }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">python uima_to_tei_txm.py</span>.
+            </span>
+            <br/>
+            <br/>
+            <span style="font-family:Roboto;font-size:14px;">
+              <b>4.</b> {{ custom_in_TXM_import }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">TEI</span>{{ custom_directory_that_was_created }}.
+            </span>
+            <br/>
+            <br/>
+            <span style="font-family:Roboto;font-size:14px;">
+              <b>5.</b> {{ custom_unselect_tokenisation }}.
+            </span>
+            <br/>
+            <br/>
+            <span style="font-family:Roboto;font-size:14px;">
+              <b>6.</b> {{ custom_CQP1 }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">[word=&quot;.*&quot;&amp;p_attr_speaker=&quot;Vincent&quot;]</span>{{ custom_CQP2 }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">&lt;p speaker=&quot;Vincent&quot;&gt; ... &lt;/p&gt;</span>{{ custom_CQP3 }}. {{ custom_CQP4 }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">[word=&quot;.*&quot;&amp;p_tag=&quot;true&quot;]</span>{{ custom_CQP5 }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">&lt;p&gt; ... &lt;/p&gt;</span>.
+            </span>
+            <br/>
+            <br/>
+            <span style="font-family:Roboto;font-size:14px;">
+              <b>7.</b> {{ custom_TXM_export1 }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">TEI</span>{{ custom_TXM_export2 }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">tei_txm_to_uima.py</span>{{ custom_TXM_export3 }}<span style="background:lightgray;border-radius:4px;padding:4px;font-family:monospace;">UIMA</span>{{ custom_TXM_export4 }}
+            </span>
+          </div>
         </div>
       </dxi-item>
     </dx-tab-panel>

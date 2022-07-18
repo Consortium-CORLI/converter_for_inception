@@ -143,6 +143,7 @@ export class Sax2Component implements OnInit {
       suggestions_str: '',
       choice: ''
     },
+    /*
     {
       id:1,
       // quality: "Facultatif",
@@ -154,6 +155,7 @@ export class Sax2Component implements OnInit {
       suggestions_str: '',
       choice: ''
     },
+    */
     {
       id:2,
       // quality: "Facultatif",
@@ -266,6 +268,23 @@ export class Sax2Component implements OnInit {
         "custom_stanza_parse_part_two": " ; cela vous génère un fichier ZIP qu'il est possible de charger automatiquement (cf. Import automatique) ou manuellement (cf. Import manuel) dans INCEpTION. À noter qu'en haut du fichier stanza_parse.py vous pouvez paramétrer la langue que vous souhaitez.",
         "custom_uima_to_tei_txm": "Le script uima_to_tei_txm.py permet de convertir vers un format compatible avec TXM (testé avec la version 0.8.2). Veuillez noter que cela nécessite d'avoir soit lancé stanza_parse.py soit exporté depuis INCEpTION, sinon il n'y aura pas de tokenisation et TXM ne l'acceptera pas. Toutes les annotations ainsi que leurs attributs devraient être disponibles dans les requêtes CQP.",
         "custom_tei_txm_to_uima": "Le script tei_txm_to_uima.py permet de reconvertir un export XML-TXM vers le format UIMA. Cela récupère toutes les balises initialement présentes dans les fichiers UIMA.",
+        "custom_TXM": "Afin de porter (puis éventuellement récupérer) vers TXM, voici les étapes à suivre : ",
+        "custom_after_conversion_unzip": "Après avoir converti, décompressez l'archive ZIP.",
+        "custom_open_terminal_and_launch": "Ouvrez un terminal dans le répertoire concerné (sous Windows, dans l'explorateur de fichier vous avez Fichier > Ouvrir Windows PowerShell) et lancez ",
+        "custom_then_launch": "Lancez ensuite ",
+        "custom_stanza_easiest": "Lancer Stanza est la manière la plus simple de tokeniser les textes pour pouvoir le porter vers TXM, mais alternativement vous pouvez faire un export INCEpTION à la place, ce n'est cependant pas optimal.",
+        "custom_in_TXM_import": "Dans TXM (v0.8.2 et au-dessus), commencez l'import avec Fichier > Importer > XML/w + CSV et sélectionnez le répertoire ",
+        "custom_directory_that_was_created": " qui a été créé (vous pouvez renommer le projet comme vous le souhaitez)",
+        "custom_unselect_tokenisation": "Déselectionnez la tokenisation automatique et lancez l'import",
+        "custom_CQP1": "Une fois terminé, vous pouvez faire des requêtes dans le corpus avec les annotations comme paramètres : par exemple ",
+        "custom_CQP2": " vous donne tous les mots présents dans une balise ",
+        "custom_CQP3": "",
+        "custom_CQP4": "Si vous souhaitez interroger des balises sans attributs, vous pouvez utiliser par exemple ",
+        "custom_CQP5": " qui vous donne tous les mots dans une balise ",
+        "custom_TXM_export1": "Pour retrouver un format UIMA, exportez au format XML-TXM, décompressez le résultat, renommez le répertoire en ",
+        "custom_TXM_export2": ", copiez-collez ",
+        "custom_TXM_export3": " du ZIP initial du convertisseur et lancez le. Cela créera un répertoire ",
+        "custom_TXM_export4": " où tous les fichiers convertis seront placés.",
         "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
         "custom_converting_example": "Exemple de conversion",
@@ -335,6 +354,23 @@ export class Sax2Component implements OnInit {
         "custom_stanza_parse_part_two": "; it generates a ZIP file that can be loaded automatically (cf. Automated import) or manually (cf. Manual import) into INCEpTION. Please note that at the top of the stanza_parse.py file you may change the target language.",
         "custom_uima_to_tei_txm": "The uima_to_tei_txm.py script allows to convert to a TXM-compatible format (tested with version 0.8.2). Please note that this requires to have either launched stanza_parse.py or exported the corpus from INCEpTION, otherwise there will be no tokenisation and TXM won't accept it. All annotations and their attributes should be available in CQP requests.",
         "custom_tei_txm_to_uima": "The tei_txm_to_uima.py scripts allows to convert back an XML-TXM export to the UIMA format. This keeps all the tags initially present in the UIMA files.",
+        "custom_TXM": "In order to load (and potentially retrieve afterwards) into TXM, here are the steps to follow: ",
+        "custom_after_conversion_unzip": "After converting, decompress the ZIP archive.",
+        "custom_open_terminal_and_launch": "Open a terminal in the directory (in Windows, in the file explorer you have File > Open Windows PowerShell) and launch ",
+        "custom_then_launch": "Then launch ",
+        "custom_stanza_easiest": "Launching Stanza is the easiest way to tokenise texts to then load them into TXM, but alternatively you may do an INCEpTION export instead, this is however not optimal.",
+        "custom_in_TXM_import": "In TXM (v0.8.2 and above), initiate the import with File > Import > XML/w + CSV and select the ",
+        "custom_directory_that_was_created": " directory that was created (you may rename the project how you please)",
+        "custom_unselect_tokenisation": "Unselect automated tokenisation and launch the import",
+        "custom_CQP1": "Once finished, you may query the corpus with the annotations as parameters: for example ",
+        "custom_CQP2": " gives you all the words that were within a ",
+        "custom_CQP3": " tag",
+        "custom_CQP4": "If you wish to query tags without attributes, you may use for example ",
+        "custom_CQP5": " which gives you all the words in a ",
+        "custom_TXM_export1": "To retrieve a UIMA format, export in XML-TXM format, unzip the result, rename the directory to ",
+        "custom_TXM_export2": ", copy-paste ",
+        "custom_TXM_export3": " from the original ZIP of the converter and launch it. It will create a ",
+        "custom_TXM_export4": " directory to put all the converted files into.",
         "custom_a_single_corpus": "merge the annotations of annotators into a single corpus",
         "custom_one_corpus_per_annotator": "one version of the corpus for each annotator",
         "custom_converting_example": "Converting example",
@@ -408,6 +444,23 @@ export class Sax2Component implements OnInit {
   get custom_stanza_parse_part_two(){return formatMessage("custom_stanza_parse_part_two")}
   get custom_uima_to_tei_txm(){return formatMessage("custom_uima_to_tei_txm")}
   get custom_tei_txm_to_uima(){return formatMessage("custom_tei_txm_to_uima")}
+  get custom_TXM(){return formatMessage("custom_TXM")}
+  get custom_after_conversion_unzip(){return formatMessage("custom_after_conversion_unzip")}
+  get custom_open_terminal_and_launch(){return formatMessage("custom_open_terminal_and_launch")}
+  get custom_then_launch(){return formatMessage("custom_then_launch")}
+  get custom_stanza_easiest(){return formatMessage("custom_stanza_easiest")}
+  get custom_in_TXM_import(){return formatMessage("custom_in_TXM_import")}
+  get custom_directory_that_was_created(){return formatMessage("custom_directory_that_was_created")}
+  get custom_unselect_tokenisation(){return formatMessage("custom_unselect_tokenisation")}
+  get custom_CQP1(){return formatMessage("custom_CQP1")}
+  get custom_CQP2(){return formatMessage("custom_CQP2")}
+  get custom_CQP3(){return formatMessage("custom_CQP3")}
+  get custom_CQP4(){return formatMessage("custom_CQP4")}
+  get custom_CQP5(){return formatMessage("custom_CQP5")}
+  get custom_TXM_export1(){return formatMessage("custom_TXM_export1")}
+  get custom_TXM_export2(){return formatMessage("custom_TXM_export2")}
+  get custom_TXM_export3(){return formatMessage("custom_TXM_export3")}
+  get custom_TXM_export4(){return formatMessage("custom_TXM_export4")}
   get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
   get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
   get custom_converting_example(){return formatMessage("custom_converting_example")};
@@ -2250,9 +2303,10 @@ export class Sax2Component implements OnInit {
       if(this.tagdefDataSource[i].tag === this.suggestionDataSource[0].choice){
         this.tagdefDataSource[i].type = 0; 
       }else if(this.tagdefDataSource[i].tag === this.suggestionDataSource[1].choice){
-        this.tagdefDataSource[i].type = 1; 
-      }else if(this.tagdefDataSource[i].tag === this.suggestionDataSource[2].choice){
+        // this.tagdefDataSource[i].type = 1; // CHANGES BECAUSE OF REMOVAL OF PARAGRAPH LINE
         this.tagdefDataSource[i].type = 2; 
+      // }else if(this.tagdefDataSource[i].tag === this.suggestionDataSource[2].choice){
+      //   this.tagdefDataSource[i].type = 2; 
       }else{
         this.tagdefDataSource[i].type = 3;
       }
