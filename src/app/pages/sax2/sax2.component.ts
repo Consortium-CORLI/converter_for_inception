@@ -285,6 +285,12 @@ export class Sax2Component implements OnInit {
         "custom_TXM_export2": ", copiez-collez ",
         "custom_TXM_export3": " du ZIP initial du convertisseur et lancez le. Cela créera un répertoire ",
         "custom_TXM_export4": " où tous les fichiers convertis seront placés.",
+        "custom_Glozz": "Afin de porter (puis éventuellement récupérer) vers Glozz, voici les étapes à suivre : ",
+        "custom_files_in_source": "Les fichiers générés (*.ac, *.aa, *.aam) sont placés dans le répertoire ",
+        "custom_you_may_load_in_Glozz": ", vous pouvez les charger dans Glozz. Pour la reconversion, il s'agit du processus inverse, en utilisant ",
+        "custom_about_dependencies": "Au sujet des relations, comme il peut y en avoir beaucoup, vous pouvez changer la valeur de ",
+        "custom_to_false": " (ligne 6) à ",
+        "custom_to_prevent_overload": " afin d'éviter une surcharge de Glozz",
         "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
         "custom_converting_example": "Exemple de conversion",
@@ -354,7 +360,7 @@ export class Sax2Component implements OnInit {
         "custom_stanza_parse_part_two": "; it generates a ZIP file that can be loaded automatically (cf. Automated import) or manually (cf. Manual import) into INCEpTION. Please note that at the top of the stanza_parse.py file you may change the target language.",
         "custom_uima_to_tei_txm": "The uima_to_tei_txm.py script allows to convert to a TXM-compatible format (tested with version 0.8.2). Please note that this requires to have either launched stanza_parse.py or exported the corpus from INCEpTION, otherwise there will be no tokenisation and TXM won't accept it. All annotations and their attributes should be available in CQP requests.",
         "custom_tei_txm_to_uima": "The tei_txm_to_uima.py scripts allows to convert back an XML-TXM export to the UIMA format. This keeps all the tags initially present in the UIMA files.",
-        "custom_TXM": "In order to load (and potentially retrieve afterwards) into TXM, here are the steps to follow: ",
+        "custom_TXM": "To load (and potentially retrieve afterwards) into TXM, here are the steps to follow: ",
         "custom_after_conversion_unzip": "After converting, decompress the ZIP archive.",
         "custom_open_terminal_and_launch": "Open a terminal in the directory (in Windows, in the file explorer you have File > Open Windows PowerShell) and launch ",
         "custom_then_launch": "Then launch ",
@@ -371,6 +377,12 @@ export class Sax2Component implements OnInit {
         "custom_TXM_export2": ", copy-paste ",
         "custom_TXM_export3": " from the original ZIP of the converter and launch it. It will create a ",
         "custom_TXM_export4": " directory to put all the converted files into.",
+        "custom_Glozz": "To load (and possibly retrieve) to Glozz, here are the steps to follow: ",
+        "custom_files_in_source": "The generated files (*.ac, *.aa, *.aam) are placed within the ",
+        "custom_you_may_load_in_Glozz": " repository, you may load them in Glozz. For converting back, it's the inverse process, using ",
+        "custom_about_dependencies": "About dependencies, as there may be a significant amount of them, you may change the value of ",
+        "custom_to_false": " (line 6) to ",
+        "custom_to_prevent_overload": " so as to prevent an overload in Glozz",
         "custom_a_single_corpus": "merge the annotations of annotators into a single corpus",
         "custom_one_corpus_per_annotator": "one version of the corpus for each annotator",
         "custom_converting_example": "Converting example",
@@ -461,6 +473,12 @@ export class Sax2Component implements OnInit {
   get custom_TXM_export2(){return formatMessage("custom_TXM_export2")}
   get custom_TXM_export3(){return formatMessage("custom_TXM_export3")}
   get custom_TXM_export4(){return formatMessage("custom_TXM_export4")}
+  get custom_Glozz(){return formatMessage("custom_Glozz")}
+  get custom_files_in_source(){return formatMessage("custom_files_in_source")}
+  get custom_you_may_load_in_Glozz(){return formatMessage("custom_you_may_load_in_Glozz")}
+  get custom_about_dependencies(){return formatMessage("custom_about_dependencies")}
+  get custom_to_false(){return formatMessage("custom_to_false")}
+  get custom_to_prevent_overload(){return formatMessage("custom_to_prevent_overload")}
   get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
   get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
   get custom_converting_example(){return formatMessage("custom_converting_example")};
