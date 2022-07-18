@@ -758,7 +758,7 @@ export class Sax2Component implements OnInit {
       reader.onload = () => {
         this.initParser();
         // <TEST_DEBUG_REVERSED_ATTR_NAMES>
-        var reader_result = reader.result.toString().replace((new RegExp("(<[^<>]+\\s)(sofa|begin|end)(=\"[^\"]*\"[^<>]*>)","gmi")),"$1$2_$3");
+        var reader_result = reader.result.toString().replace((new RegExp("(<[^<>]+\\s)(sofa|begin|end|type)(=\"[^\"]*\"[^<>]*>)","gmi")),"$1$2_$3");
         // </TEST DEBUG_RESERVED_ATTR_NAMES>
         // <TEST_DEBUG_DOT_IN_TAG_NAME>
         reader_result = reader_result.replace((new RegExp("(<[^\\s\\.\\-!]+)[\\.\\-]+([^\\s<>]*)","gmi")),"$1_$2");
