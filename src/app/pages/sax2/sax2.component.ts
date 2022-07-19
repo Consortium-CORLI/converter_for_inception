@@ -2544,6 +2544,9 @@ export class Sax2Component implements OnInit {
 
                 }else if(cs_xhr_obj.status === "in process"){
                   zis.conversion_progress = cs_xhr_obj.progress;
+                }else if(cs_xhr_obj.status === "error"){
+                  clearInterval(check_status_interval);
+                  alert("A server-side error has occurred. For help, fill a ticket at https://github.com/Consortium-CORLI/converter_for_inception/issues and indicate the conversion token: " + cs_xhr_obj.token);
                 }
                 // document.getElementById('conversion_progress_bar').value = zis.conversion_progress;
               }catch(e){

@@ -3,6 +3,7 @@
     try{
         
         $data = json_decode($raw_json);
+        $data->token = preg_replace('/[^0-9a-fA-F]/mi','',$data->token);
         // $dir_path = sys_get_temp_dir() . '/tmp_inception_converter' . '/' . $data->token;
 	$dir_path = '/sites' . '/corliweb' . '/tmp' . '/tmp_inception_converter' . '/' . $data->token;
 
@@ -159,6 +160,8 @@
                     $zip->addFromString('exportedproject.json',json_encode($project,JSON_PRETTY_PRINT));
                     $zip->close();
 
+                }else if(filesize($dir_path . '/err.log') > 0){
+                    echo '{"status":"error","token":"' . $data->token . '"}';
                 }else{
                    echo '{"status":"in process","progress":' . $log_status . '}';
                 }
