@@ -2154,6 +2154,8 @@ export class Sax2Component implements OnInit {
       }
 
       /* <LOUIS> */
+      /*
+      // REMOVAL AFTER REMOVAL OF PARAGRAPH OPTIONS
       if(standardParagraphNames.indexOf(e.elem) !== -1){
         dic[e.elem].type = 1;
         if(this.suggestionDataSource[1].suggestions.indexOf(e.elem) === -1){
@@ -2164,7 +2166,9 @@ export class Sax2Component implements OnInit {
           }
           this.suggestionDataSource[1].suggestions_str += (e.elem);
         }
-      }else if((dic[e.elem].quantity >= docMinQuantity && dic[e.elem].averageCharCount >= docMinChar) || standardDocumentNames.indexOf(e.elem) !== -1){
+      }else
+      */
+      if((dic[e.elem].quantity >= docMinQuantity && dic[e.elem].averageCharCount >= docMinChar) || standardDocumentNames.indexOf(e.elem) !== -1){
         dic[e.elem].type = 0;
         // console.log("doc",e.elem);
         if(this.suggestionDataSource[0].suggestions.indexOf(e.elem) === -1){
