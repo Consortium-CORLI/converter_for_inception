@@ -294,8 +294,12 @@ export class Sax2Component implements OnInit {
         "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
         "custom_converting_example": "Exemple de conversion",
+        "custom_written": "écrit",
+        "custom_oral": "oral",
         "custom_example_consider_this_corpus_file": "Considérons ce fichier de corpus : chaque texte qui nous intéresse est contenu dans un <div> ... </div>",
+        "custom_example_consider_this_corpus_file_u": "Considérons ce fichier de corpus : chaque texte qui nous intéresse est contenu dans un <u> ... </u>",
         "custom_example_select_div": "En sélectionnant \"div\" (sans guillemets) comme séparateur de documents, l'outil crée un fichier unique pour chaque :",
+        "custom_example_select_u": "En sélectionnant \"u\" (sans guillemets) comme séparateur de documents, l'outil crée un fichier unique pour chaque :",
         "custom_example_it_then_converts_to_UIMA": "Il convertit ensuite chaque fichier vers de l'UIMA (et les place tous dans un ZIP chargeable directement dans INCEpTION) :",
         "custom_your_corpus_will_be_split": "Votre corpus sera séparé en unités textuelles. Veuillez sélectionner le séparateur de documents (un exemple du processus est disponible dans l'onglet \"Exemple de conversion\") :",
         "dxDataGrid-noDataText": "Pas de données",
@@ -386,8 +390,12 @@ export class Sax2Component implements OnInit {
         "custom_a_single_corpus": "merge the annotations of annotators into a single corpus",
         "custom_one_corpus_per_annotator": "one version of the corpus for each annotator",
         "custom_converting_example": "Converting example",
+        "custom_written": "written",
+        "custom_oral": "oral",
         "custom_example_consider_this_corpus_file": "Let's consider this corpus file: each text is contained within a <div> ... </div>",
+        "custom_example_consider_this_corpus_file_u": "Let's consider this corpus file: each text is contained within a <u> ... </u>",
         "custom_example_select_div": "By selecting \"div\" (without quotes) as a document separator, the tool creates a unique file for each:",
+        "custom_example_select_u": "By selecting \"u\" (without quotes) as a document separator, the tool creates a unique file for each:",
         "custom_example_it_then_converts_to_UIMA": "It then converts each file to UIMA (and places them into a ZIP that can directly be loaded into INCEpTION):",
         "custom_your_corpus_will_be_split": "Your corpus will be split in textual units. Please select the document separator (an example of the process is avaiable in the \"Converting example\" tab):",
         "dxDataGrid-noDataText": "No data",
@@ -482,8 +490,12 @@ export class Sax2Component implements OnInit {
   get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
   get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
   get custom_converting_example(){return formatMessage("custom_converting_example")};
+  get custom_written(){return formatMessage("custom_written")};
+  get custom_oral(){return formatMessage("custom_oral")};
   get custom_example_consider_this_corpus_file(){return formatMessage("custom_example_consider_this_corpus_file")};
+  get custom_example_consider_this_corpus_file_u(){return formatMessage("custom_example_consider_this_corpus_file_u")};
   get custom_example_select_div(){return formatMessage("custom_example_select_div")};
+  get custom_example_select_u(){return formatMessage("custom_example_select_u")};
   get custom_example_it_then_converts_to_UIMA(){return formatMessage("custom_example_it_then_converts_to_UIMA")};
   get custom_your_corpus_will_be_split(){return formatMessage("custom_your_corpus_will_be_split")};
   // get custom_load_xml_files(){return formatMessage("custom_load_xml_files")}
@@ -746,6 +758,14 @@ export class Sax2Component implements OnInit {
         event.cancel = true;
         return;
       }
+      /* <test_debug> */
+      this.docTagMap = [];
+      this.tagdefDataSource = [];
+      this.tagsChainingRatio = [];
+      this.docDataSource = [];
+      this.file_list = [];
+      this.file_contents = [];
+      /* </test_debug> */
       this.fichierXML = file.name;
       this.uploadedXML = file;
       if(!(file.name.endsWith('.xml'))){
@@ -2373,8 +2393,12 @@ export class Sax2Component implements OnInit {
             break;
           }
         }else{
+          if(first_document_regex_result_list.length-2>=0){
           this.first_document = this.full_xml.slice(first_document_regex_result_list[first_document_regex_result_list.length-2][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
           // this.first_document = this.file_list[0].slice(first_document_regex_result_list[first_document_regex_result_list.length-2][0],first_document_regex_result_list[first_document_regex_result_list.length-1][0]);
+          }else{
+            this.first_document = "((PREVIEW UNAVAILABLE))";
+          }
           break;
         }
       }
