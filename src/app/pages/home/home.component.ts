@@ -34,9 +34,10 @@ export class HomeComponent {
         "custom_no_need_to_decompress": "Vous n'avez pas besoin de décompresser ce fichier, il pourra directement être chargé dans INCEpTION",
         "custom_import_inception": "Dans l'onglet \"Projects\" d'INCEpTION, cliquez sur \"Import project\" et sélectionnez le fichier ZIP.",
         "custom_requires_role_project_creator": "Pour que cela apparaisse à l'écran, il faut le ROLE_PROJECT_CREATOR disponible dans les paramètres d'utilisateurs (demandez à votre administrateur INCEpTION).",
-        "custom_please_note": "Veuillez noter que cet outil a été testé sur INCEpTION 23.6. Au besoin, veuillez contacter",
+        "custom_please_note": "Veuillez noter que cet outil a été testé sur INCEpTION 23.8. Au besoin, veuillez contacter",
         "custom_or_directly": "ou directement",
         "custom_on_github": "sur GitHub",
+        "custom_created_by": "Créé par Louis Estève et CORLI",
         "custom_as_this_tool_is_prototype": "Ceci étant un prototype, nous sommes aussi ouverts aux retours.",
 
         // "custom_presentation_sentence1": "Cet utilitaire est un prototype qui doit permettre de préparer des documents XML pour être importés dans l'outil <a target=\"_blank\" href=\"https://inception-project.github.io/\">INCEpTION</a>. Ceci implique de transformer vos données dans le format UIMA CAS XMI avec un seul document par fichier (split).",
@@ -89,9 +90,10 @@ export class HomeComponent {
         "custom_no_need_to_decompress": "You don't need to decompress this file, it is to be directly uploaded into INCEpTION",
         "custom_import_inception": "In the \"Projects\" tab of INCEpTION, click on \"Import project\" and select the ZIP file.",
         "custom_requires_role_project_creator": "For this to appear on the screen, it requires the ROLE_PROJECT_CREATOR in user settings (ask your INCEpTION administrator).",
-        "custom_please_note": "Please note that this tool has been tested on INCEpTION 23.6. If needed, you may contact us at",
+        "custom_please_note": "Please note that this tool has been tested on INCEpTION 23.8. If needed, you may contact us at",
         "custom_or_directly": "or directly",
         "custom_on_github": "on GitHub",
+        "custom_created_by": "Created by Louis Estève and CORLI",
         "custom_as_this_tool_is_prototype": "As this tool is a prototype, we are open to feedbacks.",
 
         "custom_load_xml_files": "Load XML files",
