@@ -117,8 +117,10 @@ for i in ld:
                         str(d)
                     ])
                     # print(f'Overlap between {a}:{b} <{__annotations_list[j][0]}> and {c}:{d} <{__annotations_list[k][0]}>')
-
-        print(f'[{"="*int((count_to_n/n)*m)}{" "*(m-int((count_to_n/n)*m))}] {int(count_to_n/n*100)}% {i} -> {overlap_count} overlaps',end='\r')
+        if n > 0:
+            print(f'[{"="*int((count_to_n/n)*m)}{" "*(m-int((count_to_n/n)*m))}] {int(count_to_n/n*100)}% {i} -> {overlap_count} overlaps',end='\r')
+        else:
+            print(f'{i} does not contain annotations.',end='\r')
     print('')
     if overlap_count > 0:
         total_overlap_count += overlap_count
