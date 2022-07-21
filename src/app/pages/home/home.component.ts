@@ -149,6 +149,7 @@ export class HomeComponent {
   get custom_import_inception(){return formatMessage("custom_import_inception")};
   get custom_please_note(){return formatMessage("custom_please_note")};
   get custom_or_directly(){return formatMessage("custom_or_directly")};
+  get custom_created_by(){return formatMessage("custom_created_by")};
   get custom_on_github(){return formatMessage("custom_on_github")};
   get custom_as_this_tool_is_prototype(){return formatMessage("custom_as_this_tool_is_prototype")};
   get custom_already_existing_project(){return formatMessage("custom_already_existing_project")};
