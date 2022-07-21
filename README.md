@@ -1,4 +1,4 @@
-# InceptionConverter
+# CORLINCEpTION converter
 
 The live version of this converter is available [here](https://corli.huma-num.fr/convinception/#/home).
 It aims at helping compatibility of corpora with [INCEpTION](https://inception-project.github.io/) by converting standard XML corpora to UIMA.
@@ -18,6 +18,7 @@ By launching `python stanza_parse.py`, all the UIMA files will be processed with
 Once the script is finished, it generates a `inception_project_stanza.zip` that can directly be loaded into INCEpTION.
 
 By changing the value of `lang` (line 10) based on [Stanza's available languages](https://stanfordnlp.github.io/stanza/available_models.html), you may change the target language.
+By changing the value of `processors` (line 11) as explained in [Stanza's documentation](https://stanfordnlp.github.io/stanza/pipeline.html), you may change the processors it uses.
 
 ## Converting UIMA to other formats
 
