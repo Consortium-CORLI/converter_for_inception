@@ -293,7 +293,7 @@ export class Sax2Component implements OnInit {
         "custom_to_prevent_overload": " afin d'éviter une surcharge de Glozz",
         "custom_a_single_corpus": "fusionner les annotations des annotateurs en un seul corpus",
         "custom_one_corpus_per_annotator": "une version du corpus pour chaque annotateur",
-        "custom_converting_example": "Exemple de conversion",
+        "custom_converting_examples": "Exemples de conversion",
         "custom_written": "écrit",
         "custom_oral": "oral",
         "custom_example_consider_this_corpus_file": "Considérons ce fichier de corpus : chaque texte qui nous intéresse est contenu dans un <div> ... </div>",
@@ -389,7 +389,7 @@ export class Sax2Component implements OnInit {
         "custom_to_prevent_overload": " so as to prevent an overload in Glozz",
         "custom_a_single_corpus": "merge the annotations of annotators into a single corpus",
         "custom_one_corpus_per_annotator": "one version of the corpus for each annotator",
-        "custom_converting_example": "Converting example",
+        "custom_converting_examples": "Converting examples",
         "custom_written": "written",
         "custom_oral": "oral",
         "custom_example_consider_this_corpus_file": "Let's consider this corpus file: each text is contained within a <div> ... </div>",
@@ -489,7 +489,7 @@ export class Sax2Component implements OnInit {
   get custom_to_prevent_overload(){return formatMessage("custom_to_prevent_overload")}
   get custom_a_single_corpus(){return formatMessage("custom_a_single_corpus")};
   get custom_one_corpus_per_annotator(){return formatMessage("custom_one_corpus_per_annotator")};
-  get custom_converting_example(){return formatMessage("custom_converting_example")};
+  get custom_converting_examples(){return formatMessage("custom_converting_examples")};
   get custom_written(){return formatMessage("custom_written")};
   get custom_oral(){return formatMessage("custom_oral")};
   get custom_example_consider_this_corpus_file(){return formatMessage("custom_example_consider_this_corpus_file")};
@@ -1203,6 +1203,7 @@ export class Sax2Component implements OnInit {
     this.display_captcha();
      return;
    }
+   this.conversion_progress = 0.0;
    this.converting = true;
     /* </LOUIS> */
     this.typesystemGeneration();
