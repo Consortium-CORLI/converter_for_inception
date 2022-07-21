@@ -120,7 +120,7 @@
 
       </dxi-item>
       <br />
-      <dx-progress-bar [min]="0" [max]="100" [value]="conversion_progress"></dx-progress-bar>
+      <dx-progress-bar [min]="0" [max]="100" [value]="conversion_progress" [visible]="converting"></dx-progress-bar>
     </div>
     </div>
   </dxi-item>
@@ -615,7 +615,7 @@
     </dx-tab-panel>
   </dxi-item>
 
-  <dxi-item title="{{ custom_converting_example }}" icon="info">
+  <dxi-item title="{{ custom_converting_examples }}" icon="info">
     
     <dx-tab-panel style="border-top:solid 1px gray;">
       <dxi-item title="{{ custom_written }}">
