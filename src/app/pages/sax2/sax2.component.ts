@@ -219,6 +219,8 @@ export class Sax2Component implements OnInit {
         "custom_conversion": "Conversion",
         "custom_tags": "Balises",
         "custom_history_and_converting_back": "Historique et reconversion",
+        "custom_history": "Historique",
+        "custom_converting_back": "Reconversion",
         "custom_help": "Aide",
         "custom_quality": "Qualité",
         "custom_necessary": "Nécessaire",
@@ -239,6 +241,10 @@ export class Sax2Component implements OnInit {
         "custom_file_names": "Noms des fichiers",
         "custom_reconvert_to_initial_format" : "Reconversion vers le format initial d'un export INCEpTION (pour ce faire, faites un export avec comme format additionnel UIMA CAS XML 1.1, déposez le fichier ZIP ci-dessous et sélectionnez votre mode de reconversion) : ",
         "custom_load_an_inception_file": "Charger un fichier d'export INCEpTION",
+        "custom_here_is_how_to_export": "Voici la procédure pour exporter un project depuis INCEpTION",
+        "custom_how_to_export1": "Dans le projet, allez dans \"Settings\"",
+        "custom_how_to_export2": "Descendez la liste sur la gauche et cliquez sur \"Export\"",
+        "custom_how_to_export3": "Sélectionnez comme format additionnel d'export \"UIMA CAS XMI (XML 1.1)\", cliquez sur \"Start export...\" et patientez jusqu'à ce que vous puissiez cliquer sur \"Download\" qui va apparaitre à droite",
         "custom_index_in_history": "Indice dans l'historique",
         "custom_reconvert": "Reconvertir",
         "custom_load_your_documents": "Chargez vos documents",
@@ -247,8 +253,12 @@ export class Sax2Component implements OnInit {
         "custom_fill_captcha": "Remplissez le CAPTCHA",
         "custom_modify_project_name": "Modifiez le nom du projet si vous le souhaitez, cliquez sur \"GENERER\" et patientez jusqu'à ce que votre corpus converti soit téléchargé automatiquement",
         "custom_inception_import": "Une fois dans INCEpTION, dans l'onglet \"Projects\", importez le fichier téléchargé en cliquant sur \"Import project\"",
+        "custom_import_as_new_project": "Import comme nouveau projet",
         "custom_automated_import": "Import automatique",
+        "custom_automated_import_explanation": "L'import automatique vous permet de directement charger le fichier ZIP généré par ce convertisseur dans INCEpTION, cela crée automatiquement un projet contenant tout.",
+        "custom_import_in_existing_project": "Import dans un projet existant",
         "custom_manual_import": "Import manuel",
+        "custom_manual_import_explanation": "L'import manuel vous permet de modifier ce que vous souhaitez ou d'importer les fichiers convertis dans un corpus déjà existant.",
         "custom_help_settings": "Dans le projet en question, cliquez sur \"Settings\"",
         "custom_help_layers": "Cliquez sur \"Layers\"",
         "custom_help_import_typesystem": "Après avoir décompressé l'archive ZIP, cliquez sur \"Import\" et sélectionnez le fichier typesystem.xml ; cela indique à INCEpTION les différentes couches d'annotation",
@@ -268,7 +278,7 @@ export class Sax2Component implements OnInit {
         "custom_stanza_parse_part_two": " ; cela vous génère un fichier ZIP qu'il est possible de charger automatiquement (cf. Import automatique) ou manuellement (cf. Import manuel) dans INCEpTION. À noter qu'en haut du fichier stanza_parse.py vous pouvez paramétrer la langue que vous souhaitez.",
         "custom_uima_to_tei_txm": "Le script uima_to_tei_txm.py permet de convertir vers un format compatible avec TXM (testé avec la version 0.8.2). Veuillez noter que cela nécessite d'avoir soit lancé stanza_parse.py soit exporté depuis INCEpTION, sinon il n'y aura pas de tokenisation et TXM ne l'acceptera pas. Toutes les annotations ainsi que leurs attributs devraient être disponibles dans les requêtes CQP.",
         "custom_tei_txm_to_uima": "Le script tei_txm_to_uima.py permet de reconvertir un export XML-TXM vers le format UIMA. Cela récupère toutes les balises initialement présentes dans les fichiers UIMA.",
-        "custom_TXM": "Afin de porter (puis éventuellement récupérer) vers TXM, voici les étapes à suivre : ",
+        "custom_TXM": "Afin de porter (puis éventuellement récupérer) vers TXM (v0.8.2 et au-dessus), voici les étapes à suivre : ",
         "custom_after_conversion_unzip": "Après avoir converti, décompressez l'archive ZIP.",
         "custom_open_terminal_and_launch": "Ouvrez un terminal dans le répertoire concerné (sous Windows, dans l'explorateur de fichier vous avez Fichier > Ouvrir Windows PowerShell) et lancez ",
         "custom_then_launch": "Lancez ensuite ",
@@ -315,6 +325,8 @@ export class Sax2Component implements OnInit {
         "custom_conversion": "Converting",
         "custom_tags": "Tags",
         "custom_history_and_converting_back": "History and converting back",
+        "custom_history": "History",
+        "custom_converting_back": "Converting back",
         "custom_help": "Help",
         "custom_quality": "Quality",
         "custom_necessary": "Necessary",
@@ -335,6 +347,10 @@ export class Sax2Component implements OnInit {
         "custom_file_names": "File names",
         "custom_reconvert_to_initial_format" : "Converting back to the initial format from an INCEpTION export (to do so, export with UIMA CAS XML 1.1 as an additional format, put the ZIP file just below and select the reconverting mode): ",
         "custom_load_an_inception_file": "Load an INCEpTION export file",
+        "custom_here_is_how_to_export": "Here is the process to export a project from INCEpTION",
+        "custom_how_to_export1": "In the project, go to \"Settings\"",
+        "custom_how_to_export2": "At the bottom of the list on the left, click on \"Export\"",
+        "custom_how_to_export3": "Select \"UIMA CAS XMI (XML 1.1)\" as the additional export format, click on \"Start export...\" and wait until you want click on \"Download\" that will appear on the right",
         "custom_index_in_history": "Index in history",
         "custom_reconvert": "Convert back",
         "custom_load_your_documents": "Load your documents",
@@ -343,8 +359,12 @@ export class Sax2Component implements OnInit {
         "custom_fill_captcha": "Fill in the CAPTCHA",
         "custom_modify_project_name": "Modify the project name if you wish to, click on \"Generate\" and wait until your converted corpus is downloaded automatically",
         "custom_inception_import": "Once in INCEpTION, in the \"Projects\" tab, import the downloaded file by clicking on \"Import project\"",
+        "custom_import_as_new_project": "Import as a new project",
         "custom_automated_import": "Automated import",
+        "custom_automated_import_explanation": "Automated import allows you to directly load the ZIP file from this converter into INCEpTION, it automatically creates a project containing everything.",
+        "custom_import_in_existing_project": "Import in existing project",
         "custom_manual_import": "Manual import",
+        "custom_manual_import_explanation": "Manual import allows you to tinker with settings whem importing your corpus or to import the converted files into an already existing corpus.",
         "custom_help_settings": "In the target project, click on \"Settings\"",
         "custom_help_layers": "Click on \"Layers\"",
         "custom_help_import_typesystem": "After decompressing the ZIP archive, click on \"Import\" and select the typesystem.xml file; this will tell INCEpTION the different annotation layers",
@@ -364,7 +384,7 @@ export class Sax2Component implements OnInit {
         "custom_stanza_parse_part_two": "; it generates a ZIP file that can be loaded automatically (cf. Automated import) or manually (cf. Manual import) into INCEpTION. Please note that at the top of the stanza_parse.py file you may change the target language.",
         "custom_uima_to_tei_txm": "The uima_to_tei_txm.py script allows to convert to a TXM-compatible format (tested with version 0.8.2). Please note that this requires to have either launched stanza_parse.py or exported the corpus from INCEpTION, otherwise there will be no tokenisation and TXM won't accept it. All annotations and their attributes should be available in CQP requests.",
         "custom_tei_txm_to_uima": "The tei_txm_to_uima.py scripts allows to convert back an XML-TXM export to the UIMA format. This keeps all the tags initially present in the UIMA files.",
-        "custom_TXM": "To load (and potentially retrieve afterwards) into TXM, here are the steps to follow: ",
+        "custom_TXM": "To load (and potentially retrieve afterwards) into TXM (v0.8.2 and above), here are the steps to follow: ",
         "custom_after_conversion_unzip": "After converting, decompress the ZIP archive.",
         "custom_open_terminal_and_launch": "Open a terminal in the directory (in Windows, in the file explorer you have File > Open Windows PowerShell) and launch ",
         "custom_then_launch": "Then launch ",
@@ -415,6 +435,8 @@ export class Sax2Component implements OnInit {
   get custom_conversion(){return formatMessage("custom_conversion")}
   get custom_tags(){return formatMessage("custom_tags")}
   get custom_history_and_converting_back(){return formatMessage("custom_history_and_converting_back")}
+  get custom_history(){return formatMessage("custom_history")}
+  get custom_converting_back(){return formatMessage("custom_converting_back")}
   get custom_help(){return formatMessage("custom_help")}
   get custom_quality(){return formatMessage("custom_quality")}
   get custom_necessary(){return formatMessage("custom_necessary")}
@@ -435,6 +457,10 @@ export class Sax2Component implements OnInit {
   get custom_file_names(){return formatMessage("custom_file_names")}
   get custom_reconvert_to_initial_format(){return formatMessage("custom_reconvert_to_initial_format")}
   get custom_load_an_inception_file(){return formatMessage("custom_load_an_inception_file")}
+  get custom_here_is_how_to_export(){return formatMessage("custom_here_is_how_to_export")}
+  get custom_how_to_export1(){return formatMessage("custom_how_to_export1")}
+  get custom_how_to_export2(){return formatMessage("custom_how_to_export2")}
+  get custom_how_to_export3(){return formatMessage("custom_how_to_export3")}
   get custom_index_in_history(){return formatMessage("custom_index_in_history")}
   get custom_reconvert(){return formatMessage("custom_reconvert")}
   get custom_load_your_documents(){return formatMessage("custom_load_your_documents")}
@@ -443,8 +469,12 @@ export class Sax2Component implements OnInit {
   get custom_fill_captcha(){return formatMessage("custom_fill_captcha")}
   get custom_modify_project_name(){return formatMessage("custom_modify_project_name")}
   get custom_inception_import(){return formatMessage("custom_inception_import")}
+  get custom_import_as_new_project(){return formatMessage("custom_import_as_new_project")}
   get custom_automated_import(){return formatMessage("custom_automated_import")}
+  get custom_automated_import_explanation(){return formatMessage("custom_automated_import_explanation")}
+  get custom_import_in_existing_project(){return formatMessage("custom_import_in_existing_project")}
   get custom_manual_import(){return formatMessage("custom_manual_import")}
+  get custom_manual_import_explanation(){return formatMessage("custom_manual_import_explanation")}
   get custom_help_settings(){return formatMessage("custom_help_settings")}
   get custom_help_layers(){return formatMessage("custom_help_layers")}
   get custom_help_import_typesystem(){return formatMessage("custom_help_import_typesystem")}

@@ -204,7 +204,7 @@
   </dxi-item>
 
   <!-- <dxi-item title="Historique"> -->
-  <dxi-item title="{{ custom_history_and_converting_back }}" icon="revert">
+  <dxi-item title="{{ custom_converting_back }}" icon="revert">
     <!-- <dxi-item [title]="LANG_title_history"> -->
     <div class="content-block">
     <!-- <div class="dx-card responsive-paddings"> -->
@@ -245,7 +245,44 @@
         </div>
       </div>
       </div>
+      
       <div class="content-block">
+        
+        <!-- <p>1. Chargez vos documents</p> -->
+      <div class="dx-card" style="padding:14px;">
+        <span style="font-family:Roboto;font-size:14px;"><b>{{ custom_here_is_how_to_export }}</b></span><br/><br/>
+        <span style="font-family:Roboto;font-size:14px;">
+          <b>1. {{ custom_how_to_export1 }}</b>
+        </span>
+        <br/>
+        <br/>
+        <img src="assets/help/aide_export1.png" style="max-width:100%">
+      </div>
+        <br/>
+        <!-- <p>2. Cliquez sur le crayon pour modifier la balise séparatrice de documents</p> -->
+      <div class="dx-card" style="padding:14px;">
+        <span style="font-family:Roboto;font-size:14px;">
+        <b>2. {{ custom_how_to_export2 }}</b>
+      </span>
+      <br/>
+      <br/>
+        <img src="assets/help/aide_export2.png" style="max-width:100%">
+      </div>
+        <br/>
+        <!-- <p>3. Renseignez la balise séparatrice et cliquez sur "SAVE"</p> -->
+      <div class="dx-card" style="padding:14px;">
+        <span style="font-family:Roboto;font-size:14px;">
+        <b>3. {{ custom_how_to_export3 }}</b>
+      </span>
+      <br/>
+      <br/>
+        <img src="assets/help/aide_export3.png" style="max-width:100%">
+      </div>
+      </div>
+  </dxi-item>
+
+  <dxi-item title="{{ custom_history }}" icon="activefolder">
+    <div class="content-block">
       <dx-data-grid [allowColumnResizing]="true" [columnAutoWidth]="true" [dataSource]="history_list" keyExpr="id"
         [showColumnHeaders]="true" (onRowUpdated)="onRowUpdated($event)" [showBorders]="true"
         (onToolbarPreparing)="onToolbarPreparing($event)" height="50%" style="max-height:50%;">
@@ -293,12 +330,14 @@
     <!-- <h5 href="#automated_corpus_import">1. Importer un corpus automatiquement</h5> -->
     <dx-tab-panel style="border-top:solid 1px gray;">
       <!-- <dxi-item title="Import automatique"> -->
-      <dxi-item title="{{ custom_automated_import }}">
+      <!-- <dxi-item title="{{ custom_automated_import }}"> -->
+      <dxi-item title="{{ custom_import_as_new_project }}">
         <!-- <h5 id="automated_corpus_import">1. Importer un corpus automatiquement</h5> -->
         <!-- <dxi-item [title]="LANG_title_help"> -->
         <div class="content-block">
           <!-- <p>1. Chargez vos documents</p> -->
         <div class="dx-card" style="padding:14px;">
+          <span style="font-family:Roboto;font-size:14px;"><b>{{ custom_automated_import_explanation }}</b></span><br/><br/>
           <span style="font-family:Roboto;font-size:14px;">
             <b>1.1. {{ custom_load_your_documents }}</b>
           </span>
@@ -363,12 +402,14 @@
       </dxi-item>
 
       <!-- <dxi-item title="Import manuel"> -->
-      <dxi-item title="{{ custom_manual_import }}">
+      <!-- <dxi-item title="{{ custom_manual_import }}"> -->
+      <dxi-item title="{{ custom_import_in_existing_project }}">
         <!-- <h5 href="#manuel_corpus_import">2. Importer un corpus automatiquement</h5> -->
         <!-- <h5 id="#manuel_corpus_import">2. Importer un corpus automatiquement</h5> -->
         <!-- <dxi-item [title]="LANG_title_help"> -->
         <div class="content-block">
           <div class="dx-card" style="padding:14px;">
+            <span style="font-family:Roboto;font-size:14px;"><b>{{ custom_manual_import_explanation }}</b></span><br/><br/>
             <span style="font-family:Roboto;font-size:14px;">
           <!-- <p>1. Chargez vos documents</p> -->
           <b>2.1. {{ custom_load_your_documents }}</b>
